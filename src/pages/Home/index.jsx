@@ -40,7 +40,6 @@ function Home() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          // 'Authorization': 'Basic ' + btoa(`${email}:${password}`),
           Authorization: `Basic ${btoa(`${email}:${password}`)}`,
         },
       });
