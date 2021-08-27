@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+// import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -7,7 +8,7 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import IconButton from '@material-ui/core/IconButton';
 import { TextField, InputAdornment } from '@material-ui/core';
-import { useAuth } from '../../hooks/useAuth';
+import { useUser } from '../../providers/UserProvider';
 import logo from '../../assets/logo.svg';
 import Button from '../../components/Button';
 import * as S from './styles';
@@ -18,7 +19,11 @@ const schema = yup.object().shape({
 });
 
 function Home() {
-  const { login } = useAuth();
+  const { login } = useUser();
+  // const history = useHistory();
+  const [, setLoading] = useState(false);
+  const [, setUserError] = useState(false);
+
   const {
     register,
     formState: { errors },
@@ -27,11 +32,33 @@ function Home() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async ({ email, password }) => {
+  const signIn = async ({ email, password }) => {
     try {
-      await login({ email, password });
+      setUserError(false);
+      setLoading(true);
+      const data = await fetch('http://localhost:3001/login', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          // 'Authorization': 'Basic ' + btoa(`${email}:${password}`),
+          Authorization: `Basic ${btoa(`${email}:${password}`)}`,
+        },
+      });
+
+      if (data.status !== 200) {
+        setLoading(false);
+        setUserError(true);
+        setTimeout(() => {
+          setUserError(false);
+        }, 2500);
+        return;
+      }
+
+      const userData = await data.json();
+      login(userData);
+      setLoading(false);
     } catch (error) {
-      //
+      console.log('error:', error);
     }
   };
 
@@ -57,7 +84,7 @@ function Home() {
         sm={6}
       >
         <S.LoginName>Login</S.LoginName>
-        <S.Form onSubmit={handleSubmit(onSubmit)}>
+        <S.Form onSubmit={handleSubmit(signIn)}>
           <TextField
             id="input-with-icon-adornment"
             variant="outlined"
