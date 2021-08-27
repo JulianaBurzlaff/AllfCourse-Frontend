@@ -7,6 +7,7 @@ export const LeftGrid = styled(Grid)`
 
     ${theme.breakpoints.up('sm')} {
       display: flex;
+      justify-content: center;
       background-color: ${theme.palette.primary.main};
       height: 100vh;
       color: ${theme.palette.primary.contrastText};
