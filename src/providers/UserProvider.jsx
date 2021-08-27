@@ -8,7 +8,7 @@ export const UserProvider = ({ children }) => {
   const login = useCallback(async ({ email, password }) => {
     const userData = { email, password };
     setUser(userData);
-    return userData;
+    // return userData;
   }, []);
 
   const logout = useCallback(() => {
