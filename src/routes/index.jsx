@@ -13,7 +13,7 @@ export default function Router() {
         <Redirect exact path="/" to="/home" />
         <Route path="/home" component={Home} />
         <Route path="/dashboard" component={Dashboard} isPrivate />
-        <Route path="/password" component={Password} isPrivate />
+        <Route path="/password" component={Password} />
       </Switch>
     </BrowserRouter>
   );
