@@ -1,7 +1,7 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 
 // https://material-ui.com/pt/customization/default-theme/
-export default createMuiTheme({
+export default createTheme({
   palette: {
     primary: {
       main: '#176D76',
