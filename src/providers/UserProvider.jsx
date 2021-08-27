@@ -1,13 +1,9 @@
-import React, { createContext, useCallback, useState } from 'react';
+import React, { createContext, useCallback, useState, useContext } from 'react';
 
 export const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState();
-
-  const logout = useCallback(() => {
-    setUser();
-  }, []);
 
   const login = useCallback(async ({ email, password }) => {
     const userData = { email, password };
@@ -15,15 +11,18 @@ export const UserProvider = ({ children }) => {
     return userData;
   }, []);
 
+  const logout = useCallback(() => {
+    setUser(null);
+  }, []);
+
   return (
-    <UserContext.Provider
-      value={{
-        user,
-        logout,
-        login,
-      }}
-    >
+    <UserContext.Provider value={{ user, logout, login }}>
       {children}
     </UserContext.Provider>
   );
+};
+
+export const useUser = () => {
+  const context = useContext(UserContext);
+  return context;
 };
