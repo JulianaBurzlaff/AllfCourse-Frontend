@@ -1,4 +1,6 @@
 import styled, { css } from 'styled-components';
+import Typography from '@material-ui/core/Typography';
+import Button from '../Button';
 
 export const Form = styled.form`
   width: 100%;
@@ -8,12 +10,44 @@ export const Form = styled.form`
   align-items: center;
 `;
 
-export const LoginName = styled.p`
+export const LoginName = styled(Typography)`
   font-size: 26px;
 `;
 
-export const Text = styled.p`
+export const Text = styled(Typography)`
   font-size: 20px;
+  width: 400px;
+  text-align: center;
+  margin: 40px 0 20px;
+`;
+
+export const Separation = styled.div`
+  ${({ theme }) => css`
+    width: 200px;
+    text-align: center;
+    position: relative;
+    margin-top: 6px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 13px;
+      border-top: 1px solid ${theme.palette.divider};
+    }
+  `}
+`;
+
+export const SeparationText = styled(Typography)`
+  ${({ theme }) => css`
+    font-size: 16px;
+    background-color: #fff;
+    z-index: 1;
+    position: relative;
+    padding: 0 6px;
+    color: ${theme.palette.grey['500']};
+  `}
 `;
 
 export const LinkButton = styled.button`
@@ -29,4 +63,8 @@ export const LinkButton = styled.button`
       transform: scale(1.1, 1.1);
     }
   `}
+`;
+
+export const SubmitButton = styled(Button)`
+  margin-top: 30px;
 `;

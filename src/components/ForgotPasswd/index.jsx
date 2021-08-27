@@ -6,7 +6,6 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import IconButton from '@material-ui/core/IconButton';
 import { TextField, InputAdornment } from '@material-ui/core';
 
-import Button from '../Button';
 import * as S from './styles';
 
 function ForgotPasswd() {
@@ -48,6 +47,10 @@ function ForgotPasswd() {
             ),
           }}
         />
+        <S.Separation>
+          <S.SeparationText component="span">ou</S.SeparationText>
+        </S.Separation>
+
         <TextField
           type="telefone"
           id="input-with-icon-adornment"
@@ -66,9 +69,9 @@ function ForgotPasswd() {
             ),
           }}
         />
-        <Button width="200px" type="submit">
+        <S.SubmitButton width="200px" type="submit">
           Recuperar senha
-        </Button>
+        </S.SubmitButton>
         <S.LinkButton>Voltar</S.LinkButton>
       </S.Form>
     </>
