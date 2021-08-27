@@ -4,6 +4,7 @@ import { ThemeProvider as MaterialThemeProvider } from '@material-ui/core/styles
 import Router from './routes';
 import theme from './theme';
 import AppProvider from './providers';
+import GlobalStyle from './styles/GlobalStyle';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <AppProvider>
           <Router />
+          <GlobalStyle />
         </AppProvider>
       </ThemeProvider>
     </MaterialThemeProvider>

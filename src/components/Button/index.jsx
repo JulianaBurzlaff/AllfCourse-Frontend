@@ -3,12 +3,12 @@ import * as S from './styles';
 
 function Button({
   className,
-  color = 'light',
-  backgroundColor = 'primary',
+  color = 'primary',
   size = 'default',
   fullWidth = false,
   children,
   onClick,
+  width,
 }) {
   const height = {
     default: '50px',
@@ -20,9 +20,9 @@ function Button({
       className={className}
       onClick={onClick}
       color={color}
-      backgroundColor={backgroundColor}
       height={height[size]}
       fullWidth={fullWidth}
+      width={width}
     >
       {children}
     </S.Button>
