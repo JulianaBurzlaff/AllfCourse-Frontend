@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -19,7 +19,7 @@ const schema = yup.object().shape({
 
 function Home() {
   const { login } = useUser();
-  // const history = useHistory();
+  const history = useHistory();
   const [, setLoading] = useState(false);
   const [, setUserError] = useState(false);
 
@@ -60,6 +60,10 @@ function Home() {
     }
   };
 
+  function forgotPass() {
+    history.push('/password');
+  }
+
   return (
     <AuthTemplate subtitle="Sua plataforma de cursos online">
       <S.LoginName>Login</S.LoginName>
@@ -99,7 +103,7 @@ function Home() {
             ),
           }}
         />
-        <S.LinkButton>Esqueceu sua senha?</S.LinkButton>
+        <S.LinkButton onClick={forgotPass}>Esqueceu sua senha?</S.LinkButton>
         <Button width="200px" type="submit">
           Entrar
         </Button>

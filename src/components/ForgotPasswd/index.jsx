@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 // import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
@@ -9,7 +9,7 @@ import { TextField, InputAdornment } from '@material-ui/core';
 import Button from '../Button';
 import * as S from './styles';
 
-function ForgotPass() {
+function ForgotPasswd() {
   // const history = useHistory();
 
   const {
@@ -75,4 +75,4 @@ function ForgotPass() {
   );
 }
 
-export default ForgotPass;
+export default ForgotPasswd;
