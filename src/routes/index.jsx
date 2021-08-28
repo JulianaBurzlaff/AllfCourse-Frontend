@@ -12,8 +12,8 @@ export default function Router() {
       <Switch>
         <Redirect exact path="/" to="/home" />
         <Route path="/home" component={Home} />
-        <Route path="/dashboard" component={Dashboard} isPrivate />
         <Route path="/password" component={Password} />
+        <Route path="/dashboard" component={Dashboard} isPrivate />
       </Switch>
     </BrowserRouter>
   );
