@@ -11,9 +11,13 @@ export const Button = styled.button`
     border-radius: 5px;
     font-size: 18px;
 
+    &:active {
+      filter: brightness(0.9);
+    }
+
     &:hover {
       cursor: pointer;
-      filter: brightness(0.9);
+      transform: scale(1.02, 1.02);
     }
 
     /* @media screen (min-width: 768px) {

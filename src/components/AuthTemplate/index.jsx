@@ -1,11 +1,11 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+// import Grid from '@material-ui/core/Grid';
 import * as S from './styles';
 import logo from '../../assets/logo.svg';
 
 function AuthLayout({ children, sizeLeft = 6, subtitle }) {
   return (
-    <Grid container>
+    <S.Container>
       <S.LeftGrid
         container
         item
@@ -27,7 +27,7 @@ function AuthLayout({ children, sizeLeft = 6, subtitle }) {
       >
         {children}
       </S.RightGrid>
-    </Grid>
+    </S.Container>
   );
 }
 

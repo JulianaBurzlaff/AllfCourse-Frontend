@@ -1,6 +1,15 @@
 import styled, { css } from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 
+export const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  overflow: hidden;
+`;
+
 export const LeftGrid = styled(Grid)`
   ${({ theme }) => css`
     display: none;
@@ -22,17 +31,19 @@ export const Phrase = styled.p`
 `;
 
 export const Logo = styled.img`
-  width: 300px;
-  height: 400px;
+  width: 80%;
 `;
 
 export const RightGrid = styled(Grid)`
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
   ${({ theme }) => css`
     ${theme.breakpoints.up('sm')} {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
       color: ${theme.palette.text.primary};
     }
   `}
