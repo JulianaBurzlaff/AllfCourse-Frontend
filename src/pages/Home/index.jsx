@@ -5,7 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import IconButton from '@material-ui/core/IconButton';
 import { TextField, InputAdornment } from '@material-ui/core';
 import { useUser } from '../../providers/UserProvider';
 import AuthTemplate from '../../components/AuthTemplate';
@@ -60,10 +59,6 @@ function Home() {
     }
   };
 
-  function forgotPass() {
-    history.push('/password');
-  }
-
   return (
     <AuthTemplate subtitle="Sua plataforma de cursos online">
       <S.LoginName>Login</S.LoginName>
@@ -71,16 +66,16 @@ function Home() {
         <TextField
           id="input-with-icon-adornment"
           variant="outlined"
+          fullWidth="true"
           placeholder="e-mail"
           margin="normal"
           {...register('email')}
           helperText={errors.email?.message}
+          error={errors.email}
           InputProps={{
             startAdornment: (
               <InputAdornment>
-                <IconButton>
-                  <MailOutlineIcon />
-                </IconButton>
+                <MailOutlineIcon color="disabled" />
               </InputAdornment>
             ),
           }}
@@ -89,25 +84,29 @@ function Home() {
           type="password"
           id="input-with-icon-adornment"
           variant="outlined"
+          fullWidth="true"
           placeholder="senha"
           margin="normal"
           {...register('password')}
           helperText={errors.password?.message}
+          error={errors.password}
           InputProps={{
             startAdornment: (
               <InputAdornment>
-                <IconButton>
-                  <LockOutlinedIcon />
-                </IconButton>
+                <LockOutlinedIcon color="disabled" />
               </InputAdornment>
             ),
           }}
         />
-        <S.LinkButton onClick={forgotPass}>Esqueceu sua senha?</S.LinkButton>
-        <Button width="200px" type="submit">
+        <S.LinkButton onClick={() => history.push('/password')}>
+          Esqueceu sua senha?
+        </S.LinkButton>
+        <Button fullWidth="true" type="submit">
           Entrar
         </Button>
-        <S.LinkButton>Crie sua conta</S.LinkButton>
+        <S.LinkButton onClick={() => history.push('/signin')}>
+          Crie sua conta
+        </S.LinkButton>
       </S.Form>
     </AuthTemplate>
   );

@@ -12,8 +12,8 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <Redirect exact path="/" to="/home" />
-        <Route path="/home" component={Home} />
+        <Redirect exact path="/" to="/login" />
+        <Route path="/login" component={Home} />
         <Route path="/register" component={Register} />
         <Route path="/dashboard" component={Dashboard} isPrivate />
         <Route path="/password" component={Password} />

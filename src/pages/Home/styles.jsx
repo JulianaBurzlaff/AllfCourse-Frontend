@@ -1,11 +1,19 @@
 import styled, { css } from 'styled-components';
 
 export const Form = styled.form`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  ${({ theme }) => css`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+
+    ${theme.breakpoints.up('sm')} {
+      width: 50%;
+      max-width: 350px;
+    }
+  `}
 `;
 
 export const LoginName = styled.p`
@@ -21,6 +29,7 @@ export const LinkButton = styled.button`
     background-color: transparent;
     cursor: pointer;
     color: ${theme.palette.primary.main};
+
     &:hover {
       transform: scale(1.1, 1.1);
     }

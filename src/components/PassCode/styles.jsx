@@ -18,7 +18,7 @@ export const Form = styled.form`
   `}
 `;
 
-export const LoginName = styled(Typography)`
+export const Title = styled(Typography)`
   font-size: 26px;
 `;
 
@@ -27,35 +27,6 @@ export const Text = styled(Typography)`
   width: 400px;
   text-align: center;
   margin: 40px 0 20px;
-`;
-
-export const Separation = styled.div`
-  ${({ theme }) => css`
-    width: 200px;
-    text-align: center;
-    position: relative;
-    margin-top: 6px;
-
-    &::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      left: 0;
-      top: 13px;
-      border-top: 1px solid ${theme.palette.divider};
-    }
-  `}
-`;
-
-export const SeparationText = styled(Typography)`
-  ${({ theme }) => css`
-    font-size: 16px;
-    background-color: #fff;
-    z-index: 1;
-    position: relative;
-    padding: 0 6px;
-    color: ${theme.palette.grey['500']};
-  `}
 `;
 
 export const LinkButton = styled.button`
