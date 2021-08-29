@@ -108,7 +108,7 @@ function Home() {
           Entrar
         </Button>
         <S.LinkButton onClick={() => history.push('/signin')}>
-          Crie sua contaa
+          Crie sua conta
         </S.LinkButton>
       </S.Form>
     </AuthTemplate>
