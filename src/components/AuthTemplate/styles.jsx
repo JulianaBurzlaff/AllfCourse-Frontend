@@ -15,15 +15,16 @@ export const LeftGrid = styled(Grid)`
   `}
 `;
 
-export const Phrase = styled.p`
+export const Subtitle = styled.p`
   font-size: 40px;
-  margin: 30px 20px 20px;
+  margin: 60px 20px 20px;
   text-align: center;
+  max-width: 400px;
 `;
 
 export const Logo = styled.img`
   width: 300px;
-  height: 400px;
+  /* height: 400px; */
 `;
 
 export const RightGrid = styled(Grid)`

@@ -71,6 +71,7 @@ function Home() {
         <TextField
           id="input-with-icon-adornment"
           variant="outlined"
+          fullWidth="true"
           placeholder="e-mail"
           margin="normal"
           {...register('email')}
@@ -89,6 +90,7 @@ function Home() {
           type="password"
           id="input-with-icon-adornment"
           variant="outlined"
+          fullWidth="true"
           placeholder="senha"
           margin="normal"
           {...register('password')}
@@ -104,7 +106,7 @@ function Home() {
           }}
         />
         <S.LinkButton onClick={forgotPass}>Esqueceu sua senha?</S.LinkButton>
-        <Button width="200px" type="submit">
+        <Button fullWidth="true" type="submit">
           Entrar
         </Button>
         <S.LinkButton>Crie sua conta</S.LinkButton>
