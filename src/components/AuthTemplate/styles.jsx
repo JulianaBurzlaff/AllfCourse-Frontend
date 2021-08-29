@@ -33,7 +33,8 @@ export const Subtitle = styled.p`
 `;
 
 export const Logo = styled.img`
-  width: 80%;
+  width: 70%;
+  max-width: 300px;
 `;
 
 export const RightGrid = styled(Grid)`
