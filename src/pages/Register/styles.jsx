@@ -3,11 +3,11 @@ import styled, { css } from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   width: 100%;
   height: 100vh;
-  margin: 20px;
+  padding: 20px;
 `;
 
 export const InputsContainer = styled.div`
@@ -24,7 +24,7 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 100%;
 `;
 
 export const LinkButton = styled.button`

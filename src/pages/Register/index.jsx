@@ -21,9 +21,6 @@ import Button from '../../components/Button';
 import DropArea from '../../components/DropArea';
 import * as S from './styles';
 
-const emailValue = { value: '' };
-const passwordValue = { value: '' };
-
 const schema = yup.object().shape({
   name: yup
     .string()
@@ -57,48 +54,21 @@ const schema = yup.object().shape({
     .test('phone-validation', 'Telefone inválido', val => {
       return !/[^0-9()\s']/.exec(val) && !/[0-9]{10}/.exec(val);
     }),
-  email: yup
-    .string()
-    .email('Email inválido')
-    .required('E-mail obrigatório')
-    .test('email-store', '', val => {
-      emailValue.value = val;
-      return true;
-    }),
+  email: yup.string().email('Email inválido').required('E-mail obrigatório'),
   confirmEmail: yup
     .string()
     .email('Email inválido')
     .required('Confirmação obrigatória')
-    .test('confirm-email-validation', 'Os e-mails não são iguais', val => {
-      return val === emailValue.value;
-    }),
+    .oneOf([yup.ref('email'), null], 'Os e-mails não conferem.'),
   password: yup
     .string()
     .required('Senha obrigatória')
-    .test(
-      'password-validation',
-      'A senha deve ter no mínimo 6 caracteres',
-      val => {
-        return /.{6}/.exec(val);
-      },
-    )
-    .test('password-store', '', val => {
-      passwordValue.value = val;
-      return true;
-    }),
+    .min(6, 'Tamanho mínimo de 6 caracteres'),
   confirmPassword: yup
     .string()
     .required('Confirmação obrigatória')
-    .test(
-      'password-validation',
-      'A senha deve ter no mínimo 6 caracteres',
-      val => {
-        return /.{6}/.exec(val);
-      },
-    )
-    .test('confirm-password--validation', 'As senhas não são iguais', val => {
-      return val === passwordValue.value;
-    }),
+    .oneOf([yup.ref('password'), null], 'As senhas não conferem.')
+    .min(6, 'Tamanho mínimo de 6 caracteres'),
 });
 
 function Register() {
@@ -175,8 +145,8 @@ function Register() {
     <AuthTemplate sizeLeft={4}>
       <S.Container>
         <DropArea
-          width="150px"
-          height="150px"
+          width="95px"
+          height="95px"
           borderRadius="75px"
           borderLine="solid"
           borderColor="none"
