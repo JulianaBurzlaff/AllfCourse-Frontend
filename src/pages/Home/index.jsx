@@ -5,7 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import IconButton from '@material-ui/core/IconButton';
 import { TextField, InputAdornment } from '@material-ui/core';
 import { useUser } from '../../providers/UserProvider';
 import AuthTemplate from '../../components/AuthTemplate';
@@ -76,9 +75,7 @@ function Home() {
           InputProps={{
             startAdornment: (
               <InputAdornment>
-                <IconButton>
-                  <MailOutlineIcon />
-                </IconButton>
+                <MailOutlineIcon color="disabled" />
               </InputAdornment>
             ),
           }}
@@ -96,9 +93,7 @@ function Home() {
           InputProps={{
             startAdornment: (
               <InputAdornment>
-                <IconButton>
-                  <LockOutlinedIcon />
-                </IconButton>
+                <LockOutlinedIcon color="disabled" />
               </InputAdornment>
             ),
           }}

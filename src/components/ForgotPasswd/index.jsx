@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PhoneIcon from '@material-ui/icons/Phone';
-import IconButton from '@material-ui/core/IconButton';
 import { TextField, InputAdornment } from '@material-ui/core';
 
 import * as S from './styles';
@@ -28,7 +27,7 @@ function ForgotPasswd({ onSuccess }) {
     <>
       <S.LoginName>Esqueceu a senha?</S.LoginName>
       <S.Text>
-        Informe o seu e-mail ou telefone para que a gente te ajude a
+        Informe o seu e-mail ou telefone para que possamos te ajudar a
         recuperá-la.
       </S.Text>
       <S.Form onSubmit={handleSubmit(codeSend)}>
@@ -43,9 +42,7 @@ function ForgotPasswd({ onSuccess }) {
           InputProps={{
             startAdornment: (
               <InputAdornment>
-                <IconButton>
-                  <MailOutlineIcon />
-                </IconButton>
+                <MailOutlineIcon color="disabled" />
               </InputAdornment>
             ),
           }}
@@ -72,9 +69,7 @@ function ForgotPasswd({ onSuccess }) {
               InputProps={{
                 startAdornment: (
                   <InputAdornment>
-                    <IconButton>
-                      <PhoneIcon />
-                    </IconButton>
+                    <PhoneIcon color="disabled" />
                   </InputAdornment>
                 ),
               }}

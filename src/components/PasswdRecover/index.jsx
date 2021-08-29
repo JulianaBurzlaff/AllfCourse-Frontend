@@ -2,7 +2,6 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import IconButton from '@material-ui/core/IconButton';
 import { TextField, InputAdornment } from '@material-ui/core';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -48,9 +47,7 @@ function PasswdRecover({ onSuccess }) {
           InputProps={{
             startAdornment: (
               <InputAdornment>
-                <IconButton>
-                  <LockOutlinedIcon />
-                </IconButton>
+                <LockOutlinedIcon color="disabled" />
               </InputAdornment>
             ),
           }}
@@ -68,9 +65,7 @@ function PasswdRecover({ onSuccess }) {
           InputProps={{
             startAdornment: (
               <InputAdornment>
-                <IconButton>
-                  <LockOutlinedIcon />
-                </IconButton>
+                <LockOutlinedIcon color="disabled" />
               </InputAdornment>
             ),
           }}
