@@ -9,7 +9,7 @@ import { TextField, InputAdornment } from '@material-ui/core';
 
 import * as S from './styles';
 
-function ForgotPasswd() {
+function ForgotPasswd({ onSuccess }) {
   const history = useHistory();
 
   const {
@@ -21,6 +21,7 @@ function ForgotPasswd() {
   const codeSend = async ({ email, phone }) => {
     console.log(email);
     console.log(phone);
+    onSuccess();
   };
 
   return (

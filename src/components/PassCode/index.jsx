@@ -10,7 +10,7 @@ const schema = yup.object().shape({
   code: yup.string().required('Código obrigatório'),
 });
 
-function PassCode() {
+function PassCode({ onSuccess }) {
   const history = useHistory();
 
   const {
@@ -23,6 +23,7 @@ function PassCode() {
 
   const codeCheck = async ({ code }) => {
     console.log(code);
+    onSuccess();
   };
 
   return (

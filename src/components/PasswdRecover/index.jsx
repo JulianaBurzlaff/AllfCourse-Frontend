@@ -1,17 +1,19 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { TextField } from '@material-ui/core';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import IconButton from '@material-ui/core/IconButton';
+import { TextField, InputAdornment } from '@material-ui/core';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import * as S from './styles';
 
 const schema = yup.object().shape({
   password: yup.string().required('Senha obrigatória'),
-  confirmPassword: yup.string().required('Confirmação de enha obrigatória'),
+  confirmPassword: yup.string().required('Confirmação de senha obrigatória'),
 });
 
-function PassCode() {
+function PasswdRecover({ onSuccess }) {
   const history = useHistory();
 
   const {
@@ -22,34 +24,60 @@ function PassCode() {
     resolver: yupResolver(schema),
   });
 
-  const codeCheck = async ({ code }) => {
-    console.log(code);
+  const passwordChange = async ({ password, confirmPassword }) => {
+    console.log(password);
+    console.log(confirmPassword);
+    onSuccess();
   };
 
   return (
     <>
-      <S.Title>Esqueceu a senha?</S.Title>
-      <S.Text>
-        Digite abaixo o código recebido por e-mail ou SMS para que possamos
-        continuar.
-      </S.Text>
-      <S.Form onSubmit={handleSubmit(codeCheck)}>
+      <S.Title>Recuperação de senha</S.Title>
+      <S.Text>Insira abaixo a sua nova senha.</S.Text>
+      <S.Form onSubmit={handleSubmit(passwordChange)}>
         <TextField
-          id="code"
+          type="password"
+          id="input-with-icon-adornment"
           variant="outlined"
           fullWidth="true"
-          placeholder="código"
+          placeholder="senha"
           margin="normal"
-          {...register('code')}
-          helperText={errors.code?.message}
-          error={errors.code}
-          inputProps={{
-            style: { textAlign: 'center' },
+          {...register('password')}
+          helperText={errors.password?.message}
+          error={errors.password}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment>
+                <IconButton>
+                  <LockOutlinedIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
           }}
         />
-        <S.LinkButton>Não recebeu o código? Enviar novamente</S.LinkButton>
+        <TextField
+          type="password"
+          id="input-with-icon-adornment"
+          variant="outlined"
+          fullWidth="true"
+          placeholder="confirmação de senha"
+          margin="normal"
+          {...register('confirmPassword')}
+          helperText={errors.confirmPassword?.message}
+          error={errors.confirmPassword}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment>
+                <IconButton>
+                  <LockOutlinedIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+
         <S.SubmitButton fullWidth="true" type="submit">
-          Continuar
+          Confirmar
         </S.SubmitButton>
         <S.LinkButton onClick={() => history.push('/')}> Voltar </S.LinkButton>
       </S.Form>
@@ -57,4 +85,4 @@ function PassCode() {
   );
 }
 
-export default PassCode;
+export default PasswdRecover;
