@@ -455,7 +455,7 @@ function Register() {
             </Button>
             <S.LinkButton
               onClick={() => {
-                history.push('home');
+                history.push('login');
               }}
             >
               Voltar

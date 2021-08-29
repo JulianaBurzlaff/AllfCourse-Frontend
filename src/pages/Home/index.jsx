@@ -104,7 +104,7 @@ function Home() {
         <Button fullWidth="true" type="submit">
           Entrar
         </Button>
-        <S.LinkButton onClick={() => history.push('/signin')}>
+        <S.LinkButton onClick={() => history.push('/register')}>
           Crie sua conta
         </S.LinkButton>
       </S.Form>

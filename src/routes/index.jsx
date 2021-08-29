@@ -15,8 +15,8 @@ export default function Router() {
         <Redirect exact path="/" to="/login" />
         <Route path="/login" component={Home} />
         <Route path="/register" component={Register} />
-        <Route path="/dashboard" component={Dashboard} isPrivate />
         <Route path="/password" component={Password} />
+        <Route path="/dashboard" component={Dashboard} isPrivate />
         <Route
           path="/student/dashboard"
           component={StudentDashboard}

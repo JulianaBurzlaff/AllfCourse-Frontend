@@ -8,8 +8,12 @@ import * as yup from 'yup';
 import * as S from './styles';
 
 const schema = yup.object().shape({
-  password: yup.string().required('Senha obrigatória'),
-  confirmPassword: yup.string().required('Confirmação de senha obrigatória'),
+  password: yup.string().required('Senha obrigatória').min(6, ''),
+  confirmPassword: yup
+    .string()
+    .required('Confirmação de senha obrigatória')
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .min(6),
 });
 
 function PasswdRecover({ onSuccess }) {
