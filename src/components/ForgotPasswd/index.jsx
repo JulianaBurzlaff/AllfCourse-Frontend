@@ -1,5 +1,5 @@
 import React from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PhoneIcon from '@material-ui/icons/Phone';
@@ -9,7 +9,7 @@ import { TextField, InputAdornment } from '@material-ui/core';
 import * as S from './styles';
 
 function ForgotPasswd() {
-  // const history = useHistory();
+  const history = useHistory();
 
   const {
     register,
@@ -26,7 +26,7 @@ function ForgotPasswd() {
     <>
       <S.LoginName>Esqueceu a senha?</S.LoginName>
       <S.Text>
-        Informe o seu e-mail ou telefone para que a gente te ajude a a
+        Informe o seu e-mail ou telefone para que a gente te ajude a
         recuperá-la.
       </S.Text>
       <S.Form onSubmit={handleSubmit(signIn)}>
@@ -72,7 +72,7 @@ function ForgotPasswd() {
         <S.SubmitButton width="200px" type="submit">
           Recuperar senha
         </S.SubmitButton>
-        <S.LinkButton>Voltar</S.LinkButton>
+        <S.LinkButton onClick={() => history.push('/')}> Voltar </S.LinkButton>
       </S.Form>
     </>
   );

@@ -60,10 +60,6 @@ function Home() {
     }
   };
 
-  function forgotPass() {
-    history.push('/password');
-  }
-
   return (
     <AuthTemplate subtitle="Sua plataforma de cursos online">
       <S.LoginName>Login</S.LoginName>
@@ -105,11 +101,15 @@ function Home() {
             ),
           }}
         />
-        <S.LinkButton onClick={forgotPass}>Esqueceu sua senha?</S.LinkButton>
+        <S.LinkButton onClick={() => history.push('/password')}>
+          Esqueceu sua senha?
+        </S.LinkButton>
         <Button fullWidth="true" type="submit">
           Entrar
         </Button>
-        <S.LinkButton>Crie sua conta</S.LinkButton>
+        <S.LinkButton onClick={() => history.push('/signin')}>
+          Crie sua conta
+        </S.LinkButton>
       </S.Form>
     </AuthTemplate>
   );
