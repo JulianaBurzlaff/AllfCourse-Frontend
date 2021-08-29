@@ -10,8 +10,8 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <Redirect exact path="/" to="/home" />
-        <Route path="/home" component={Home} />
+        <Redirect exact path="/" to="/login" />
+        <Route path="/login" component={Home} />
         <Route path="/password" component={Password} />
         <Route path="/dashboard" component={Dashboard} isPrivate />
       </Switch>

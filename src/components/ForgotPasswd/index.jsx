@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import InputMask from 'react-input-mask';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PhoneIcon from '@material-ui/icons/Phone';
 import IconButton from '@material-ui/core/IconButton';
@@ -33,6 +34,7 @@ function ForgotPasswd() {
         <TextField
           id="input-with-icon-adornment"
           variant="outlined"
+          fullWidth="true"
           placeholder="e-mail"
           margin="normal"
           {...register('email')}
@@ -50,26 +52,35 @@ function ForgotPasswd() {
         <S.Separation>
           <S.SeparationText component="span">ou</S.SeparationText>
         </S.Separation>
-
-        <TextField
-          type="telefone"
-          id="input-with-icon-adornment"
-          variant="outlined"
-          placeholder="telefone"
-          margin="normal"
+        <InputMask
+          mask="(99)99999 9999"
           {...register('phone')}
-          helperText={errors.phone?.message}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment>
-                <IconButton>
-                  <PhoneIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-        <S.SubmitButton width="200px" type="submit">
+          disabled={false}
+          maskChar=" "
+        >
+          {() => (
+            <TextField
+              type="telefone"
+              id="input-with-icon-adornment"
+              variant="outlined"
+              placeholder="telefone"
+              fullWidth="true"
+              margin="normal"
+              {...register('phone')}
+              helperText={errors.phone?.message}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment>
+                    <IconButton>
+                      <PhoneIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
+        </InputMask>
+        <S.SubmitButton fullWidth="true" type="submit">
           Recuperar senha
         </S.SubmitButton>
         <S.LinkButton onClick={() => history.push('/')}> Voltar </S.LinkButton>

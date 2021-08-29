@@ -3,11 +3,19 @@ import Typography from '@material-ui/core/Typography';
 import Button from '../Button';
 
 export const Form = styled.form`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  ${({ theme }) => css`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+
+    ${theme.breakpoints.up('sm')} {
+      width: 60%;
+      max-width: 400px;
+    }
+  `}
 `;
 
 export const LoginName = styled(Typography)`
