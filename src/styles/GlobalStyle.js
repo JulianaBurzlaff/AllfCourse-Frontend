@@ -10,6 +10,7 @@ export default createGlobalStyle`
   }
 
   body{
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,6 +22,7 @@ export default createGlobalStyle`
   }
 
   #root{
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;

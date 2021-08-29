@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 
 export const Container = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
