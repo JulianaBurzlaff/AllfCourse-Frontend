@@ -7,7 +7,8 @@ import * as yup from 'yup';
 import * as S from './styles';
 
 const schema = yup.object().shape({
-  code: yup.string().required('Código obrigatório'),
+  password: yup.string().required('Senha obrigatória'),
+  confirmPassword: yup.string().required('Confirmação de enha obrigatória'),
 });
 
 function PassCode() {
