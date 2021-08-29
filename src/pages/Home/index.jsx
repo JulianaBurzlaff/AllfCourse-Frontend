@@ -72,6 +72,7 @@ function Home() {
           margin="normal"
           {...register('email')}
           helperText={errors.email?.message}
+          error={errors.email}
           InputProps={{
             startAdornment: (
               <InputAdornment>
@@ -91,6 +92,7 @@ function Home() {
           margin="normal"
           {...register('password')}
           helperText={errors.password?.message}
+          error={errors.password}
           InputProps={{
             startAdornment: (
               <InputAdornment>

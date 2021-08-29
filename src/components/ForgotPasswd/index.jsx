@@ -18,7 +18,7 @@ function ForgotPasswd() {
     handleSubmit,
   } = useForm();
 
-  const signIn = async ({ email, phone }) => {
+  const codeSend = async ({ email, phone }) => {
     console.log(email);
     console.log(phone);
   };
@@ -30,7 +30,7 @@ function ForgotPasswd() {
         Informe o seu e-mail ou telefone para que a gente te ajude a
         recuperá-la.
       </S.Text>
-      <S.Form onSubmit={handleSubmit(signIn)}>
+      <S.Form onSubmit={handleSubmit(codeSend)}>
         <TextField
           id="input-with-icon-adornment"
           variant="outlined"
