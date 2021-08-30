@@ -7,7 +7,7 @@ import Register from '../pages/Register';
 import Dashboard from '../pages/Dashboard';
 import Password from '../pages/Password';
 import StudentDashboard from '../pages/StudentDashboard';
-import TeacherDashboard from '../pages/TeacherDashboard';
+import TeacherDashboardPage from '../pages/TeacherDashboardPage';
 
 export default function Router() {
   return (
@@ -25,7 +25,7 @@ export default function Router() {
         />
         <Route
           path="/teacher/dashboard"
-          component={TeacherDashboard}
+          component={TeacherDashboardPage}
           isPrivate
         />
       </Switch>
