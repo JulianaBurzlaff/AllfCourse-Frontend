@@ -18,7 +18,7 @@ function Section({ children, title, contentDirection, wrap }) {
       </S.SectionTitle>
       <Container
         direction={contentDirection}
-        justifyContent="flex-satart"
+        justifyContent="center"
         alignItems="center"
         wrap={wrap}
         width="85%"
