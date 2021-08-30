@@ -19,8 +19,8 @@ const schema = yup.object().shape({
 function Home() {
   const { login } = useUser();
   const history = useHistory();
-  const [, setLoading] = useState(false);
-  const [, setUserError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [userError, setUserError] = useState(false);
 
   const {
     register,
@@ -101,13 +101,17 @@ function Home() {
         <S.LinkButton onClick={() => history.push('/password')}>
           Esqueceu sua senha?
         </S.LinkButton>
-        <Button fullWidth="true" type="submit">
+        <Button loading={loading} fullWidth="true" type="submit">
           Entrar
         </Button>
         <S.LinkButton onClick={() => history.push('/register')}>
           Crie sua conta
         </S.LinkButton>
       </S.Form>
+      <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>
+      <S.ErrorReturn>
+        {userError ? 'Email ou senha incorretos' : ''}
+      </S.ErrorReturn>
     </AuthTemplate>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -21,6 +21,7 @@ const schema = yup.object().shape({
 
 function PasswdRecover({ onSuccess, token, loading, setLoading }) {
   const history = useHistory();
+  const [success, setMessage] = useState(false);
 
   const {
     register,
@@ -44,7 +45,11 @@ function PasswdRecover({ onSuccess, token, loading, setLoading }) {
       return false;
     }
     setLoading(false);
-    onSuccess();
+    setMessage(true);
+    setTimeout(() => {
+      setMessage(false);
+      onSuccess();
+    }, 2500);
     return true;
   };
 
@@ -90,11 +95,14 @@ function PasswdRecover({ onSuccess, token, loading, setLoading }) {
           }}
         />
 
-        <S.SubmitButton fullWidth="true" type="submit">
+        <S.SubmitButton loading={loading} fullWidth="true" type="submit">
           Confirmar
         </S.SubmitButton>
         <S.LinkButton onClick={() => history.push('/')}> Voltar </S.LinkButton>
-        <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>
+        <S.Return>
+          {loading ? 'Aguarde...' : ''}
+          {success ? 'Senha alterada com sucesso' : ''}
+        </S.Return>
       </S.Form>
     </>
   );

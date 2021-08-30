@@ -27,4 +27,9 @@ export const Button = styled.button`
       padding: 0 16px;
     }
   `}
+  ${({ loading }) =>
+    loading &&
+    `
+   pointer-events: none;
+  `}
 `;

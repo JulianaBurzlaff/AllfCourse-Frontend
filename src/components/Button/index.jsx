@@ -9,6 +9,7 @@ function Button({
   children,
   onClick,
   width,
+  loading,
 }) {
   const height = {
     default: '50px',
@@ -23,6 +24,7 @@ function Button({
       height={height[size]}
       fullWidth={fullWidth}
       width={width}
+      loading={loading}
     >
       {children}
     </S.Button>

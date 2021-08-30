@@ -35,3 +35,13 @@ export const LinkButton = styled.button`
     }
   `}
 `;
+
+export const Return = styled.span`
+  color: #49a7a1;
+  height: 15px;
+`;
+
+export const ErrorReturn = styled.span`
+  color: #c65b58;
+  height: 15px;
+`;

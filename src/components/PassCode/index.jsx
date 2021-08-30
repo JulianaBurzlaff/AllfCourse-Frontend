@@ -64,14 +64,14 @@ function PassCode({ onSuccess, setToken, loading, setLoading }) {
           placeholder="código"
           margin="normal"
           {...register('token')}
-          helperText={errors.code?.message}
-          error={errors.code}
+          helperText={errors.token?.message}
+          error={errors.token}
           inputProps={{
             style: { textAlign: 'center' },
           }}
         />
         <S.LinkButton>Não recebeu o código? Enviar novamente</S.LinkButton>
-        <S.SubmitButton fullWidth="true" type="submit">
+        <S.SubmitButton loading={loading} fullWidth="true" type="submit">
           Continuar
         </S.SubmitButton>
         <S.LinkButton onClick={() => history.push('/')}> Voltar </S.LinkButton>
