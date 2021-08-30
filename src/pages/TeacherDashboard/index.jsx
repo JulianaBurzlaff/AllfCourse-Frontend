@@ -1,48 +1,89 @@
 import React from 'react';
-// import Grid from '@material-ui/core/Grid';
-// import { useHistory } from 'react-router-dom';
-import Header from '../../components/Header';
+import DashboardTemplate from '../../components/DashboardTemplate';
 import CourseUnderReviewBanner from '../../components/CourseUnderReviewBanner';
+import CourseBanner from '../../components/CourseBanner';
 import Container from '../../components/Container';
 import Section from '../../components/Section';
-import logo from '../../assets/logo.svg';
-import avatar from '../../assets/avatar.svg';
 import * as S from './styles';
 
 function TeacherDasboard() {
   return (
-    <Container
-      direction="row"
-      justifyContent="flex-start"
-      alignItems="flex-start"
-      width="100vw"
-    >
-      <Header width="80px" height="100vh" logo={logo} avatar={avatar} />
+    <DashboardTemplate>
       <Container
-        direction="column"
-        justifyContent="flex-start"
+        direction="row"
+        justifyContent="space-between"
         alignItems="center"
-        width="calc(100vw - 80px)"
-        margin="0 0 0 80px"
+        width="90%"
+        margin="50px 0 0 0"
       >
-        <Container
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          width="90%"
-          margin="50px 0 0 0"
-        >
-          <S.Text size="20px" weight="normal" color="primary">
-            Bem vindo!
-          </S.Text>
-        </Container>
-        <Section title="CURSOS EM ESPERA">
-          <CourseUnderReviewBanner />
-        </Section>
-        <Section title="MEUS CURSOS" />
-        <Section title="CURSOS INATIVOS" />
+        <S.Text size="20px" weight="normal" color="primary">
+          Bem vindo!
+        </S.Text>
       </Container>
-    </Container>
+      <Section title="CURSOS EM ESPERA" contentDirection="column">
+        <CourseUnderReviewBanner
+          title="CURSO 1"
+          description="Descrição"
+          value={0}
+          requestDate="00/00/0000"
+          inReview
+        />
+        <CourseUnderReviewBanner
+          title="CURSO 2"
+          description="Descrição"
+          value={0}
+          requestDate="00/00/0000"
+          rejected
+        />
+      </Section>
+      <Section title="MEUS CURSOS" contentDirection="row" wrap="wrap">
+        <CourseBanner
+          title="CURSO 2"
+          description="Descrição"
+          teacher="Nome do professor"
+          value={0}
+          subscribersNumber="152"
+        />
+        <CourseBanner
+          title="CURSO 2"
+          description="Descrição"
+          teacher="Nome do professor"
+          value={0}
+          subscribersNumber="152"
+        />
+        <CourseBanner
+          title="CURSO 2"
+          description="Descrição"
+          teacher="Nome do professor"
+          value={0}
+          subscribersNumber="152"
+        />
+        <CourseBanner
+          title="CURSO 2"
+          description="Descrição"
+          teacher="Nome do professor"
+          value={0}
+          subscribersNumber="152"
+        />
+        <CourseBanner
+          title="CURSO 2"
+          description="Descrição"
+          teacher="Nome do professor"
+          value={0}
+          subscribersNumber="152"
+        />
+      </Section>
+      <Section title="CURSOS INATIVOS" contentDirection="row" wrap="wrap">
+        <CourseBanner
+          title="CURSO 2"
+          description="Descrição"
+          teacher="Nome do professor"
+          value={0}
+          subscribersNumber="152"
+          inactive
+        />
+      </Section>
+    </DashboardTemplate>
   );
 }
 

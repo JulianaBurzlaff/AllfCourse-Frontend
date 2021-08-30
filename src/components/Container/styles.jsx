@@ -5,6 +5,7 @@ export const Container = styled.div`
     direction,
     justifyContent,
     alignItems,
+    wrap,
     width,
     minWidth,
     maxWidth,
@@ -20,6 +21,7 @@ export const Container = styled.div`
     flex-direction: ${direction};
     justify-content: ${justifyContent};
     align-items: ${alignItems};
+    flex-wrap: ${wrap || 'none'};
     width: ${width};
     min-width: ${minWidth || 'auto'};
     max-width: ${maxWidth || 'auto'};

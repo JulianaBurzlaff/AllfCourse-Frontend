@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components';
 
 export const SectionTitle = styled.div`
-  ${({ theme }) => css`
+  ${({ theme, contentDirection }) => css`
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: ${contentDirection};
+    justify-content: flex-start;
     align-items: flex-start;
     width: calc(90% - 10px);
     padding-left: 10px;

@@ -6,10 +6,12 @@ export default createTheme({
     primary: {
       main: '#176D76',
       dark: '#0F464B',
+      light: '#B8D9D7',
       contrastText: '#F8F9FA',
     },
     secondary: {
       main: '#69726F',
+      dark: '#343A40',
     },
     error: {
       main: '#C65B58',

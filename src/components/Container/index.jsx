@@ -6,6 +6,7 @@ function Container({
   direction,
   justifyContent,
   alignItems,
+  wrap,
   width,
   minWidth,
   maxWidth,
@@ -22,6 +23,7 @@ function Container({
       direction={direction}
       justifyContent={justifyContent}
       alignItems={alignItems}
+      wrap={wrap}
       width={width}
       minWidth={minWidth}
       maxWidth={maxWidth}

@@ -2,7 +2,7 @@ import React from 'react';
 import * as S from './styles';
 import Container from '../Container';
 
-function Section({ children, title }) {
+function Section({ children, title, contentDirection, wrap }) {
   return (
     <Container
       direction="column"
@@ -17,10 +17,11 @@ function Section({ children, title }) {
         </S.Text>
       </S.SectionTitle>
       <Container
-        direction="column"
-        justifyContent="flex-start"
+        direction={contentDirection}
+        justifyContent="flex-satart"
         alignItems="center"
-        width="95%"
+        wrap={wrap}
+        width="85%"
       >
         {children}
       </Container>
