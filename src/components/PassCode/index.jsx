@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { TextField } from '@material-ui/core';
@@ -7,11 +7,16 @@ import * as yup from 'yup';
 import * as S from './styles';
 
 const schema = yup.object().shape({
-  code: yup.string().required('Código obrigatório'),
+  token: yup
+    .string()
+    .required('Código obrigatório')
+    .min(40, 'Código informado inválido')
+    .max(40, 'Código informado inválido'),
 });
 
-function PassCode({ onSuccess }) {
+function PassCode({ onSuccess, setToken, loading, setLoading }) {
   const history = useHistory();
+  const [recoveryError, setrecoveryError] = useState(false);
 
   const {
     register,
@@ -21,9 +26,27 @@ function PassCode({ onSuccess }) {
     resolver: yupResolver(schema),
   });
 
-  const codeCheck = async ({ code }) => {
-    console.log(code);
+  const codeCheck = async ({ token }) => {
+    setLoading(true);
+    const response = await fetch('http://localhost:3001/checkpasstoken', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token }),
+    });
+    if (response.status !== 201) {
+      setLoading(false);
+      setrecoveryError(true);
+      setTimeout(() => {
+        setrecoveryError(false);
+      }, 2500);
+      return false;
+    }
+    setToken(token);
+    setLoading(false);
     onSuccess();
+    return true;
   };
 
   return (
@@ -35,12 +58,12 @@ function PassCode({ onSuccess }) {
       </S.Text>
       <S.Form onSubmit={handleSubmit(codeCheck)}>
         <TextField
-          id="code"
+          id="token"
           variant="outlined"
           fullWidth="true"
           placeholder="código"
           margin="normal"
-          {...register('code')}
+          {...register('token')}
           helperText={errors.code?.message}
           error={errors.code}
           inputProps={{
@@ -52,6 +75,10 @@ function PassCode({ onSuccess }) {
           Continuar
         </S.SubmitButton>
         <S.LinkButton onClick={() => history.push('/')}> Voltar </S.LinkButton>
+        <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>
+        <S.ErrorReturn>
+          {recoveryError ? 'O código informado não é válido' : ''}
+        </S.ErrorReturn>
       </S.Form>
     </>
   );
