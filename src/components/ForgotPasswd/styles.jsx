@@ -18,15 +18,19 @@ export const Form = styled.form`
   `}
 `;
 
-export const LoginName = styled(Typography)`
-  font-size: 26px;
+export const Title = styled(Typography)`
+  && {
+    font-size: 26px;
+  }
 `;
 
 export const Text = styled(Typography)`
-  font-size: 20px;
-  width: 400px;
-  text-align: center;
-  margin: 40px 0 20px;
+  && {
+    font-size: 20px;
+    width: 400px;
+    text-align: center;
+    margin: 40px 0 20px;
+  }
 `;
 
 export const Separation = styled.div`

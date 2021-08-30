@@ -56,7 +56,7 @@ function ForgotPasswd({ onSuccess }) {
 
   return (
     <>
-      <S.LoginName>Esqueceu a senha?</S.LoginName>
+      <S.Title>Esqueceu a senha?</S.Title>
       <S.Text>
         Informe o seu e-mail ou telefone para que possamos te ajudar a
         recuperá-la.
