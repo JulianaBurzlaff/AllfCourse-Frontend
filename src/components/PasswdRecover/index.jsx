@@ -19,7 +19,7 @@ const schema = yup.object().shape({
     .min(6, 'Tamanho mínimo de 6 caracteres'),
 });
 
-function PasswdRecover({ onSuccess }) {
+function PasswdRecover({ onSuccess, token, loading, setLoading }) {
   const history = useHistory();
 
   const {
@@ -31,9 +31,21 @@ function PasswdRecover({ onSuccess }) {
   });
 
   const passwordChange = async ({ password, confirmPassword }) => {
-    console.log(password);
-    console.log(confirmPassword);
+    setLoading(true);
+    const response = await fetch('http://localhost:3001/resetpass', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token, password, confirmPassword }),
+    });
+    if (response.status !== 201) {
+      setLoading(false);
+      return false;
+    }
+    setLoading(false);
     onSuccess();
+    return true;
   };
 
   return (
@@ -82,6 +94,7 @@ function PasswdRecover({ onSuccess }) {
           Confirmar
         </S.SubmitButton>
         <S.LinkButton onClick={() => history.push('/')}> Voltar </S.LinkButton>
+        <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>
       </S.Form>
     </>
   );

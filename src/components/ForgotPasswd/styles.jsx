@@ -18,7 +18,7 @@ export const Form = styled.form`
   `}
 `;
 
-export const LoginName = styled(Typography)`
+export const Title = styled(Typography)`
   font-size: 26px;
 `;
 
@@ -75,4 +75,15 @@ export const LinkButton = styled.button`
 
 export const SubmitButton = styled(Button)`
   margin-top: 30px;
+
+  ${({ loading }) =>
+    loading &&
+    `
+   pointer-events: none;
+  `}
+`;
+
+export const Return = styled.span`
+  color: #49a7a1;
+  height: 15px;
 `;

@@ -34,7 +34,7 @@ function Home() {
     try {
       setUserError(false);
       setLoading(true);
-      const data = await fetch('http://localhost:3001/login', {
+      const response = await fetch('http://localhost:3001/login', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ function Home() {
         },
       });
 
-      if (data.status !== 200) {
+      if (response.status !== 200) {
         setLoading(false);
         setUserError(true);
         setTimeout(() => {
@@ -51,7 +51,7 @@ function Home() {
         return;
       }
 
-      const userData = await data.json();
+      const userData = await response.json();
       login(userData);
       setLoading(false);
     } catch (error) {

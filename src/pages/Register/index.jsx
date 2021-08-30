@@ -13,7 +13,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import PhoneIcon from '@material-ui/icons/Phone';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
-import IconButton from '@material-ui/core/IconButton';
 import { useUser } from '../../providers/UserProvider';
 import { UploadContext } from '../../providers/UploadProvider';
 import AuthTemplate from '../../components/AuthTemplate';
@@ -168,9 +167,7 @@ function Register() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
-                      <IconButton>
-                        <PersonOutlineOutlinedIcon />
-                      </IconButton>
+                      <PersonOutlineOutlinedIcon color="disabled" />
                     </InputAdornment>
                   ),
                 }}
@@ -190,9 +187,7 @@ function Register() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
-                      <IconButton>
-                        <PersonOutlineOutlinedIcon />
-                      </IconButton>
+                      <PersonOutlineOutlinedIcon color="disabled" />
                     </InputAdornment>
                   ),
                 }}
@@ -212,9 +207,7 @@ function Register() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
-                      <IconButton>
-                        <PersonOutlineOutlinedIcon />
-                      </IconButton>
+                      <PersonOutlineOutlinedIcon color="disabled" />
                     </InputAdornment>
                   ),
                 }}
@@ -230,9 +223,7 @@ function Register() {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment>
-                        <IconButton>
-                          <PersonOutlineOutlinedIcon />
-                        </IconButton>
+                        <PersonOutlineOutlinedIcon color="disabled" />
                       </InputAdornment>
                     ),
                   }}
@@ -269,9 +260,7 @@ function Register() {
                     InputProps={{
                       startAdornment: (
                         <InputAdornment>
-                          <IconButton>
-                            <PersonOutlineOutlinedIcon />
-                          </IconButton>
+                          <PersonOutlineOutlinedIcon color="disabled" />
                         </InputAdornment>
                       ),
                     }}
@@ -291,9 +280,7 @@ function Register() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
-                      <IconButton>
-                        <CalendarTodayOutlinedIcon />
-                      </IconButton>
+                      <CalendarTodayOutlinedIcon color="disabled" />
                     </InputAdornment>
                   ),
                 }}
@@ -320,9 +307,7 @@ function Register() {
                     InputProps={{
                       startAdornment: (
                         <InputAdornment>
-                          <IconButton>
-                            <PhoneIcon />
-                          </IconButton>
+                          <PhoneIcon color="disabled" />
                         </InputAdornment>
                       ),
                     }}
@@ -344,9 +329,7 @@ function Register() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
-                      <IconButton>
-                        <MailOutlineIcon />
-                      </IconButton>
+                      <MailOutlineIcon color="disabled" />
                     </InputAdornment>
                   ),
                 }}
@@ -366,13 +349,35 @@ function Register() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
-                      <IconButton>
-                        <MailOutlineIcon />
-                      </IconButton>
+                      <MailOutlineIcon color="disabled" />
                     </InputAdornment>
                   ),
                 }}
               />
+            </S.Input>
+            <S.Input>
+              <FormControl variant="outlined" fullWidth>
+                <Select
+                  id="input-gender"
+                  native
+                  fullWidth
+                  {...register('gender')}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment>
+                        <PersonOutlineOutlinedIcon color="disabled" />
+                      </InputAdornment>
+                    ),
+                  }}
+                >
+                  <option aria-label="None" value="">
+                    Tipo de usuário
+                  </option>
+                  <option value="Aluno">Aluno</option>
+                  <option value="Professor">Professor</option>
+                  <option value="Aluno e professor">Aluno e professor</option>
+                </Select>
+              </FormControl>
             </S.Input>
             <S.Input>
               <TextField
@@ -388,9 +393,7 @@ function Register() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
-                      <IconButton>
-                        <LockOutlinedIcon />
-                      </IconButton>
+                      <LockOutlinedIcon color="disabled" />
                     </InputAdornment>
                   ),
                 }}
@@ -410,9 +413,7 @@ function Register() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
-                      <IconButton>
-                        <LockOutlinedIcon />
-                      </IconButton>
+                      <LockOutlinedIcon color="disabled" />
                     </InputAdornment>
                   ),
                 }}

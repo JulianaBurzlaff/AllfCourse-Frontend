@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -37,8 +37,9 @@ const schema = yup.object().shape({
     }),
 });
 
-function ForgotPasswd({ onSuccess }) {
+function ForgotPasswd({ onSuccess, loading, setLoading }) {
   const history = useHistory();
+  const [recoveryError, setrecoveryError] = useState(false);
 
   const {
     register,
@@ -49,14 +50,41 @@ function ForgotPasswd({ onSuccess }) {
   });
 
   const codeSend = async ({ email, phone }) => {
-    console.log(email);
-    console.log(phone);
+    if (email) {
+      setLoading(true);
+      const response = await fetch('http://localhost:3001/requestpass-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.status !== 201) {
+        setrecoveryError(true);
+      }
+    }
+
+    if (phone) {
+      setLoading(true);
+      const response = await fetch('http://localhost:3001/requestpass-sms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phone }),
+      });
+      if (response.status !== 201) {
+        setrecoveryError(true);
+      }
+    }
+    setLoading(false);
     onSuccess();
   };
 
   return (
     <>
-      <S.LoginName>Esqueceu a senha?</S.LoginName>
+      <S.Title>Esqueceu a senha?</S.Title>
       <S.Text>
         Informe o seu e-mail ou telefone para que possamos te ajudar a
         recuperá-la.
@@ -109,10 +137,14 @@ function ForgotPasswd({ onSuccess }) {
             />
           )}
         </InputMask>
-        <S.SubmitButton fullWidth="true" type="submit">
+        <S.SubmitButton loading={loading} fullWidth="true" type="submit">
           Recuperar senha
         </S.SubmitButton>
         <S.LinkButton onClick={() => history.push('/')}> Voltar </S.LinkButton>
+        <S.Return>
+          {loading ? 'Aguarde...' : ''}
+          {recoveryError ? 'Email or password not found' : ''}
+        </S.Return>
       </S.Form>
     </>
   );

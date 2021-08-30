@@ -46,4 +46,19 @@ export const LinkButton = styled.button`
 
 export const SubmitButton = styled(Button)`
   margin-top: 30px;
+  ${({ loading }) =>
+    loading &&
+    `
+   pointer-events: none;
+  `}
+`;
+
+export const Return = styled.span`
+  color: #49a7a1;
+  height: 15px;
+`;
+
+export const ErrorReturn = styled.span`
+  color: #c65b58;
+  height: 15px;
 `;

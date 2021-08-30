@@ -1,6 +1,11 @@
-// import styled, { css } from 'styled-components';
-// import Grid from '@material-ui/core/Grid';
+import styled, { css } from 'styled-components';
 
-// export const HeaderGrid = styled(Grid)`
-//   ${}
-// `;
+export const Text = styled.p`
+  ${({ theme, fontSize, weight, color }) => css`
+    color: ${theme.palette.text[color]};
+    font-size: ${fontSize};
+    font-weight: ${weight};
+    padding-left: 12px;
+    margin-bottom: 35px;
+  `}
+`;
