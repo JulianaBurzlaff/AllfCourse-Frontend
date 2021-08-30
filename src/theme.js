@@ -13,12 +13,14 @@ export default createTheme({
     },
     error: {
       main: '#C65B58',
+      dark: '#A50303',
     },
     success: {
       main: '#49A7A1',
     },
     warning: {
       main: '#EFB66D',
+      dark: '#A55E03',
     },
     text: {
       primary: '#343a40',

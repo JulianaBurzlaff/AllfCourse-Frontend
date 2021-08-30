@@ -10,7 +10,7 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import CallOutlinedIcon from '@material-ui/icons/CallOutlined';
+import PhoneIcon from '@material-ui/icons/Phone';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
 import IconButton from '@material-ui/core/IconButton';
@@ -108,7 +108,7 @@ function Register() {
       phone,
       email,
       password,
-      avatar: uploadedFile,
+      avatar: uploadedFile.file,
     };
 
     try {
@@ -147,7 +147,7 @@ function Register() {
         <DropArea
           width="95px"
           height="95px"
-          borderRadius="75px"
+          borderRadius="47.5px"
           borderLine="solid"
           borderColor="none"
         />
@@ -321,7 +321,7 @@ function Register() {
                       startAdornment: (
                         <InputAdornment>
                           <IconButton>
-                            <CallOutlinedIcon />
+                            <PhoneIcon />
                           </IconButton>
                         </InputAdornment>
                       ),

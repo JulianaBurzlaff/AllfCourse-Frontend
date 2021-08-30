@@ -5,6 +5,7 @@ export const Header = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
   ${({ theme, color, height, width }) => css`
     background-color: ${theme.palette[color].dark};
     width: ${width};
