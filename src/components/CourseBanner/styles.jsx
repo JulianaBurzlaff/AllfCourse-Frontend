@@ -141,3 +141,7 @@ export const ValuesContainer = styled.div`
     `}
   }
 `;
+
+export const Progress = styled.div`
+  width: 90%;
+`;

@@ -1,5 +1,6 @@
 import React from 'react';
 import Container from '../Container';
+import ProgressBar from '../ProgressBar';
 import * as S from './styles';
 
 function CourseBanner({
@@ -9,6 +10,8 @@ function CourseBanner({
   value,
   subscribersNumber,
   inactive = false,
+  student = false,
+  progress,
 }) {
   return (
     <S.BannerContainer>
@@ -32,6 +35,9 @@ function CourseBanner({
             <p>{`${subscribersNumber} inscritos`}</p>
           </S.ValuesContainer>
         </S.Container>
+        <S.Progress>
+          {student && <ProgressBar progress={progress} />}
+        </S.Progress>
       </Container>
     </S.BannerContainer>
   );

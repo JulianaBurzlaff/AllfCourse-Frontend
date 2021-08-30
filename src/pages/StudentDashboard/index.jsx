@@ -28,6 +28,8 @@ function StudentDasboard() {
           teacher="Nome do professor"
           value={0}
           subscribersNumber="152"
+          student
+          progress={20}
         />
       </Section>
       <Section title="TODOS OS CURSOS" contentDirection="row" wrap="wrap">
