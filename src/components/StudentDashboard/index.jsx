@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 // import Grid from '@material-ui/core/Grid';
 // import { useHistory } from 'react-router-dom';
 import { useUser } from '../../providers/UserProvider';
-import { api } from '../../services/api';
+import { useCourse } from '../../providers/CourseProvider';
 import CourseBanner from '../CourseBanner';
 import Container from '../Container';
 import Section from '../Section';
@@ -10,17 +11,11 @@ import * as S from './styles';
 
 function StudentDasboard() {
   const { user } = useUser();
+  const { approvedCourses = [], fetchApprovedCourses } = useCourse();
 
-  useEffect(async () => {
-    try {
-      const { data } = await api.get('/courses/logged-user');
-      console.log(data);
-      console.log(user);
-      return data;
-    } catch (error) {
-      return null;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    fetchApprovedCourses();
+    console.log(user);
   }, []);
 
   return (
@@ -48,27 +43,15 @@ function StudentDasboard() {
         />
       </Section>
       <Section title="TODOS OS CURSOS" contentDirection="row" wrap="wrap">
-        <CourseBanner
-          title="CURSO 2"
-          description="Descrição"
-          teacher="Nome do professor"
-          value={0}
-          subscribersNumber="152"
-        />
-        <CourseBanner
-          title="CURSO 2"
-          description="Descrição"
-          teacher="Nome do professor"
-          value={0}
-          subscribersNumber="152"
-        />
-        <CourseBanner
-          title="CURSO 2"
-          description="Descrição"
-          teacher="Nome do professor"
-          value={0}
-          subscribersNumber="152"
-        />
+        {approvedCourses.map(course => (
+          <CourseBanner
+            title={course.course_name}
+            description={course.course_name}
+            teacher={course.course_name}
+            value={course.course_value}
+            subscribersNumber={course.course_name}
+          />
+        ))}
       </Section>
     </>
   );

@@ -36,6 +36,7 @@ function Home() {
       setLoading(true);
       const response = await fetch('http://localhost:3001/login', {
         method: 'GET',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Basic ${btoa(`${email}:${password}`)}`,
