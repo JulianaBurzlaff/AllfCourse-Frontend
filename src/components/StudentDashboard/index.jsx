@@ -1,15 +1,15 @@
 import React from 'react';
 // import Grid from '@material-ui/core/Grid';
 // import { useHistory } from 'react-router-dom';
-import DashboardTemplate from '../../components/DashboardTemplate';
-import CourseBanner from '../../components/CourseBanner';
-import Container from '../../components/Container';
-import Section from '../../components/Section';
+
+import CourseBanner from '../CourseBanner';
+import Container from '../Container';
+import Section from '../Section';
 import * as S from './styles';
 
 function StudentDasboard() {
   return (
-    <DashboardTemplate>
+    <>
       <Container
         direction="row"
         justifyContent="space-between"
@@ -55,7 +55,7 @@ function StudentDasboard() {
           subscribersNumber="152"
         />
       </Section>
-    </DashboardTemplate>
+    </>
   );
 }
 

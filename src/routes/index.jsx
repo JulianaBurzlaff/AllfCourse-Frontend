@@ -8,7 +8,7 @@ import Dashboard from '../pages/Dashboard';
 import Password from '../pages/Password';
 
 // Rotas de teste
-import StudentDashboard from '../pages/StudentDashboard';
+import StudentDashboardPage from '../pages/StudentDashboardPage';
 import TeacherDashboardPage from '../pages/TeacherDashboardPage';
 
 export default function Router() {
@@ -22,11 +22,7 @@ export default function Router() {
         <Route path="/dashboard" component={Dashboard} isPrivate />
 
         {/* Rotas de teste */}
-        <Route
-          path="/student/dashboard"
-          component={StudentDashboard}
-          isPrivate
-        />
+        <Route path="/student/dashboard" component={StudentDashboardPage} />
         <Route
           path="/teacher/dashboard"
           component={TeacherDashboardPage}
