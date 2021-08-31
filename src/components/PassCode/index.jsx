@@ -16,7 +16,7 @@ const schema = yup.object().shape({
 
 function PassCode({ onSuccess, setToken, loading, setLoading }) {
   const history = useHistory();
-  const [recoveryError, setrecoveryError] = useState(false);
+  const [recoveryError, setRecoveryError] = useState(false);
 
   const {
     register,
@@ -27,6 +27,7 @@ function PassCode({ onSuccess, setToken, loading, setLoading }) {
   });
 
   const codeCheck = async ({ token }) => {
+    setRecoveryError(false);
     setLoading(true);
     const response = await fetch('http://localhost:3001/checkpasstoken', {
       method: 'POST',
@@ -37,9 +38,9 @@ function PassCode({ onSuccess, setToken, loading, setLoading }) {
     });
     if (response.status !== 201) {
       setLoading(false);
-      setrecoveryError(true);
+      setRecoveryError(true);
       setTimeout(() => {
-        setrecoveryError(false);
+        setRecoveryError(false);
       }, 2500);
       return false;
     }

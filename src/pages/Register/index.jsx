@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import PhoneIcon from '@material-ui/icons/Phone';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
+import { useUser } from '../../providers/UserProvider';
 import { UploadContext } from '../../providers/UploadProvider';
 import AuthTemplate from '../../components/AuthTemplate';
 import Button from '../../components/Button';
@@ -20,13 +21,13 @@ import DropArea from '../../components/DropArea';
 import * as S from './styles';
 
 const schema = yup.object().shape({
-  firstname: yup
+  firstName: yup
     .string()
     .required('Nome obrigatório')
     .test('name-validation', 'Nome inválido', val => {
       return !/[^A-Za-z0-9áãâéêíóõúç\s']/.exec(val);
     }),
-  lastname: yup
+  lastName: yup
     .string()
     .required('Sobrenome obrigatório')
     .test('surname-validation', 'Sobrenome inválido', val => {
@@ -38,14 +39,14 @@ const schema = yup.object().shape({
     .test('social-name-validation', 'Nome inválido', val => {
       return !/[^A-Za-z0-9áãâéêíóõúç\s']/.exec(val);
     }),
-  gender: yup.string().notRequired(),
+  gender: yup.string().required('Selecione o seu gênero'),
   document: yup
     .string()
     .required('Documento obrigatório')
     .test('document-validation', 'Documento inválido', val => {
       return !/[^0-9.\-']/.exec(val);
     }),
-  birthdate: yup.string().notRequired(),
+  birthDate: yup.string().required('Informe sua data de nascimento'),
   phone: yup
     .string()
     .required('Telefone obrigatório')
@@ -58,15 +59,7 @@ const schema = yup.object().shape({
     .email('Email inválido')
     .required('Confirmação obrigatória')
     .oneOf([yup.ref('email'), null], 'Os e-mails não conferem.'),
-  usertype: yup
-    .string()
-    .test('usertype-validation', 'Tipo de usuário obrigatório', val => {
-      return (
-        (val !== '' && val === 'student') ||
-        val === 'teacher' ||
-        val === 'student and teacher'
-      );
-    }),
+  type: yup.string().required('Escolha o tipo de usuário'),
   password: yup
     .string()
     .required('Senha obrigatória')
@@ -79,9 +72,10 @@ const schema = yup.object().shape({
 });
 
 function Register() {
+  const { login } = useUser();
   const history = useHistory();
-  const [, setLoading] = useState(false);
-  const [, setUserError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [registerError, setRegisterError] = useState(false);
 
   const { uploadedFile } = useContext(UploadContext);
 
@@ -93,52 +87,74 @@ function Register() {
     resolver: yupResolver(schema),
   });
 
+  const signIn = async ({ email, password }) => {
+    try {
+      const response = await fetch('http://localhost:3001/login', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${btoa(`${email}:${password}`)}`,
+        },
+      });
+
+      if (response.status !== 200) {
+        history.push('/');
+      }
+
+      const userData = await response.json();
+      login(userData);
+    } catch (error) {
+      console.log('error:', error);
+    }
+  };
+
   const signUp = async ({
-    firstname,
-    lastname,
-    socialname,
+    firstName,
+    lastName,
+    socialName,
     gender,
     document,
-    birthdate,
+    birthDate,
     phone,
     email,
     password,
+    type,
   }) => {
     const data = {
-      firstname,
-      lastname,
-      socialname,
+      firstName,
+      lastName,
+      socialName,
       gender,
-      document,
-      birthdate,
-      phone,
+      document: document.replace(/[^0-9]+/g, ''),
+      birthDate,
+      phone: phone.replace(/[^0-9]+/g, ''),
       email,
       password,
-      file: uploadedFile.file,
+      avatar: uploadedFile.file,
+      type: Number(type),
     };
 
     try {
-      setUserError(false);
+      setRegisterError('');
       setLoading(true);
       const response = await fetch('http://localhost:3001/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: data,
+        body: JSON.stringify(data),
       });
 
-      if (response.status !== 200) {
+      if (response.status !== 201) {
         setLoading(false);
-        setUserError(true);
+        setRegisterError('error');
         setTimeout(() => {
-          setUserError(false);
+          setRegisterError('');
         }, 2500);
         return;
       }
 
-      // history.push();
-      setLoading(false);
+      signIn(email, password);
     } catch (error) {
       console.log('error:', error);
     }
@@ -165,9 +181,9 @@ function Register() {
                 placeholder="nome"
                 margin="none"
                 fullWidth
-                {...register('firstname')}
-                helperText={errors.firstname?.message}
-                error={errors.firstname}
+                {...register('firstName')}
+                helperText={errors.firstName?.message}
+                error={errors.firstName}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
@@ -185,9 +201,9 @@ function Register() {
                 placeholder="sobrenome"
                 margin="none"
                 fullWidth
-                {...register('lastname')}
-                helperText={errors.lastname?.message}
-                error={errors.lastname}
+                {...register('lastName')}
+                helperText={errors.lastName?.message}
+                error={errors.lastName}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
@@ -224,6 +240,7 @@ function Register() {
                   native
                   fullWidth
                   {...register('gender')}
+                  error={errors.gender}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment>
@@ -235,12 +252,11 @@ function Register() {
                   <option aria-label="None" value="">
                     Gênero
                   </option>
-                  <option value="Masculino">Masculino</option>
-                  <option value="Feminino">Feminino</option>
-                  <option value="Prefiro não informar">
-                    Prefiro não informar
-                  </option>
+                  <option value="Male">Masculino</option>
+                  <option value="Female">Feminino</option>
+                  <option value="NI">Prefiro não informar</option>
                 </Select>
+                <S.ReturnError>{errors.gender?.message}</S.ReturnError>
               </FormControl>
             </S.Input>
             <S.Input>
@@ -280,7 +296,9 @@ function Register() {
                 placeholder="data de nascimento"
                 margin="none"
                 fullWidth
-                {...register('birthdate')}
+                {...register('birthDate')}
+                helperText={errors.birthDate?.message}
+                error={errors.birthDate}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
@@ -362,11 +380,11 @@ function Register() {
             <S.Input>
               <FormControl variant="outlined" fullWidth>
                 <Select
-                  id="input-usertype"
+                  id="input-type"
                   native
                   fullWidth
-                  {...register('usertype')}
-                  error={errors.usertype}
+                  {...register('type')}
+                  error={errors.gender}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment>
@@ -378,10 +396,11 @@ function Register() {
                   <option aria-label="None" value="">
                     Tipo de usuário
                   </option>
-                  <option value="student">Aluno</option>
-                  <option value="teacher">Professor</option>
-                  <option value="student and teacher">Aluno e professor</option>
+                  <option value="1">Aluno</option>
+                  <option value="2">Professor</option>
+                  <option value="3">Aluno e professor</option>
                 </Select>
+                <S.ReturnError>{errors.type?.message}</S.ReturnError>
               </FormControl>
             </S.Input>
             <S.Input>
@@ -426,7 +445,7 @@ function Register() {
             </S.Input>
           </S.InputsContainer>
           <S.ButtonsContainer>
-            <Button width="200px" size="small" type="submit">
+            <Button loading={loading} width="200px" size="small" type="submit">
               Cadastrar
             </Button>
             <S.LinkButton
@@ -438,6 +457,8 @@ function Register() {
             </S.LinkButton>
           </S.ButtonsContainer>
         </S.Form>
+        <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>
+        <S.ErrorReturn>{registerError}</S.ErrorReturn>
       </S.Container>
     </AuthTemplate>
   );
