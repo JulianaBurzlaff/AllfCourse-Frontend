@@ -13,7 +13,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import PhoneIcon from '@material-ui/icons/Phone';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
-import { useUser } from '../../providers/UserProvider';
 import { UploadContext } from '../../providers/UploadProvider';
 import AuthTemplate from '../../components/AuthTemplate';
 import Button from '../../components/Button';
@@ -21,19 +20,19 @@ import DropArea from '../../components/DropArea';
 import * as S from './styles';
 
 const schema = yup.object().shape({
-  name: yup
+  firstname: yup
     .string()
     .required('Nome obrigatório')
     .test('name-validation', 'Nome inválido', val => {
       return !/[^A-Za-z0-9áãâéêíóõúç\s']/.exec(val);
     }),
-  surname: yup
+  lastname: yup
     .string()
     .required('Sobrenome obrigatório')
     .test('surname-validation', 'Sobrenome inválido', val => {
       return !/[^A-Za-z0-9áãâéêíóõúç\s']/.exec(val);
     }),
-  socialName: yup
+  socialname: yup
     .string()
     .notRequired()
     .test('social-name-validation', 'Nome inválido', val => {
@@ -46,7 +45,7 @@ const schema = yup.object().shape({
     .test('document-validation', 'Documento inválido', val => {
       return !/[^0-9.\-']/.exec(val);
     }),
-  date: yup.string().notRequired(),
+  birthdate: yup.string().notRequired(),
   phone: yup
     .string()
     .required('Telefone obrigatório')
@@ -54,16 +53,25 @@ const schema = yup.object().shape({
       return !/[^0-9()\s']/.exec(val) && !/[0-9]{10}/.exec(val);
     }),
   email: yup.string().email('Email inválido').required('E-mail obrigatório'),
-  confirmEmail: yup
+  confirmemail: yup
     .string()
     .email('Email inválido')
     .required('Confirmação obrigatória')
     .oneOf([yup.ref('email'), null], 'Os e-mails não conferem.'),
+  usertype: yup
+    .string()
+    .test('usertype-validation', 'Tipo de usuário obrigatório', val => {
+      return (
+        (val !== '' && val === 'student') ||
+        val === 'teacher' ||
+        val === 'student and teacher'
+      );
+    }),
   password: yup
     .string()
     .required('Senha obrigatória')
     .min(6, 'Tamanho mínimo de 6 caracteres'),
-  confirmPassword: yup
+  confirmpassword: yup
     .string()
     .required('Confirmação obrigatória')
     .oneOf([yup.ref('password'), null], 'As senhas não conferem.')
@@ -71,7 +79,6 @@ const schema = yup.object().shape({
 });
 
 function Register() {
-  const { login } = useUser();
   const history = useHistory();
   const [, setLoading] = useState(false);
   const [, setUserError] = useState(false);
@@ -87,27 +94,27 @@ function Register() {
   });
 
   const signUp = async ({
-    name,
-    surname,
-    socialName,
+    firstname,
+    lastname,
+    socialname,
     gender,
     document,
-    date,
+    birthdate,
     phone,
     email,
     password,
   }) => {
     const data = {
-      name,
-      surname,
-      social_name: socialName,
+      firstname,
+      lastname,
+      socialname,
       gender,
       document,
-      birth_date: date,
+      birthdate,
       phone,
       email,
       password,
-      avatar: uploadedFile.file,
+      file: uploadedFile.file,
     };
 
     try {
@@ -130,10 +137,7 @@ function Register() {
         return;
       }
 
-      login({
-        email,
-        password,
-      });
+      // history.push();
       setLoading(false);
     } catch (error) {
       console.log('error:', error);
@@ -156,14 +160,14 @@ function Register() {
             <S.Input>
               <TextField
                 type="text"
-                id="input-name"
+                id="input-firstname"
                 variant="outlined"
                 placeholder="nome"
                 margin="none"
                 fullWidth
-                {...register('name')}
-                helperText={errors.name?.message}
-                error={errors.name}
+                {...register('firstname')}
+                helperText={errors.firstname?.message}
+                error={errors.firstname}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
@@ -176,14 +180,14 @@ function Register() {
             <S.Input>
               <TextField
                 type="text"
-                id="input-surname"
+                id="input-lastname"
                 variant="outlined"
                 placeholder="sobrenome"
                 margin="none"
                 fullWidth
-                {...register('surname')}
-                helperText={errors.surname?.message}
-                error={errors.surname}
+                {...register('lastname')}
+                helperText={errors.lastname?.message}
+                error={errors.lastname}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
@@ -196,14 +200,14 @@ function Register() {
             <S.Input>
               <TextField
                 type="text"
-                id="input-social-name"
+                id="input-socialname"
                 variant="outlined"
                 placeholder="nome social"
                 margin="none"
                 fullWidth
-                {...register('socialName')}
-                helperText={errors.socialName?.message}
-                error={errors.socialName}
+                {...register('socialname')}
+                helperText={errors.socialname?.message}
+                error={errors.socialname}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
@@ -271,12 +275,12 @@ function Register() {
             <S.Input>
               <TextField
                 type="date"
-                id="input-date"
+                id="input-birthdate"
                 variant="outlined"
                 placeholder="data de nascimento"
                 margin="none"
                 fullWidth
-                {...register('date')}
+                {...register('birthdate')}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
@@ -338,14 +342,14 @@ function Register() {
             <S.Input>
               <TextField
                 type="text"
-                id="input-email-confirm"
+                id="input-confirmemail"
                 variant="outlined"
                 placeholder="confirmação de e-mail"
                 margin="none"
                 fullWidth
-                {...register('confirmEmail')}
-                helperText={errors.confirmEmail?.message}
-                error={errors.confirmEmail}
+                {...register('confirmemail')}
+                helperText={errors.confirmemail?.message}
+                error={errors.confirmemail}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
@@ -358,10 +362,11 @@ function Register() {
             <S.Input>
               <FormControl variant="outlined" fullWidth>
                 <Select
-                  id="input-gender"
+                  id="input-usertype"
                   native
                   fullWidth
-                  {...register('gender')}
+                  {...register('usertype')}
+                  error={errors.usertype}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment>
@@ -373,9 +378,9 @@ function Register() {
                   <option aria-label="None" value="">
                     Tipo de usuário
                   </option>
-                  <option value="Aluno">Aluno</option>
-                  <option value="Professor">Professor</option>
-                  <option value="Aluno e professor">Aluno e professor</option>
+                  <option value="student">Aluno</option>
+                  <option value="teacher">Professor</option>
+                  <option value="student and teacher">Aluno e professor</option>
                 </Select>
               </FormControl>
             </S.Input>
@@ -402,14 +407,14 @@ function Register() {
             <S.Input>
               <TextField
                 type="password"
-                id="input-confirm-password"
+                id="input-confirmpassword"
                 variant="outlined"
                 placeholder="confirmação de senha"
                 margin="none"
                 fullWidth
-                {...register('confirmPassword')}
-                helperText={errors.confirmPassword?.message}
-                error={errors.confirmPassword}
+                {...register('confirmpassword')}
+                helperText={errors.confirmpassword?.message}
+                error={errors.confirmpassword}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>

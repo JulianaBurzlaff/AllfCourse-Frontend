@@ -7,7 +7,7 @@ export const BannerContainer = styled.button`
     justify-content: flex-start;
     align-items: center;
     background: ${theme.palette.primary.contrastText};
-    border: 1px solid ${theme.palette.primary.main};
+    border: 1px solid ${theme.palette.primary.light};
     box-sizing: border-box;
     border-radius: 10px;
     width: 23%;
@@ -23,6 +23,12 @@ export const BannerContainer = styled.button`
     &:active {
       filter: brightness(0.9);
     }
+
+    ${({ inactive }) =>
+      inactive &&
+      css`
+        border: 1px solid ${theme.palette.warning.main};
+      `}
   `}
 `;
 

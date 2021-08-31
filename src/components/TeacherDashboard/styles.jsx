@@ -6,6 +6,5 @@ export const Text = styled.p`
     font-size: ${fontSize};
     font-weight: ${weight};
     padding-left: 12px;
-    margin-bottom: 35px;
   `}
 `;

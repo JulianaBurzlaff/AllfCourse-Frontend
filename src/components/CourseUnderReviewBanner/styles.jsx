@@ -7,7 +7,7 @@ export const BannerContainer = styled.button`
     justify-content: space-around;
     align-items: center;
     background: ${theme.palette.primary.contrastText};
-    border: 1px solid ${theme.palette.primary.main};
+    border: 1px solid ${theme.palette.primary.light};
     box-sizing: border-box;
     border-radius: 10px;
     width: 99%;
