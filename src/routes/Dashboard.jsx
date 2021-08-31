@@ -15,7 +15,7 @@ import StudentDashboardPage from '../pages/StudentDashboardPage';
 export default function DashboardRouter() {
   const { path } = useRouteMatch();
 
-  const userType = 3;
+  const userType = 1;
 
   const RedirectDashboard = useCallback(() => {
     switch (userType) {
@@ -43,11 +43,7 @@ export default function DashboardRouter() {
     <BrowserRouter>
       <Switch>
         {RedirectDashboard()}
-        <Route
-          path={`${path}/student`}
-          component={StudentDashboardPage}
-          IsPrivate
-        />
+        <Route path={`${path}/student`} component={StudentDashboardPage} />
         <Route path={`${path}/teacher`} component={TeacherRouter} />
         {/* <Route path={`${path}/adm`} /> */}
       </Switch>
