@@ -146,8 +146,13 @@ function Register() {
       });
 
       if (response.status !== 201) {
+        const responseError = await response.json();
+        const error =
+          responseError.message.criticalErrors[
+            Object.keys(responseError.message.criticalErrors)[0]
+          ].message;
         setLoading(false);
-        setRegisterError('error');
+        setRegisterError(error);
         setTimeout(() => {
           setRegisterError('');
         }, 2500);
