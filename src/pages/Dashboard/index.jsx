@@ -1,11 +1,8 @@
 import React from 'react';
+import DashboardTemplate from '../../components/DashboardTemplate';
 
-function Darshboard() {
-  return (
-    <>
-      <h1>Olá</h1>
-    </>
-  );
+function Dashboard({ children }) {
+  return <DashboardTemplate>{children}</DashboardTemplate>;
 }
 
-export default Darshboard;
+export default Dashboard;

@@ -1,30 +1,30 @@
-import React, { createContext, useCallback, useState } from 'react';
+// import React, { createContext, useCallback, useState } from 'react';
 
-export const AuthContext = createContext({});
+// export const AuthContext = createContext({});
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState();
+// export const AuthProvider = ({ children }) => {
+//   const [user, setUser] = useState();
 
-  const login = useCallback(async ({ email, password }) => {
-    const data = { email, password };
-    setUser(data);
-    return data;
-  }, []);
+//   const login = useCallback(async ({ email, password }) => {
+//     const data = { email, password };
+//     setUser(data);
+//     return data;
+//   }, []);
 
-  // const logout = useCallback(async () => {
-  //   await api.post('/logout');
-  //   localStorage.removeItem('user');
-  //   setUser(null);
-  // }, []);
+//   // const logout = useCallback(async () => {
+//   //   await api.post('/logout');
+//   //   localStorage.removeItem('user');
+//   //   setUser(null);
+//   // }, []);
 
-  return (
-    <AuthContext.Provider
-      value={{
-        user,
-        login,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
-};
+//   return (
+//     <AuthContext.Provider
+//       value={{
+//         user,
+//         login,
+//       }}
+//     >
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };

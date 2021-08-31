@@ -4,8 +4,9 @@ import {
   Switch,
   useRouteMatch,
   Redirect,
+  Route,
 } from 'react-router-dom';
-import { Route } from './Route';
+// import { Route } from './Route';
 
 import TeacherRouter from './Teacher';
 
@@ -42,7 +43,11 @@ export default function DashboardRouter() {
     <BrowserRouter>
       <Switch>
         {RedirectDashboard()}
-        <Route path={`${path}/student`} component={StudentDashboardPage} />
+        <Route
+          path={`${path}/student`}
+          component={StudentDashboardPage}
+          IsPrivate
+        />
         <Route path={`${path}/teacher`} component={TeacherRouter} />
         {/* <Route path={`${path}/adm`} /> */}
       </Switch>

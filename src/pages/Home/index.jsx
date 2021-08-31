@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import jwt from 'jsonwebtoken';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
@@ -39,10 +40,12 @@ function Home() {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Basic ${btoa(`${email}:${password}`)}`,
+          withcredentials: true,
         },
       });
 
       if (response.status !== 200) {
+        console.log("OK'");
         setLoading(false);
         setUserError(true);
         setTimeout(() => {
@@ -51,7 +54,9 @@ function Home() {
         return;
       }
 
-      const userData = await response.json();
+      const responseData = await response.json();
+      const userData = jwt.decode(responseData.token);
+
       login(userData);
       setLoading(false);
     } catch (error) {

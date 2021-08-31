@@ -18,6 +18,17 @@ export const Logo = styled.img`
   margin-top: 20px;
 `;
 
-export const Avatar = styled.div`
+export const Avatar = styled.button`
   margin-bottom: 20px;
+  border: none;
+  background: none;
+
+  &:active {
+    filter: brightness(0.9);
+  }
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1, 1.1);
+  }
 `;
