@@ -62,3 +62,20 @@ export const ButtonsContainer = styled.div`
   align-items: center;
   margin-top: 30px;
 `;
+
+export const ReturnError = styled.p`
+  font-family: Roboto;
+  font-size: 12px;
+  color: #c65b58;
+  margin: 3px 14px 0 14px;
+`;
+
+export const Return = styled.span`
+  color: #49a7a1;
+  height: 15px;
+`;
+
+export const ErrorReturn = styled.span`
+  color: #c65b58;
+  height: 15px;
+`;

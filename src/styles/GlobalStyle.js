@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import createTheme from '../theme';
 
 export default createGlobalStyle`
 
@@ -7,6 +8,15 @@ export default createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     outline: none;
+  }
+
+  *::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+      background-color: ${createTheme.palette.primary.dark};
   }
 
   body{

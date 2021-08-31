@@ -3,9 +3,11 @@ import CourseUnderReviewBanner from '../CourseUnderReviewBanner';
 import CourseBanner from '../CourseBanner';
 import Container from '../Container';
 import Section from '../Section';
+import ButtonIcon from '../ButtonIcon';
+import addWhiteIcon from '../../assets/icons/add-white.svg';
 import * as S from './styles';
 
-function TeacherDasboard() {
+function TeacherDashboard() {
   const userData = {
     name: 'Lucas Sousa',
   };
@@ -69,17 +71,19 @@ function TeacherDasboard() {
         justifyContent="space-between"
         alignItems="center"
         width="90%"
-        margin="50px 0 0 0"
+        margin="50px 0 35px 0"
       >
         <S.Text size="20px" weight="normal" color="primary">
           Bem vindo!
         </S.Text>
+        <ButtonIcon icon={addWhiteIcon}>Novo curso</ButtonIcon>
       </Container>
       <Section title="CURSOS EM ESPERA" contentDirection="column">
         {coursesData.map(course => {
           return course.status === 'in review' ||
             course.status === 'rejected' ? (
             <CourseUnderReviewBanner
+              id={course.id}
               title={course.name}
               description={course.description}
               value={course.value}
@@ -96,6 +100,7 @@ function TeacherDasboard() {
         {coursesData.map(course => {
           return course.status === 'active' ? (
             <CourseBanner
+              id={course.id}
               title={course.name}
               description={course.description}
               teacher={userData.name}
@@ -111,6 +116,7 @@ function TeacherDasboard() {
         {coursesData.map(course => {
           return course.status === 'inactive' ? (
             <CourseBanner
+              id={course.id}
               title={course.name}
               description={course.description}
               teacher={userData.name}
@@ -127,4 +133,4 @@ function TeacherDasboard() {
   );
 }
 
-export default TeacherDasboard;
+export default TeacherDashboard;

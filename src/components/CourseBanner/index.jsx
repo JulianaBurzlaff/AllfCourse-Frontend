@@ -14,7 +14,7 @@ function CourseBanner({
   progress,
 }) {
   return (
-    <S.BannerContainer>
+    <S.BannerContainer inactive={inactive}>
       <S.ImageContainer />
       <Container
         direction="column"
@@ -22,12 +22,12 @@ function CourseBanner({
         alignItems="center"
         width="100%"
       >
-        <S.CourseDescription>
+        <S.CourseDescription inactive={inactive}>
           <h3>{title}</h3>
           <p>{description}</p>
         </S.CourseDescription>
         <S.Container>
-          <S.TeacherContainer>
+          <S.TeacherContainer inactive={inactive}>
             <h3>{teacher}</h3>
           </S.TeacherContainer>
           <S.ValuesContainer inactive={inactive}>
