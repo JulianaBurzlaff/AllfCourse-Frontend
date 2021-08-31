@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 import AuthTemplate from '../../components/AuthTemplate';
 import ForgotPasswd from '../../components/ForgotPasswd';
 import PassCode from '../../components/PassCode';
@@ -10,7 +9,7 @@ function Password() {
   const [screen, setScreen] = useState('forgot-password');
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
-  const { enqueueSnackbar } = useSnackbar();
+
   const history = useHistory();
 
   const onForgotPasswordSuccess = () => {
@@ -23,9 +22,6 @@ function Password() {
 
   const onPasswordRecoverSuccess = () => {
     history.push('/login');
-    enqueueSnackbar('Senha alterada com sucesso', {
-      variant: 'success',
-    });
   };
 
   return (
