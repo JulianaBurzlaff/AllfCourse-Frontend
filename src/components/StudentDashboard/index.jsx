@@ -11,10 +11,10 @@ import * as S from './styles';
 
 function StudentDasboard() {
   const { user } = useUser();
-  const { approvedCourses = [], fetchApprovedCourses } = useCourse();
+  const { approvedCourses = [] } = useCourse();
 
   useEffect(() => {
-    fetchApprovedCourses();
+    // fetchApprovedCourses();
     console.log(user);
   }, []);
 
