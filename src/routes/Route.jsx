@@ -9,7 +9,7 @@ export const Route = ({ isPrivate = false, component: Component, ...rest }) => {
     <ReactDOMRoute
       {...rest}
       render={({ location }) => {
-        return isPrivate === !!user ? (
+        return isPrivate === !!user.length ? (
           <Component />
         ) : (
           <Redirect

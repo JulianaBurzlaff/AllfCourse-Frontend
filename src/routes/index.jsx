@@ -20,7 +20,7 @@ export default function Router() {
         <Route path="/login" component={Home} />
         <Route path="/register" component={Register} />
         <Route path="/password" component={Password} />
-        <Route path="/dashboard" component={DashboardRouter} />
+        <Route path="/dashboard" component={DashboardRouter} isPrivate />
 
         {/* Rotas de teste */}
         <Route path="/student/dashboard" component={StudentDashboardPage} />
