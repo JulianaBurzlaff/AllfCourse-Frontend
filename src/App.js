@@ -9,6 +9,7 @@ import Router from './routes';
 import theme from './theme';
 import AppProvider from './providers';
 import { UploadProvider } from './providers/UploadProvider';
+import { CourseProvider } from './providers/CourseProvider';
 import GlobalStyle from './styles/GlobalStyle';
 
 function App() {
@@ -19,8 +20,10 @@ function App() {
           <ThemeProvider theme={theme}>
             <AppProvider>
               <UploadProvider>
-                <Router />
-                <GlobalStyle />
+                <CourseProvider>
+                  <Router />
+                  <GlobalStyle />
+                </CourseProvider>
               </UploadProvider>
             </AppProvider>
           </ThemeProvider>
