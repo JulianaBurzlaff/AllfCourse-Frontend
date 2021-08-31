@@ -46,7 +46,6 @@ function Home() {
       });
 
       if (response.status !== 200) {
-        console.log("OK'");
         setLoading(false);
         setUserError(true);
         setTimeout(() => {

@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useState, useContext } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useState,
+  useContext,
+  useEffect,
+} from 'react';
 
 export const UserContext = createContext({});
 
@@ -10,6 +16,10 @@ export const UserProvider = ({ children }) => {
     setUser(userData);
     return true;
   }, []);
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   const logout = useCallback(() => {
     setUser([]);

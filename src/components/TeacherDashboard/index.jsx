@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useUser } from '../../providers/UserProvider';
 import CourseUnderReviewBanner from '../CourseUnderReviewBanner';
 import CourseBanner from '../CourseBanner';
 import Container from '../Container';
@@ -8,6 +9,8 @@ import addWhiteIcon from '../../assets/icons/add-white.svg';
 import * as S from './styles';
 
 function TeacherDashboard() {
+  const { user } = useUser();
+
   const userData = {
     name: 'Lucas Sousa',
   };
@@ -76,7 +79,14 @@ function TeacherDashboard() {
         <S.Text size="20px" weight="normal" color="primary">
           Bem vindo!
         </S.Text>
-        <ButtonIcon icon={addWhiteIcon}>Novo curso</ButtonIcon>
+        <ButtonIcon
+          icon={addWhiteIcon}
+          onClick={() => {
+            console.log(user);
+          }}
+        >
+          Novo curso
+        </ButtonIcon>
       </Container>
       <Section title="CURSOS EM ESPERA" contentDirection="column">
         {coursesData.map(course => {
