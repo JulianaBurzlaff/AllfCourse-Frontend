@@ -46,10 +46,10 @@ function StudentDasboard() {
         {approvedCourses.map(course => (
           <CourseBanner
             title={course.course_name}
-            description={course.course_name}
-            teacher={course.course_name}
-            value={course.course_value}
-            subscribersNumber={course.course_name}
+            description={course.course_description}
+            teacher={course.teacher_name}
+            value={course.value}
+            subscribersNumber={course.total_enrolleds}
           />
         ))}
       </Section>
