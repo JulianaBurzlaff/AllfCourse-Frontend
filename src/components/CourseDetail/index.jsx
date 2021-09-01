@@ -20,7 +20,7 @@ function CourseDetail() {
   const { enqueueSnackbar } = useSnackbar();
 
   function enrollUser() {
-    console.log(user.id);
+    console.log(user[0].id);
     console.log(chosenCourse.id);
     // fazer post de matricula
     enqueueSnackbar('Matrícula efetuada com sucesso', {
