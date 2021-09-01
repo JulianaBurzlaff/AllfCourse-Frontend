@@ -15,7 +15,6 @@ export const Header = styled.div`
 
 export const Logo = styled.img`
   width: 80%;
-  margin-top: 20px;
 `;
 
 export const Avatar = styled.button`

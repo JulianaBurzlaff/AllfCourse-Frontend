@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Switch, useRouteMatch } from 'react-router-dom';
 import { Route } from './Route';
 
-import Dashboard from '../pages/Dashboard';
 import TeacherDashboard from '../components/TeacherDashboard';
 
 export default function TeacherRouter() {
@@ -11,11 +10,7 @@ export default function TeacherRouter() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path={path} isPrivate>
-          <Dashboard>
-            <TeacherDashboard />
-          </Dashboard>
-        </Route>
+        <Route path={path} component={TeacherDashboard} isPrivate />
       </Switch>
     </BrowserRouter>
   );
