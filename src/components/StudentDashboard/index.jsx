@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 // import Grid from '@material-ui/core/Grid';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useUser } from '../../providers/UserProvider';
 import { useCourse } from '../../providers/CourseProvider';
 import CourseBanner from '../CourseBanner';
@@ -11,18 +11,24 @@ import * as S from './styles';
 
 function StudentDasboard() {
   const { user } = useUser();
+  const history = useHistory();
   const {
     approvedCourses = [],
     fetchApprovedCourses,
     fetchLoggedStudentCourses,
     loggedStudentCourses = [],
+    fetchChosenCourse,
   } = useCourse();
 
   useEffect(() => {
     fetchApprovedCourses();
     fetchLoggedStudentCourses();
-    console.log(user);
   }, []);
+
+  function onCourseBannerClick(id) {
+    fetchChosenCourse({ id });
+    history.push(`/dashboard/student/course/${id}`);
+  }
 
   return (
     <>
@@ -60,6 +66,7 @@ function StudentDasboard() {
             teacher={course.teacher_name}
             value={course.value}
             subscribersNumber={course.total_enrolleds}
+            onClick={() => onCourseBannerClick(course.course_id)}
           />
         ))}
       </Section>

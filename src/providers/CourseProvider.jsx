@@ -6,6 +6,7 @@ export const CourseContext = createContext({});
 export const CourseProvider = ({ children }) => {
   const [approvedCourses, setApprovedCourses] = useState();
   const [loggedStudentCourses, setLoggedStudentCourses] = useState();
+  const [chosenCourse, setChosenCourse] = useState();
 
   const fetchApprovedCourses = useCallback(async () => {
     try {
@@ -37,6 +38,18 @@ export const CourseProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const fetchChosenCourse = useCallback(async ({ id }) => {
+    try {
+      const { data } = await api.get(`/getcourse/${id}`);
+
+      setChosenCourse(data);
+      return data;
+    } catch (error) {
+      return null;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <CourseContext.Provider
       value={{
@@ -44,6 +57,8 @@ export const CourseProvider = ({ children }) => {
         approvedCourses,
         fetchLoggedStudentCourses,
         loggedStudentCourses,
+        fetchChosenCourse,
+        chosenCourse,
       }}
     >
       {children}

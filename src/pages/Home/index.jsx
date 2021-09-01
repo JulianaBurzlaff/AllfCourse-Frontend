@@ -28,6 +28,10 @@ function Home() {
     formState: { errors },
     handleSubmit,
   } = useForm({
+    defaultValues: {
+      email: 'burzlaff.juliana@gmail.com',
+      password: '1234567',
+    },
     resolver: yupResolver(schema),
   });
 
@@ -67,7 +71,7 @@ function Home() {
   return (
     <AuthTemplate subtitle="Sua plataforma de cursos online">
       <S.LoginName>Login</S.LoginName>
-      <S.Form onSubmit={handleSubmit(signIn)}>
+      <S.Form>
         <TextField
           id="input-with-icon-adornment"
           variant="outlined"
@@ -93,6 +97,11 @@ function Home() {
           placeholder="senha"
           margin="normal"
           {...register('password')}
+          onKeyPress={e => {
+            if (e.key === 'Enter') {
+              handleSubmit(signIn)();
+            }
+          }}
           helperText={errors.password?.message}
           error={errors.password}
           InputProps={{
@@ -106,7 +115,11 @@ function Home() {
         <S.LinkButton onClick={() => history.push('/password')}>
           Esqueceu sua senha?
         </S.LinkButton>
-        <Button loading={loading} fullWidth="true" type="submit">
+        <Button
+          onClick={handleSubmit(signIn)}
+          loading={loading}
+          fullWidth="true"
+        >
           Entrar
         </Button>
         <S.LinkButton onClick={() => history.push('/register')}>

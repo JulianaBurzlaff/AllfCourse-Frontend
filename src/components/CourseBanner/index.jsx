@@ -12,9 +12,10 @@ function CourseBanner({
   inactive = false,
   student = false,
   progress,
+  onClick,
 }) {
   return (
-    <S.BannerContainer inactive={inactive}>
+    <S.BannerContainer onClick={onClick} inactive={inactive}>
       <S.ImageContainer />
       <Container
         direction="column"
