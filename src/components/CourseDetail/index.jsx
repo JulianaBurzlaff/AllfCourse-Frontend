@@ -7,13 +7,14 @@ import { useCourse } from '../../providers/CourseProvider';
 import CourseHeader from '../CourseHeader';
 import Container from '../Container';
 import Section from '../Section';
+import ModulesAccordion from '../ModulesAccordion';
 import image from '../../assets/logo.svg';
 
 import * as S from './styles';
 
 function CourseDetail() {
   // const { user } = useUser();
-  const { chosenCourse = [] } = useCourse();
+  const { chosenCourse } = useCourse();
 
   return (
     <>
@@ -25,7 +26,7 @@ function CourseDetail() {
         margin="50px 0 0 0"
       >
         <CourseHeader
-          title={chosenCourse[0].name}
+          title={chosenCourse.name}
           description="Descrição"
           teacher="Diego Souza"
           value={0}
@@ -35,6 +36,9 @@ function CourseDetail() {
         />
         <S.SubmitButton width="200px">Matricular-se</S.SubmitButton>
         <Section title="CONTEÚDO" contentDirection="column" alignItems="left" />
+        <S.Content>
+          <ModulesAccordion moduleName="Modulo1" className="aula 1" />
+        </S.Content>
         <S.SubmitButton width="200px">Matricular-se</S.SubmitButton>
       </Container>
     </>
