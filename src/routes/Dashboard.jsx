@@ -3,7 +3,7 @@ import {
   BrowserRouter,
   Switch,
   useRouteMatch,
-  Redirect,
+  // Redirect,
   Route,
 } from 'react-router-dom';
 // import { Route } from './Route';
@@ -25,7 +25,7 @@ export default function DashboardRouter() {
   return (
     <BrowserRouter>
       <Switch>
-        <Redirect exact path={path} to={`${path}/${typeActive}`} />
+        {/* <Redirect exact path={path} to={`${path}/${typeActive}`} /> */}
         <Dashboard>
           <Route exact path={`${path}/student`} component={StudentRouter} />
           <Route exact path={`${path}/teacher`} component={TeacherRouter} />

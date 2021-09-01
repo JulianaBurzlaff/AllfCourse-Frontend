@@ -1,12 +1,14 @@
+/* eslint-disable camelcase */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import Grid from '@material-ui/core/Grid';
-import { useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useUser } from '../../providers/UserProvider';
 import { useCourse } from '../../providers/CourseProvider';
 import CourseHeader from '../CourseHeader';
 import Container from '../Container';
+import Loader from '../Loader';
 import Section from '../Section';
 import ModulesAccordion from '../ModulesAccordion';
 import image from '../../assets/logo.svg';
@@ -14,8 +16,10 @@ import image from '../../assets/logo.svg';
 import * as S from './styles';
 
 function CourseDetail() {
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
   const { user } = useUser();
-  const { chosenCourse } = useCourse();
+  const { fetchChosenCourse, chosenCourse = [] } = useCourse();
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -29,6 +33,14 @@ function CourseDetail() {
     history.push('/dashboard/student');
   }
 
+  useEffect(() => {
+    fetchChosenCourse({ id }).finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <Container
@@ -40,11 +52,11 @@ function CourseDetail() {
       >
         <CourseHeader
           title={chosenCourse.name}
-          description="Descrição"
-          teacher="Diego Souza"
-          value={0}
-          subscribersNumber={1}
-          categories="Categorias"
+          description={chosenCourse.description}
+          teacher={chosenCourse.teacher_name}
+          value={chosenCourse.value}
+          subscribersNumber={chosenCourse.enrolleds}
+          categories={chosenCourse.categories}
           image={image}
         />
         <S.SubmitButton width="200px" onClick={enrollUser}>

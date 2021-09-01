@@ -7,6 +7,7 @@ import { useCourse } from '../../providers/CourseProvider';
 import CourseBanner from '../CourseBanner';
 import Container from '../Container';
 import Section from '../Section';
+import Loader from '../Loader';
 import * as S from './styles';
 
 function StudentDasboard() {
@@ -17,17 +18,21 @@ function StudentDasboard() {
     fetchApprovedCourses,
     fetchLoggedStudentCourses,
     loggedStudentCourses = [],
-    fetchChosenCourse,
+    loading,
+    setLoading,
   } = useCourse();
 
   useEffect(() => {
-    fetchApprovedCourses();
-    fetchLoggedStudentCourses();
+    fetchApprovedCourses().finally(() => setLoading(false));
+    fetchLoggedStudentCourses().finally(() => setLoading(false));
   }, []);
 
   function onCourseBannerClick(id) {
-    fetchChosenCourse({ id });
     history.push(`/dashboard/student/course/${id}`);
+  }
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (

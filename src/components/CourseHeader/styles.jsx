@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -39,6 +39,8 @@ export const Values = styled.div`
 
 export const Categories = styled.div`
   margin-left: 50px;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Image = styled.img`
@@ -47,4 +49,17 @@ export const Image = styled.img`
 
 export const Progress = styled.div`
   width: 90%;
+`;
+
+export const CategoryTitle = styled.div`
+  font-size: 14px;
+`;
+
+export const Category = styled.div`
+  ${({ theme }) => css`
+    margin-right: 5px;
+    display: flex;
+    background-color: ${theme.palette.text.primary};
+    color: ${theme.palette.text.secondary};
+  `}
 `;
