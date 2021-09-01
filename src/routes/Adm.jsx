@@ -4,13 +4,13 @@ import { Route } from './Route';
 
 import AdmDashboard from '../components/AdmDashboard';
 
-export default function AdmRouter() {
+export default function TeacherRouter() {
   const { path } = useRouteMatch();
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route path={path} component={AdmDashboard} isPrivate />
+        <Route exact path={path} component={AdmDashboard} isPrivate />
       </Switch>
     </BrowserRouter>
   );

@@ -9,7 +9,7 @@ import React from 'react';
 // import * as S from './styles';
 
 function AdmDashboard() {
-  return <></>;
+  return <p>Olá</p>;
 }
 
 export default AdmDashboard;

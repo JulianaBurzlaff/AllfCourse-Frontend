@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useUser } from '../../providers/UserProvider';
 import CourseUnderReviewBanner from '../CourseUnderReviewBanner';
 import CourseBanner from '../CourseBanner';
@@ -10,6 +11,7 @@ import * as S from './styles';
 
 function TeacherDashboard() {
   const { user } = useUser();
+  const history = useHistory();
 
   const userData = {
     name: 'Lucas Sousa',
@@ -116,6 +118,10 @@ function TeacherDashboard() {
               teacher={userData.name}
               value={course.value}
               subscribersNumber={course.subscribes_number}
+              onClick={() => {
+                console.log('AQUI');
+                history.push('/dashboard/teacher/course-data');
+              }}
             />
           ) : (
             <></>

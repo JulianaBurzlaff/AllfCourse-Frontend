@@ -2,12 +2,18 @@ import React from 'react';
 import * as S from './styles';
 import Container from '../Container';
 
-function Section({ children, title, contentDirection, wrap }) {
+function Section({
+  children,
+  title,
+  contentDirection,
+  wrap,
+  alignItems = 'center',
+}) {
   return (
     <Container
       direction="column"
       justifyContent="flex-start"
-      alignItems="center"
+      alignItems={alignItems}
       width="100%"
       margin="0 0 50px 0"
     >

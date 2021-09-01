@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const Form = styled.form`
+export const Form = styled.div`
   ${({ theme }) => css`
     width: 100%;
     display: flex;

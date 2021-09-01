@@ -10,7 +10,7 @@ export default function TeacherRouter() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path={path} component={TeacherDashboard} isPrivate />
+        <Route exact path={path} component={TeacherDashboard} isPrivate />
       </Switch>
     </BrowserRouter>
   );
