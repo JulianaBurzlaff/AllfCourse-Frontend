@@ -6,7 +6,7 @@ export const CourseContext = createContext({});
 export const CourseProvider = ({ children }) => {
   const [approvedCourses, setApprovedCourses] = useState();
   const [loggedStudentCourses, setLoggedStudentCourses] = useState();
-  const [chosenCourse, setChosenCourse] = useState();
+  const [chosenCourse, setChosenCourse] = useState({});
 
   const fetchApprovedCourses = useCallback(async () => {
     try {
@@ -42,7 +42,7 @@ export const CourseProvider = ({ children }) => {
     try {
       const { data } = await api.get(`/getcourse/${id}`);
 
-      setChosenCourse(data);
+      setChosenCourse(data[0]);
       return data;
     } catch (error) {
       return null;

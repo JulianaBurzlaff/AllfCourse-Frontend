@@ -28,6 +28,10 @@ export default createTheme({
       primary: '#343a40',
       secondary: '#F8F9FA',
     },
+    info: {
+      main: '#D5D8B5',
+      dark: '#A55E03',
+    },
   },
 });
 
