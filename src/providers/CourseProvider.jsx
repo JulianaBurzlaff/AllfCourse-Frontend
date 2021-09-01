@@ -11,7 +11,9 @@ export const CourseProvider = ({ children }) => {
     try {
       const { data } = await api.get('/courses/logged-user');
 
-      const approved = data.filter(course => course.status === 'aprovado');
+      const approved = data.filter(
+        course => course.status === 'aprovado' && course.enrolled === false,
+      );
 
       setApprovedCourses(approved);
       return approved;

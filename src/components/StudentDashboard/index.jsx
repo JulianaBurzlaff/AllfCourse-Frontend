@@ -38,17 +38,19 @@ function StudentDasboard() {
         </S.Text>
       </Container>
       <Section title="CURSOS EM ANDAMENTO" contentDirection="column">
-        {loggedStudentCourses.map(course => (
-          <CourseBanner
-            title={course.course_name}
-            description={course.course_description}
-            teacher={course.teacher_name}
-            value={course.value}
-            subscribersNumber={course.total_enrolleds}
-            student
-            progress={20}
-          />
-        ))}
+        {loggedStudentCourses.length > 0
+          ? loggedStudentCourses.map(course => (
+              <CourseBanner
+                title={course.course_name}
+                description={course.course_description}
+                teacher={course.teacher_name}
+                value={course.value}
+                subscribersNumber={course.total_enrolleds}
+                student
+                progress={course.finished ? 100 : 0}
+              />
+            ))
+          : 'Nenhum curso em andamento no momento'}
       </Section>
       <Section title="TODOS OS CURSOS" contentDirection="row" wrap="wrap">
         {approvedCourses.map(course => (
