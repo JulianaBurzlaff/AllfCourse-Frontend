@@ -34,7 +34,7 @@ function StudentDasboard() {
         margin="50px 0 0 0"
       >
         <S.Text size="20px" weight="normal" color="primary">
-          Bem vindo, ALUNO!
+          Bem vindo, {user[0].name}!
         </S.Text>
       </Container>
       <Section title="CURSOS EM ANDAMENTO" contentDirection="column">
