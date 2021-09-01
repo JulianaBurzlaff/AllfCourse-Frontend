@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   height: 200px;
-  margin-bottom: 10px;
+  margin-bottom: 50px;
 `;
 
 export const Infos = styled.div`
@@ -15,16 +15,17 @@ export const Infos = styled.div`
 `;
 
 export const Title = styled.div`
-  font-size: 18px;
+  font-size: 22px;
+  font-weight: bold;
 `;
 
 export const Teacher = styled.div`
-  font-size: 16px;
+  font-size: 18px;
   margin-top: 15px;
 `;
 
 export const Description = styled.div`
-  margin-top: 15px;
+  margin-top: 16px;
 `;
 
 export const ValuesContainer = styled.div`
@@ -34,13 +35,31 @@ export const ValuesContainer = styled.div`
 `;
 
 export const Values = styled.div`
-  font-size: 14px;
+  h3 {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    margin-bottom: 5px;
+
+    h6 {
+      margin-right: 5px;
+      font-weight: normal;
+      font-size: 16px;
+    }
+  }
+  p {
+    font-size: 14px;
+  }
 `;
 
 export const Categories = styled.div`
   margin-left: 50px;
   display: flex;
   flex-direction: column;
+`;
+
+export const CategoriesTags = styled.div`
+  display: flex;
 `;
 
 export const Image = styled.img`
@@ -52,13 +71,15 @@ export const Progress = styled.div`
 `;
 
 export const CategoryTitle = styled.div`
-  font-size: 14px;
+  font-size: 16px;
+  margin-bottom: 5px;
 `;
 
 export const Category = styled.div`
   ${({ theme }) => css`
-    margin-right: 5px;
-    display: flex;
+    margin-right: 8px;
+    border-radius: 5px;
+    padding: 6px;
     background-color: ${theme.palette.text.primary};
     color: ${theme.palette.text.secondary};
   `}

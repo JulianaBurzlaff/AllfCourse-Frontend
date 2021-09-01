@@ -21,14 +21,19 @@ function CourseHeader({
         <S.Description>{description}</S.Description>
         <S.ValuesContainer>
           <S.Values>
-            <p>{parseInt(value, 10) ? `R$ ${value}` : 'GRATUITO'}</p>
+            <h3>
+              <h6>Valor:</h6>
+              {parseInt(value, 10) ? `R$ ${value}` : 'GRATUITO'}
+            </h3>
             <p>{`${subscribersNumber} inscritos`}</p>
           </S.Values>
           <S.Categories>
             <S.CategoryTitle>Categorias:</S.CategoryTitle>
-            {categories.map(category => (
-              <S.Category>{category.name}</S.Category>
-            ))}
+            <S.CategoriesTags>
+              {categories.map(category => (
+                <S.Category>{category.name}</S.Category>
+              ))}
+            </S.CategoriesTags>
           </S.Categories>
         </S.ValuesContainer>
 
