@@ -23,8 +23,13 @@ function StudentDasboard() {
   } = useCourse();
 
   useEffect(() => {
-    fetchLoggedStudentCourses().finally(() => setLoading(false));
-    fetchApprovedCourses().finally(() => setLoading(false));
+    (async () => {
+      await setLoading(true);
+
+      await Promise.all([fetchLoggedStudentCourses(), fetchApprovedCourses()]);
+
+      await setLoading(false);
+    })();
   }, []);
 
   function onCourseBannerClick(id) {
