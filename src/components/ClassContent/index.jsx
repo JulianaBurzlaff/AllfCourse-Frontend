@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useCourse } from '../../providers/CourseProvider';
 import Container from '../Container';
 import Loader from '../Loader';
@@ -11,7 +11,7 @@ import * as S from './styles';
 function ClassConten() {
   const [loading, setLoading] = useState(true);
   const { courseId, moduleId, classId } = useParams();
-
+  const history = useHistory();
   const { fetchChosenCourse, chosenCourse = [] } = useCourse();
 
   useEffect(() => {
@@ -44,7 +44,13 @@ function ClassConten() {
               {module?.name}
             </S.Module>
           </S.Info>
-          <S.BackButton>Voltar à página do curso</S.BackButton>
+          <S.BackButton
+            onClick={() => {
+              history.goBack();
+            }}
+          >
+            Voltar à página do curso
+          </S.BackButton>
         </S.Header>
       </Container>
     </>
