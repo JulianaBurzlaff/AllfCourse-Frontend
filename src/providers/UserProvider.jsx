@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
 import jwt from 'jsonwebtoken';
+import { api } from '../services/api';
 
 export const UserContext = createContext({});
 
@@ -51,17 +52,18 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const signIn = async ({ email, password }) => {
+    console.log('2', email, password);
     try {
       setUserError(false);
       setLoading(true);
-      const response = await fetch('http://localhost:3001/login', {
-        method: 'GET',
+      const response = await api.get('http://localhost:3001/login', {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Basic ${btoa(`${email}:${password}`)}`,
         },
       });
 
+      console.log(response);
       if (response.status !== 200) {
         setLoading(false);
         setUserError(true);
@@ -71,9 +73,8 @@ export const UserProvider = ({ children }) => {
         return;
       }
 
-      const responseData = await response.json();
-      const userData = jwt.decode(responseData.token);
-      console.log(userData);
+      const responseData = await response.data;
+      const userData = await jwt.decode(responseData.token);
       login(userData);
       setLoading(false);
     } catch (error) {

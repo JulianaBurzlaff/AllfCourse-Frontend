@@ -13,8 +13,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import PhoneIcon from '@material-ui/icons/Phone';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
-import { useUser } from '../../providers/UserProvider';
 import { UploadContext } from '../../providers/UploadProvider';
+import { useUser } from '../../providers/UserProvider';
 import AuthTemplate from '../../components/AuthTemplate';
 import Button from '../../components/Button';
 import DropArea from '../../components/DropArea';
@@ -129,7 +129,6 @@ function Register() {
 
       if (response.status !== 201) {
         const responseError = await response.json();
-        console.log(responseError);
         const error =
           responseError.message.validationErrors[
             Object.keys(responseError.message.validationErrors)[0]
@@ -144,9 +143,8 @@ function Register() {
       }
 
       setLoading(false);
-      setStatus('Usuário cadastrado com sucesso. Entrando...');
-      console.log(email, password);
-      signIn(email, password);
+      setStatus('Usuário cadastrado com sucesso.');
+      signIn({ email, password });
     } catch (error) {
       console.log('error:', error);
     }
