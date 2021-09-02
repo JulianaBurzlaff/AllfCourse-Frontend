@@ -7,23 +7,26 @@ export const StudentContext = createContext({});
 export const StudentProvider = ({ children }) => {
   const { enqueueSnackbar } = useSnackbar();
 
-  const enrollStudent = useCallback(async ({ studentId, courseId }) => {
-    try {
-      const { data } = await api.post('/buy', {
-        studentId,
-        courseId,
-        paymentMethodId: '1',
-        price: '0,00',
-      });
-      enqueueSnackbar('Matrícula efetuada com sucesso', {
-        variant: 'success',
-      });
-      return data;
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
-  }, []);
+  const enrollStudent = useCallback(
+    async ({ studentId, courseId }) => {
+      try {
+        const { data } = await api.post('/buy', {
+          studentId,
+          courseId,
+          paymentMethodId: '1',
+          price: '0,00',
+        });
+        enqueueSnackbar('Matrícula efetuada com sucesso', {
+          variant: 'success',
+        });
+        return data;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    },
+    [enqueueSnackbar],
+  );
 
   return (
     <StudentContext.Provider

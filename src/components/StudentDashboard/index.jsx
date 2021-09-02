@@ -29,7 +29,7 @@ function StudentDasboard() {
 
       setLoading(false);
     })();
-  }, []);
+  });
 
   function onCourseBannerClick(id) {
     history.push(`/dashboard/student/course/${id}`);
