@@ -22,11 +22,13 @@ function CourseDetail() {
   const { fetchChosenCourse, chosenCourse = [] } = useCourse();
   const history = useHistory();
 
-  const enrollUser = async () => {
+  const enrollUser = async courseid => {
+    const studentId = user[0].id.toString();
+    const courseId = courseid.toString();
     try {
       await enrollStudent({
-        studentId: user[0].id,
-        courseId: chosenCourse.id,
+        studentId,
+        courseId,
       });
 
       history.push('/dashboard/student');
@@ -61,7 +63,10 @@ function CourseDetail() {
           categories={chosenCourse.categories}
           image={image}
         />
-        <S.SubmitButton width="200px" onClick={enrollUser}>
+        <S.SubmitButton
+          width="200px"
+          onClick={() => enrollUser(chosenCourse.course_id)}
+        >
           Matricular-se
         </S.SubmitButton>
         <Section title="CONTEÚDO" contentDirection="column" alignItems="left" />
@@ -70,7 +75,10 @@ function CourseDetail() {
             <ModulesAccordion courseModule={mod} />
           ))}
         </S.Content>
-        <S.SubmitButton width="200px" onClick={enrollUser}>
+        <S.SubmitButton
+          width="200px"
+          onClick={() => enrollUser(chosenCourse.course_id)}
+        >
           Matricular-se
         </S.SubmitButton>
       </Container>

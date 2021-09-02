@@ -1,11 +1,10 @@
-import React, { createContext, useCallback, useState, useContext } from 'react';
+import React, { createContext, useCallback, useContext } from 'react';
 import { useSnackbar } from 'notistack';
 import { api } from '../services/api';
 
 export const StudentContext = createContext({});
 
 export const StudentProvider = ({ children }) => {
-  const [loading, setLoading] = useState(true);
   const { enqueueSnackbar } = useSnackbar();
 
   const enrollStudent = useCallback(async ({ studentId, courseId }) => {
@@ -13,8 +12,8 @@ export const StudentProvider = ({ children }) => {
       const { data } = await api.post('/buy', {
         studentId,
         courseId,
-        paymentMethodId: 1,
-        price: 0,
+        paymentMethodId: '1',
+        price: '0,00',
       });
       enqueueSnackbar('Matrícula efetuada com sucesso', {
         variant: 'success',
@@ -30,8 +29,6 @@ export const StudentProvider = ({ children }) => {
     <StudentContext.Provider
       value={{
         enrollStudent,
-        setLoading,
-        loading,
       }}
     >
       {children}
