@@ -7,6 +7,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
+  margin-top: 20px;
 `;
 
 export const ModuleAccordion = styled(Accordion)`
@@ -23,9 +24,51 @@ export const ModuleAccordionSummary = styled(AccordionSummary)`
   `}
 `;
 
+export const ModuleInfo = styled.div`
+  ${({ theme }) => css`
+    color: ${theme.palette.primary.dark};
+    margin-right: 40px;
+  `}
+`;
+
 export const ModuleAccordionDetails = styled(AccordionDetails)`
+  ${({ theme }) => css`
+    background-color: ${theme.palette.text.secondary};
+    display: flex;
+    flex-direction: column;
+    margin-top: 3px;
+  `}
+`;
+
+export const Description = styled.div`
+  ${({ theme }) => css`
+    color: ${theme.palette.text.primary};
+    margin: 10px;
+  `}
+`;
+
+export const Class = styled.button`
   ${({ theme }) => css`
     background-color: ${theme.palette.info.main};
     color: ${theme.palette.info.dark};
+    margin-top: 5px;
+    height: 50px;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+      border: 1px solid ${theme.palette.info.dark};
+    }
+  `}
+`;
+
+export const ClassInfo = styled.div`
+  ${({ theme }) => css`
+    color: ${theme.palette.info.dark};
+    margin-right: 40px;
   `}
 `;

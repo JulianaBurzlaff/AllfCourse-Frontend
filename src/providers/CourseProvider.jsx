@@ -7,6 +7,7 @@ export const CourseProvider = ({ children }) => {
   const [approvedCourses, setApprovedCourses] = useState();
   const [loggedStudentCourses, setLoggedStudentCourses] = useState();
   const [chosenCourse, setChosenCourse] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const fetchApprovedCourses = useCallback(async () => {
     try {
@@ -40,10 +41,9 @@ export const CourseProvider = ({ children }) => {
 
   const fetchChosenCourse = useCallback(async ({ id }) => {
     try {
-      const { data } = await api.get(`/getcourse/${id}`);
-
+      const { data } = await api.get(`/course-informations/${id}`);
       setChosenCourse(data[0]);
-      return data;
+      return data[0];
     } catch (error) {
       return null;
     }
@@ -59,6 +59,8 @@ export const CourseProvider = ({ children }) => {
         loggedStudentCourses,
         fetchChosenCourse,
         chosenCourse,
+        setLoading,
+        loading,
       }}
     >
       {children}

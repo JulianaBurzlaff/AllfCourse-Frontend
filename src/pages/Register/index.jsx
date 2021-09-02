@@ -98,9 +98,9 @@ function Register() {
         },
       });
 
-      if (response.status !== 200) {
-        history.push('/');
-      }
+      // if (response.status !== 200) {
+      //   history.push('/');
+      // }
 
       const userData = await response.json();
       login(userData);

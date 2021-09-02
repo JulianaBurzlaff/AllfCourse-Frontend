@@ -124,7 +124,7 @@ function TeacherDashboard() {
         })}
         <S.Text>
           {!loading && !coursesError && inReviewOrRejectedCourses.length === 0
-            ? 'Não há nenhum curso com análise em espera.'
+            ? 'Não há curso com análise em espera.'
             : ''}
         </S.Text>
         <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>
@@ -152,7 +152,7 @@ function TeacherDashboard() {
         })}
         <S.Text>
           {!loading && !coursesError && activeCourses.length === 0
-            ? 'Não há nenhum curso ativo.'
+            ? 'Não há curso ativo.'
             : ''}
         </S.Text>
         <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>
@@ -178,7 +178,7 @@ function TeacherDashboard() {
         })}
         <S.Text>
           {!loading && !coursesError && inactiveCourses.length === 0
-            ? 'Não há nenhum curso inativo.'
+            ? 'Não há curso inativo.'
             : ''}
         </S.Text>
         <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>

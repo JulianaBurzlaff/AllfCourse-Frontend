@@ -7,6 +7,7 @@ import { useCourse } from '../../providers/CourseProvider';
 import CourseBanner from '../CourseBanner';
 import Container from '../Container';
 import Section from '../Section';
+import Loader from '../Loader';
 import * as S from './styles';
 
 function StudentDasboard() {
@@ -17,17 +18,27 @@ function StudentDasboard() {
     fetchApprovedCourses,
     fetchLoggedStudentCourses,
     loggedStudentCourses = [],
-    fetchChosenCourse,
+    loading,
+    setLoading,
   } = useCourse();
 
+  console.log('StudentDasboard');
+
   useEffect(() => {
-    fetchApprovedCourses();
-    fetchLoggedStudentCourses();
+    fetchLoggedStudentCourses().finally(() => setLoading(false));
+    fetchApprovedCourses().finally(() => setLoading(false));
   }, []);
 
   function onCourseBannerClick(id) {
-    fetchChosenCourse({ id });
     history.push(`/dashboard/student/course/${id}`);
+  }
+
+  function onMyCourseBannerClick(id) {
+    history.push(`/dashboard/student/course/${id}/content`);
+  }
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (
@@ -54,6 +65,7 @@ function StudentDasboard() {
                 subscribersNumber={course.total_enrolleds}
                 student
                 progress={course.finished ? 100 : 0}
+                onClick={() => onMyCourseBannerClick(course.course_id)}
               />
             ))
           : 'Nenhum curso em andamento no momento'}

@@ -1,10 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { useUser } from '../../providers/UserProvider';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import { useCourse } from '../../providers/CourseProvider';
-import { useStudent } from '../../providers/StudentProvider';
 import CourseHeader from '../CourseHeader';
 import Container from '../Container';
 import Loader from '../Loader';
@@ -14,32 +12,27 @@ import image from '../../assets/logo.svg';
 
 import * as S from './styles';
 
-function CourseDetail() {
+function CourseContent() {
   const [loading, setLoading] = useState(true);
-  const { enrollStudent } = useStudent();
   const { id } = useParams();
-  const { user } = useUser();
-  const { fetchChosenCourse, chosenCourse = [] } = useCourse();
-  const history = useHistory();
 
-  const enrollUser = async courseid => {
-    const studentId = user[0].id.toString();
-    const courseId = courseid.toString();
-    try {
-      await enrollStudent({
-        studentId,
-        courseId,
-      });
-
-      history.push('/dashboard/student');
-    } catch (error) {
-      //
-    }
-  };
+  const {
+    fetchLoggedStudentCourses,
+    loggedStudentCourses = [],
+    fetchChosenCourse,
+    chosenCourse = {},
+  } = useCourse();
 
   useEffect(() => {
     fetchChosenCourse({ id }).finally(() => setLoading(false));
+    fetchLoggedStudentCourses().finally(() => setLoading(false));
   }, []);
+
+  const course = useMemo(() => {
+    return loggedStudentCourses?.find(
+      c => c.course_id === Number(chosenCourse.course_id),
+    );
+  }, [chosenCourse]);
 
   if (loading) {
     return <Loader />;
@@ -62,28 +55,25 @@ function CourseDetail() {
           subscribersNumber={chosenCourse.enrolleds}
           categories={chosenCourse.categories}
           image={image}
+          progress={course.finished ? 100 : 0}
+          enrolled
+          heightPB="10px"
+          fontSize="16px"
         />
-        <S.SubmitButton
-          width="200px"
-          onClick={() => enrollUser(chosenCourse.course_id)}
-        >
-          Matricular-se
-        </S.SubmitButton>
+
         <Section title="CONTEÚDO" contentDirection="column" alignItems="left" />
         <S.Content>
-          {chosenCourse.modules.map(mod => (
-            <ModulesAccordion courseModule={mod} />
+          {chosenCourse?.modules?.map(mod => (
+            <ModulesAccordion
+              courseModule={mod}
+              courseId={chosenCourse.course_id}
+              canClick
+            />
           ))}
         </S.Content>
-        <S.SubmitButton
-          width="200px"
-          onClick={() => enrollUser(chosenCourse.course_id)}
-        >
-          Matricular-se
-        </S.SubmitButton>
       </Container>
     </>
   );
 }
 
-export default CourseDetail;
+export default CourseContent;

@@ -10,6 +10,7 @@ import theme from './theme';
 import AppProvider from './providers';
 import { UploadProvider } from './providers/UploadProvider';
 import { CourseProvider } from './providers/CourseProvider';
+import { StudentProvider } from './providers/StudentProvider';
 import { UserProvider } from './providers/UserProvider';
 import GlobalStyle from './styles/GlobalStyle';
 
@@ -23,8 +24,10 @@ function App() {
               <UserProvider>
                 <UploadProvider>
                   <CourseProvider>
-                    <Router />
-                    <GlobalStyle />
+                    <StudentProvider>
+                      <Router />
+                      <GlobalStyle />
+                    </StudentProvider>
                   </CourseProvider>
                 </UploadProvider>
               </UserProvider>

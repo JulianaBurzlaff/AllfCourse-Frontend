@@ -8,10 +8,12 @@ function CourseHeader({
   teacher,
   value,
   subscribersNumber,
-  categories,
+  categories = [],
   image,
   progress,
   enrolled,
+  heightPB,
+  fontSize,
 }) {
   return (
     <S.Container>
@@ -21,14 +23,30 @@ function CourseHeader({
         <S.Description>{description}</S.Description>
         <S.ValuesContainer>
           <S.Values>
-            <p>{parseInt(value, 10) ? `R$ ${value}` : 'GRATUITO'}</p>
+            <h3>
+              <h6>Valor:</h6>
+              {parseInt(value, 10) ? `R$ ${value}` : 'GRATUITO'}
+            </h3>
             <p>{`${subscribersNumber} inscritos`}</p>
           </S.Values>
-          <S.Categories>Categorias: {categories}</S.Categories>
+          <S.Categories>
+            <S.CategoryTitle>Categorias:</S.CategoryTitle>
+            <S.CategoriesTags>
+              {categories.map(category => (
+                <S.Category>{category.name}</S.Category>
+              ))}
+            </S.CategoriesTags>
+          </S.Categories>
         </S.ValuesContainer>
 
         <S.Progress>
-          {enrolled && <ProgressBar progress={progress} />}
+          {enrolled && (
+            <ProgressBar
+              progress={progress}
+              heightPB={heightPB}
+              fontSize={fontSize}
+            />
+          )}
         </S.Progress>
       </S.Infos>
       <S.Image src={image} />
