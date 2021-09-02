@@ -56,7 +56,7 @@ export const UserProvider = ({ children }) => {
     try {
       setUserError(false);
       setLoading(true);
-      const response = await api.get('http://localhost:3001/login', {
+      const response = await api.get('/login', {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Basic ${btoa(`${email}:${password}`)}`,
