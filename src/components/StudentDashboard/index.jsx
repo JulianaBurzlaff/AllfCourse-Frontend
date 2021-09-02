@@ -23,12 +23,16 @@ function StudentDasboard() {
   } = useCourse();
 
   useEffect(() => {
-    fetchApprovedCourses().finally(() => setLoading(false));
     fetchLoggedStudentCourses().finally(() => setLoading(false));
+    fetchApprovedCourses().finally(() => setLoading(false));
   }, []);
 
   function onCourseBannerClick(id) {
     history.push(`/dashboard/student/course/${id}`);
+  }
+
+  function onMyCourseBannerClick(id) {
+    history.push(`/dashboard/student/course/${id}/content`);
   }
 
   if (loading) {
@@ -59,6 +63,7 @@ function StudentDasboard() {
                 subscribersNumber={course.total_enrolleds}
                 student
                 progress={course.finished ? 100 : 0}
+                onClick={() => onMyCourseBannerClick(course.course_id)}
               />
             ))
           : 'Nenhum curso em andamento no momento'}

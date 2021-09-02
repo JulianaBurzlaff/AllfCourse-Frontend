@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   height: 200px;
-  margin-bottom: 50px;
+  margin-bottom: 70px;
 `;
 
 export const Infos = styled.div`
@@ -31,7 +31,7 @@ export const Description = styled.div`
 export const ValuesContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 30px;
+  margin: 30px 0 10px;
 `;
 
 export const Values = styled.div`

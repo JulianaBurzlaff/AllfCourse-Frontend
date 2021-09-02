@@ -12,6 +12,8 @@ function CourseHeader({
   image,
   progress,
   enrolled,
+  heightPB,
+  fontSize,
 }) {
   return (
     <S.Container>
@@ -38,7 +40,13 @@ function CourseHeader({
         </S.ValuesContainer>
 
         <S.Progress>
-          {enrolled && <ProgressBar progress={progress} />}
+          {enrolled && (
+            <ProgressBar
+              progress={progress}
+              heightPB={heightPB}
+              fontSize={fontSize}
+            />
+          )}
         </S.Progress>
       </S.Infos>
       <S.Image src={image} />

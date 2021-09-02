@@ -1,19 +1,19 @@
 import React from 'react';
 
-import LinearProgress from '@material-ui/core/LinearProgress';
 import * as S from './styles';
 
-function ProgressBar({ progress }) {
+function ProgressBar({ progress, heightPB, fontSize = '12px' }) {
   return (
     <S.Container>
       <S.PGBar>
-        <LinearProgress
+        <S.ProgressBar
           variant="determinate"
           value={progress}
           color="primary"
+          heightPB={heightPB}
         />
       </S.PGBar>
-      <S.Value>{progress}%</S.Value>
+      <S.Value fontSize={fontSize}>{progress}%</S.Value>
     </S.Container>
   );
 }
