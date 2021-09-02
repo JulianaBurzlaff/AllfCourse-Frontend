@@ -5,6 +5,7 @@ import { Route } from './Route';
 import StudentDashboard from '../components/StudentDashboard';
 import CourseDetail from '../components/CourseDetail';
 import CourseContent from '../components/CourseContent';
+import ClassContent from '../components/ClassContent';
 
 export default function StudentRouter() {
   const { path } = useRouteMatch();
@@ -23,6 +24,12 @@ export default function StudentRouter() {
           exact
           path={`${path}/course/:id/content`}
           component={CourseContent}
+          isPrivate
+        />
+        <Route
+          exact
+          path={`${path}/course/:courseId/module/:moduleId/class/:classId`}
+          component={ClassContent}
           isPrivate
         />
       </Switch>

@@ -1,8 +1,17 @@
 import React from 'react';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { useHistory } from 'react-router-dom';
 import * as S from './styles';
 
-function ModulesAccordion({ courseModule }) {
+function ModulesAccordion({ courseModule, courseId, canClick }) {
+  const history = useHistory();
+
+  const openClass = classId => {
+    history.push(
+      `/dashboard/student/course/${courseId}/module/${courseModule.id}/class/${classId}`,
+    );
+  };
+
   return (
     <S.Container>
       <S.ModuleAccordion>
@@ -11,8 +20,11 @@ function ModulesAccordion({ courseModule }) {
           {courseModule.name}
         </S.ModuleAccordionSummary>
         <S.ModuleAccordionDetails>
+          <S.Description>{courseModule.description}</S.Description>
           {courseModule.classes.map(courseClass => (
-            <S.Class>
+            <S.Class
+              onClick={canClick ? () => openClass(courseClass.id) : undefined}
+            >
               <S.ClassInfo> AULA {courseClass.class_order}</S.ClassInfo>
               {courseClass.name}
             </S.Class>

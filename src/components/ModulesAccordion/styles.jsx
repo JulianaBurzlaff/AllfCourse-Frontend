@@ -40,7 +40,14 @@ export const ModuleAccordionDetails = styled(AccordionDetails)`
   `}
 `;
 
-export const Class = styled.div`
+export const Description = styled.div`
+  ${({ theme }) => css`
+    color: ${theme.palette.text.primary};
+    margin: 10px;
+  `}
+`;
+
+export const Class = styled.button`
   ${({ theme }) => css`
     background-color: ${theme.palette.info.main};
     color: ${theme.palette.info.dark};
@@ -49,6 +56,13 @@ export const Class = styled.div`
     border-radius: 5px;
     padding: 15px;
     display: flex;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+      border: 1px solid ${theme.palette.info.dark};
+    }
   `}
 `;
 

@@ -22,7 +22,7 @@ function CourseContent() {
     // fetchLoggedStudentCourses,
     // loggedStudentCourses = [],
     fetchChosenCourse,
-    chosenCourse = [],
+    chosenCourse = {},
   } = useCourse();
   // const history = useHistory();
   // const course = loggedStudentCourses.filter(
@@ -63,8 +63,12 @@ function CourseContent() {
 
         <Section title="CONTEÚDO" contentDirection="column" alignItems="left" />
         <S.Content>
-          {chosenCourse.modules.map(mod => (
-            <ModulesAccordion courseModule={mod} />
+          {chosenCourse?.modules?.map(mod => (
+            <ModulesAccordion
+              courseModule={mod}
+              courseId={chosenCourse.course_id}
+              canClick
+            />
           ))}
         </S.Content>
       </Container>
