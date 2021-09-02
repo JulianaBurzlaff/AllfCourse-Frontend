@@ -22,7 +22,6 @@ export const StudentProvider = ({ children }) => {
     } catch (error) {
       return null;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
