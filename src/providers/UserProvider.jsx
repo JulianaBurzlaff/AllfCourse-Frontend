@@ -8,7 +8,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [typeActive, setTypeActive] = useState('');
   const [loading, setLoading] = useState(false);
-  const [userError, setUserError] = useState(false);
+  const [userError, setUserError] = useState('');
 
   const handleTypeActive = useCallback(type => {
     setTypeActive(type);
@@ -53,7 +53,7 @@ export const UserProvider = ({ children }) => {
 
   const signIn = async ({ email, password }) => {
     try {
-      setUserError(false);
+      setUserError('');
       setLoading(true);
       const response = await api.get('/login', {
         headers: {
@@ -62,21 +62,24 @@ export const UserProvider = ({ children }) => {
         },
       });
 
-      if (response.status !== 200) {
-        setLoading(false);
-        setUserError(true);
-        setTimeout(() => {
-          setUserError(false);
-        }, 2500);
-        return;
-      }
-
       const responseData = await response.data;
       const userData = await jwt.decode(responseData.token);
       login(userData);
       setLoading(false);
     } catch (error) {
-      console.error(error);
+      if (error.response.status !== 200) {
+        setLoading(false);
+
+        const pathError = Object.keys(
+          error.response.data.message.criticalErrors,
+        )[0];
+        setUserError(
+          error.response.data.message.criticalErrors[pathError].message,
+        );
+        setTimeout(() => {
+          setUserError('');
+        }, 2500);
+      }
     }
   };
 
