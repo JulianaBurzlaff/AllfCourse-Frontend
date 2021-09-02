@@ -77,6 +77,7 @@ function Register() {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [registerError, setRegisterError] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const { uploadedFile } = useContext(UploadContext);
 
@@ -97,10 +98,6 @@ function Register() {
           Authorization: `Basic ${btoa(`${email}:${password}`)}`,
         },
       });
-
-      // if (response.status !== 200) {
-      //   history.push('/');
-      // }
 
       const userData = await response.json();
       login(userData);
@@ -160,8 +157,11 @@ function Register() {
         }, 2500);
         return;
       }
-
-      signIn(email, password);
+      setSuccess(true);
+      setLoading(false);
+      setTimeout(() => {
+        signIn(email, password);
+      }, 300);
     } catch (error) {
       console.log('error:', error);
     }
@@ -468,6 +468,7 @@ function Register() {
             </S.LinkButton>
           </S.ButtonsContainer>
         </S.Form>
+        <S.Return>{success ? 'Usuário cadastrado com sucesso' : ''}</S.Return>
         <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>
         <S.ErrorReturn>{registerError}</S.ErrorReturn>
       </S.Container>
