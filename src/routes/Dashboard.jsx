@@ -13,6 +13,8 @@ import StudentDashboard from '../components/StudentDashboard';
 import AdmDashboard from '../components/AdmDashboard';
 import NewCourse from '../components/NewCourse';
 import CourseDetail from '../components/CourseDetail';
+import CourseContent from '../components/CourseContent';
+import ClassContent from '../components/ClassContent';
 
 export default function DashboardRouter() {
   const { path } = useRouteMatch();
@@ -51,6 +53,18 @@ export default function DashboardRouter() {
             exact
             path={`${path}/student/course/:id`}
             component={CourseDetail}
+            isPrivate
+          />
+          <Route
+            exact
+            path={`${path}/student/course/:id/content`}
+            component={CourseContent}
+            isPrivate
+          />
+          <Route
+            exact
+            path={`${path}/student/course/:courseId/module/:moduleId/class/:classId`}
+            component={ClassContent}
             isPrivate
           />
         </Dashboard>

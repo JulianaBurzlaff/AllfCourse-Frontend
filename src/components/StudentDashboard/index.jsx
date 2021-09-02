@@ -22,8 +22,6 @@ function StudentDasboard() {
     setLoading,
   } = useCourse();
 
-  console.log('StudentDasboard');
-
   useEffect(() => {
     fetchLoggedStudentCourses().finally(() => setLoading(false));
     fetchApprovedCourses().finally(() => setLoading(false));

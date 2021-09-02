@@ -57,11 +57,11 @@ export const Class = styled.button`
     padding: 15px;
     display: flex;
     border: none;
-    cursor: pointer;
     text-decoration: none;
 
     &:hover {
       border: 1px solid ${theme.palette.info.dark};
+      cursor: pointer;
     }
   `}
 `;

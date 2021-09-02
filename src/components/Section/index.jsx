@@ -15,7 +15,7 @@ function Section({
       justifyContent="flex-start"
       alignItems={alignItems}
       width="100%"
-      margin="0 0 50px 0"
+      margin="0 0 10px 0"
     >
       <S.SectionTitle>
         <S.Text fontSize="16px" weight="600" color="secondary">

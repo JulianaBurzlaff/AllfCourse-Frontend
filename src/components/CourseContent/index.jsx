@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCourse } from '../../providers/CourseProvider';
 import CourseHeader from '../CourseHeader';
@@ -17,22 +17,22 @@ function CourseContent() {
   const { id } = useParams();
 
   const {
-    fetchLoggedStudentCourses,
-    loggedStudentCourses = [],
+    // fetchLoggedStudentCourses,
+    // loggedStudentCourses = [],
     fetchChosenCourse,
     chosenCourse = {},
   } = useCourse();
 
   useEffect(() => {
-    fetchLoggedStudentCourses();
+    // fetchLoggedStudentCourses();
     fetchChosenCourse({ id }).finally(() => setLoading(false));
   }, []);
 
-  const course = useMemo(() => {
-    return loggedStudentCourses?.find(
-      c => c.course_id === Number(chosenCourse.course_id),
-    );
-  }, [loggedStudentCourses]);
+  // const course = useMemo(() => {
+  //   return loggedStudentCourses?.find(
+  //     c => c.course_id === Number(chosenCourse.course_id),
+  //   );
+  // }, [loggedStudentCourses]);
 
   if (loading) {
     return <Loader />;
@@ -55,7 +55,7 @@ function CourseContent() {
           subscribersNumber={chosenCourse.enrolleds}
           categories={chosenCourse.categories}
           image={image}
-          progress={course?.finished ? 100 : 0}
+          progress={0}
           enrolled
           heightPB="10px"
           fontSize="16px"
