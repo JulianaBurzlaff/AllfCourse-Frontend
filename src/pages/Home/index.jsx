@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import jwt from 'jsonwebtoken';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
@@ -18,55 +17,16 @@ const schema = yup.object().shape({
 });
 
 function Home() {
-  const { login } = useUser();
+  const { signIn, loading, userError } = useUser();
   const history = useHistory();
-  const [loading, setLoading] = useState(false);
-  const [userError, setUserError] = useState(false);
 
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({
-    defaultValues: {
-      email: 'lucasgsousa93@gmail.com',
-      password: '123456',
-    },
     resolver: yupResolver(schema),
   });
-
-  const signIn = async ({ email, password }) => {
-    try {
-      setUserError(false);
-      setLoading(true);
-      const response = await fetch('http://localhost:3001/login', {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Basic ${btoa(`${email}:${password}`)}`,
-          withcredentials: true,
-        },
-      });
-
-      if (response.status !== 200) {
-        setLoading(false);
-        setUserError(true);
-        setTimeout(() => {
-          setUserError(false);
-        }, 2500);
-        return;
-      }
-
-      const responseData = await response.json();
-      const userData = jwt.decode(responseData.token);
-
-      login(userData);
-      setLoading(false);
-    } catch (error) {
-      console.log('error:', error);
-    }
-  };
 
   return (
     <AuthTemplate subtitle="Sua plataforma de cursos online">

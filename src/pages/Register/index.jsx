@@ -73,11 +73,11 @@ const schema = yup.object().shape({
 });
 
 function Register() {
-  const { login } = useUser();
+  const { signIn } = useUser();
   const history = useHistory();
+  const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
   const [registerError, setRegisterError] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   const { uploadedFile } = useContext(UploadContext);
 
@@ -88,23 +88,6 @@ function Register() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const signIn = async ({ email, password }) => {
-    try {
-      const response = await fetch('http://localhost:3001/login', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Basic ${btoa(`${email}:${password}`)}`,
-        },
-      });
-
-      const userData = await response.json();
-      login(userData);
-    } catch (error) {
-      console.log('error:', error);
-    }
-  };
 
   const signUp = async ({
     firstName,
@@ -134,6 +117,7 @@ function Register() {
 
     try {
       setRegisterError('');
+      setStatus('Aguarde...');
       setLoading(true);
       const response = await fetch('http://localhost:3001/register', {
         method: 'POST',
@@ -150,18 +134,19 @@ function Register() {
           responseError.message.validationErrors[
             Object.keys(responseError.message.validationErrors)[0]
           ].message;
-        setLoading(false);
+        setStatus('');
         setRegisterError(error);
+        setLoading(false);
         setTimeout(() => {
           setRegisterError('');
         }, 2500);
         return;
       }
-      setSuccess(true);
+
       setLoading(false);
-      setTimeout(() => {
-        signIn(email, password);
-      }, 300);
+      setStatus('Usuário cadastrado com sucesso. Entrando...');
+      console.log(email, password);
+      signIn(email, password);
     } catch (error) {
       console.log('error:', error);
     }
@@ -468,8 +453,7 @@ function Register() {
             </S.LinkButton>
           </S.ButtonsContainer>
         </S.Form>
-        <S.Return>{success ? 'Usuário cadastrado com sucesso' : ''}</S.Return>
-        <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>
+        <S.Return>{status}</S.Return>
         <S.ErrorReturn>{registerError}</S.ErrorReturn>
       </S.Container>
     </AuthTemplate>
