@@ -64,7 +64,9 @@ function CourseDetail() {
         </S.SubmitButton>
         <Section title="CONTEÚDO" contentDirection="column" alignItems="left" />
         <S.Content>
-          <ModulesAccordion moduleName="Modulo1" className="aula 1" />
+          {chosenCourse.modules.map(mod => (
+            <ModulesAccordion courseModule={mod} />
+          ))}
         </S.Content>
         <S.SubmitButton width="200px" onClick={enrollUser}>
           Matricular-se
