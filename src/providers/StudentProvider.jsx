@@ -20,6 +20,7 @@ export const StudentProvider = ({ children }) => {
       });
       return data;
     } catch (error) {
+      console.error(error);
       return null;
     }
   }, []);

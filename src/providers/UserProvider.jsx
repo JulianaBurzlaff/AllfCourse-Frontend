@@ -76,7 +76,7 @@ export const UserProvider = ({ children }) => {
       login(userData);
       setLoading(false);
     } catch (error) {
-      console.log('error:', error);
+      console.error(error);
     }
   };
 
