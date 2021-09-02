@@ -34,7 +34,7 @@ const schema = yup.object().shape({
     .test('surname-validation', 'Sobrenome inválido', val => {
       return !/[^A-Za-z0-9áãâéêíóõúç\s']/.exec(val);
     }),
-  socialname: yup
+  socialName: yup
     .string()
     .notRequired()
     .test('social-name-validation', 'Nome inválido', val => {
@@ -132,7 +132,7 @@ function Register() {
       email,
       password,
       avatar: uploadedFile.file,
-      type: Number(type),
+      type,
     };
 
     try {
@@ -148,9 +148,10 @@ function Register() {
 
       if (response.status !== 201) {
         const responseError = await response.json();
+        console.log(responseError);
         const error =
-          responseError.message.criticalErrors[
-            Object.keys(responseError.message.criticalErrors)[0]
+          responseError.message.validationErrors[
+            Object.keys(responseError.message.validationErrors)[0]
           ].message;
         setLoading(false);
         setRegisterError(error);
@@ -231,9 +232,9 @@ function Register() {
                 placeholder="nome social"
                 margin="none"
                 fullWidth
-                {...register('socialname')}
-                helperText={errors.socialname?.message}
-                error={errors.socialname}
+                {...register('socialName')}
+                helperText={errors.socialName?.message}
+                error={errors.socialName}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment>
