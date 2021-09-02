@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-// import Grid from '@material-ui/core/Grid';
 import { useHistory } from 'react-router-dom';
 import { useUser } from '../../providers/UserProvider';
 import { useCourse } from '../../providers/CourseProvider';
