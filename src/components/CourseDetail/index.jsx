@@ -1,11 +1,10 @@
 /* eslint-disable camelcase */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-// import Grid from '@material-ui/core/Grid';
 import { useParams, useHistory } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 import { useUser } from '../../providers/UserProvider';
 import { useCourse } from '../../providers/CourseProvider';
+import { useStudent } from '../../providers/StudentProvider';
 import CourseHeader from '../CourseHeader';
 import Container from '../Container';
 import Loader from '../Loader';
@@ -17,21 +16,24 @@ import * as S from './styles';
 
 function CourseDetail() {
   const [loading, setLoading] = useState(true);
+  const { enrollStudent } = useStudent();
   const { id } = useParams();
   const { user } = useUser();
   const { fetchChosenCourse, chosenCourse = [] } = useCourse();
   const history = useHistory();
-  const { enqueueSnackbar } = useSnackbar();
 
-  function enrollUser() {
-    console.log(user[0].id);
-    console.log(chosenCourse.id);
-    // fazer post de matricula
-    enqueueSnackbar('Matrícula efetuada com sucesso', {
-      variant: 'success',
-    });
-    history.push('/dashboard/student');
-  }
+  const enrollUser = async () => {
+    try {
+      await enrollStudent({
+        studentId: user[0].id,
+        courseId: chosenCourse.id,
+      });
+
+      history.push('/dashboard/student');
+    } catch (error) {
+      //
+    }
+  };
 
   useEffect(() => {
     fetchChosenCourse({ id }).finally(() => setLoading(false));
