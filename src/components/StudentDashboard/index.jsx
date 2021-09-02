@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 // import Grid from '@material-ui/core/Grid';
 import { useHistory } from 'react-router-dom';
@@ -24,11 +23,11 @@ function StudentDasboard() {
 
   useEffect(() => {
     (async () => {
-      await setLoading(true);
+      setLoading(true);
 
       await Promise.all([fetchLoggedStudentCourses(), fetchApprovedCourses()]);
 
-      await setLoading(false);
+      setLoading(false);
     })();
   }, []);
 
