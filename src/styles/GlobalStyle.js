@@ -29,6 +29,7 @@ export default createGlobalStyle`
     font-style: normal;
     font-weight: normal;
     overflow-x: hidden;
+    background: ${createTheme.palette.primary.contrastText};
   }
 
   #root{

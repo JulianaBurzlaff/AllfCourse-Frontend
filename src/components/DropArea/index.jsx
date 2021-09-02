@@ -1,10 +1,19 @@
 import React, { useContext } from 'react';
 import Dropzone from 'react-dropzone';
 import { UploadContext } from '../../providers/UploadProvider';
-import avatar from '../../assets/avatar.svg';
 import * as S from './styles';
 
-function DropArea({ width, height, borderRadius, borderLine, borderColor }) {
+function DropArea({
+  width,
+  height,
+  dropWidth,
+  dropHeight,
+  borderRadius,
+  borderLine,
+  borderColor,
+  image,
+  children,
+}) {
   const { uploadedFile, handleUpload } = useContext(UploadContext);
 
   const renderDragMessage = isDragReject => {
@@ -15,7 +24,14 @@ function DropArea({ width, height, borderRadius, borderLine, borderColor }) {
   };
 
   return (
-    <S.Container>
+    <S.Container
+      width={width}
+      height={height}
+      borderRadius={borderRadius}
+      borderLine={borderLine}
+      borderColor={borderColor}
+      image={uploadedFile?.preview ? uploadedFile.preview : image}
+    >
       <Dropzone
         accept="image/*"
         onDropAccepted={file => {
@@ -27,15 +43,12 @@ function DropArea({ width, height, borderRadius, borderLine, borderColor }) {
             {...getRootProps()}
             isDragActive={isDragActive}
             isDragReject={isDragReject}
-            width={width}
-            height={height}
-            borderRadius={borderRadius}
-            borderLine={borderLine}
-            borderColor={borderColor}
-            image={uploadedFile?.preview ? uploadedFile.preview : avatar}
+            width={dropWidth}
+            height={dropHeight}
           >
             <input {...getInputProps()} />
             {renderDragMessage(isDragReject)}
+            {children}
           </S.DropContainer>
         )}
       </Dropzone>
