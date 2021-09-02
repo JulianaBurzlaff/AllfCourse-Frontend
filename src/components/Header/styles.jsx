@@ -7,14 +7,14 @@ export const Header = styled.div`
   align-items: center;
   position: fixed;
   ${({ theme, color, height, width }) => css`
-    background-color: ${theme.palette[color].dark};
+    background-color: ${theme.palette[color].main};
     width: ${width};
     height: ${height};
   `}
 `;
 
 export const Logo = styled.img`
-  width: 80%;
+  width: 66%;
 `;
 
 export const Avatar = styled.button`

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useUser } from '../../providers/UserProvider';
@@ -23,13 +22,13 @@ function StudentDasboard() {
 
   useEffect(() => {
     (async () => {
-      await setLoading(true);
+      setLoading(true);
 
       await Promise.all([fetchLoggedStudentCourses(), fetchApprovedCourses()]);
 
-      await setLoading(false);
+      setLoading(false);
     })();
-  }, []);
+  });
 
   function onCourseBannerClick(id) {
     history.push(`/dashboard/student/course/${id}`);

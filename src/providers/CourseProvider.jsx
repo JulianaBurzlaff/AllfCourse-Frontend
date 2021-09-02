@@ -22,7 +22,6 @@ export const CourseProvider = ({ children }) => {
     } catch (error) {
       return null;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchLoggedStudentCourses = useCallback(async () => {
@@ -36,7 +35,6 @@ export const CourseProvider = ({ children }) => {
     } catch (error) {
       return null;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchChosenCourse = useCallback(async ({ id }) => {
@@ -47,7 +45,6 @@ export const CourseProvider = ({ children }) => {
     } catch (error) {
       return null;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

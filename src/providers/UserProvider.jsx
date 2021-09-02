@@ -52,7 +52,6 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const signIn = async ({ email, password }) => {
-    console.log('2', email, password);
     try {
       setUserError(false);
       setLoading(true);
@@ -63,7 +62,6 @@ export const UserProvider = ({ children }) => {
         },
       });
 
-      console.log(response);
       if (response.status !== 200) {
         setLoading(false);
         setUserError(true);
@@ -78,7 +76,7 @@ export const UserProvider = ({ children }) => {
       login(userData);
       setLoading(false);
     } catch (error) {
-      console.log('error:', error);
+      console.error(error);
     }
   };
 
