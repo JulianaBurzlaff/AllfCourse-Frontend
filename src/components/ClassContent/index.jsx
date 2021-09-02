@@ -23,6 +23,10 @@ function ClassConten() {
     return chosenCourse.modules?.find(mod => mod.id === Number(moduleId));
   }, [chosenCourse]);
 
+  const classInfo = useMemo(() => {
+    return module.classes?.find(cl => cl.id === Number(classId));
+  }, [chosenCourse]);
+
   if (loading) {
     return <Loader />;
   }
@@ -52,6 +56,22 @@ function ClassConten() {
             Voltar à página do curso
           </S.BackButton>
         </S.Header>
+        <S.Content>
+          <S.Class>
+            <S.Video>Video</S.Video>
+            <S.ClassInfo>
+              <S.ClassOrder>AULA {classInfo?.class_order}</S.ClassOrder>
+              <S.ClassName> {classInfo?.name}</S.ClassName>
+            </S.ClassInfo>
+          </S.Class>
+          <S.RightSide>
+            <S.Material>MATERIAL COMPLEMENTAR</S.Material>
+            <S.Buttons>
+              <S.Previous>Aula Anterior</S.Previous>
+              <S.Next>Próxima aula</S.Next>
+            </S.Buttons>
+          </S.RightSide>
+        </S.Content>
       </Container>
     </>
   );
