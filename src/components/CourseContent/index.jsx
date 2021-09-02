@@ -24,15 +24,15 @@ function CourseContent() {
   } = useCourse();
 
   useEffect(() => {
+    fetchLoggedStudentCourses();
     fetchChosenCourse({ id }).finally(() => setLoading(false));
-    fetchLoggedStudentCourses().finally(() => setLoading(false));
   }, []);
 
   const course = useMemo(() => {
     return loggedStudentCourses?.find(
       c => c.course_id === Number(chosenCourse.course_id),
     );
-  }, [chosenCourse]);
+  }, [loggedStudentCourses]);
 
   if (loading) {
     return <Loader />;
@@ -55,7 +55,7 @@ function CourseContent() {
           subscribersNumber={chosenCourse.enrolleds}
           categories={chosenCourse.categories}
           image={image}
-          progress={course.finished ? 100 : 0}
+          progress={course?.finished ? 100 : 0}
           enrolled
           heightPB="10px"
           fontSize="16px"
