@@ -29,8 +29,8 @@ function Home() {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      email: 'burzlaff.juliana@gmail.com',
-      password: '1234567',
+      email: 'lucasgsousa93@gmail.com',
+      password: '123456',
     },
     resolver: yupResolver(schema),
   });

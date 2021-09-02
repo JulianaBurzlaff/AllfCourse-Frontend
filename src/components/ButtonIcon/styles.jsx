@@ -41,7 +41,9 @@ export const Button = styled.button`
       css`
         color: ${theme.palette.text.primary};
         background-color: ${theme.palette.primary.contrastText};
-        border: ${theme.palette.text.primary};
+        opacity: 0.8;
+        box-sizing: border-box;
+        border: solid 1px ${theme.palette.text.primary};
       `}
   `}
 `;

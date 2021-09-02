@@ -1,14 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0 0 0;
-`;
-
-export const DropContainer = styled.div.attrs({
+export const Container = styled.div.attrs({
   className: 'dropzone',
 })`
   display: flex;
@@ -16,33 +8,57 @@ export const DropContainer = styled.div.attrs({
   justify-content: center;
   align-items: center;
 
-  ${({ width, height, borderRadius, borderLine, borderColor, image }) => css`
+  ${({
+    theme,
+    width,
+    height,
+    borderRadius,
+    borderLine,
+    borderColor,
+    image,
+    margin,
+  }) => css`
     width: ${width};
     height: ${height};
-    border: ${borderLine} ${borderColor};
+    border: ${borderColor === 'none'
+      ? 'none'
+      : `${borderLine} 1px ${theme.palette[borderColor].main}`};
     border-radius: ${borderRadius};
     background-image: url(${image});
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 50%;
     background-size: 100%;
-    cursor: pointer;
-    &:hover {
-      transform: scale(1.02, 1.02);
-    }
+    margin: ${margin};
   `}
 
-  ${({ theme, isDragActive }) =>
+  ${({ theme, isDragActive, borderLine }) =>
     isDragActive &&
     css`
-      border: solid 1px ${theme.palette.primary.dark};
+      border: ${borderLine} 1px ${theme.palette.primary.dark};
     `}
 
-  ${({ theme, isDragReject }) =>
+  ${({ theme, isDragReject, borderLine }) =>
     isDragReject &&
     css`
-      border: solid 1px ${theme.palette.error.main};
+      border: ${borderLine} 1px ${theme.palette.error.main};
     `}
+`;
+
+export const DropContainer = styled.div`
+  ${({ width, height }) => css`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: ${width};
+    height: ${height};
+  `}
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.02, 1.02);
+  }
 `;
 
 export const UploadMessage = styled.p`

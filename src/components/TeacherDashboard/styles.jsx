@@ -5,6 +5,13 @@ export const Text = styled.p`
     color: ${theme.palette.text[color]};
     font-size: ${fontSize};
     font-weight: ${weight};
-    padding-left: 12px;
   `}
+`;
+
+export const Return = styled.p`
+  color: #49a7a1;
+`;
+
+export const ErrorReturn = styled.p`
+  color: #c65b58;
 `;

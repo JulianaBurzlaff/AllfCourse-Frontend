@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useUser } from '../../providers/UserProvider';
 import CourseUnderReviewBanner from '../CourseUnderReviewBanner';
@@ -7,67 +7,82 @@ import Container from '../Container';
 import Section from '../Section';
 import ButtonIcon from '../ButtonIcon';
 import addWhiteIcon from '../../assets/icons/add-white.svg';
+import { api } from '../../services/api';
 import * as S from './styles';
 
 function TeacherDashboard() {
   const { user } = useUser();
   const history = useHistory();
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [coursesError, setCoursesError] = useState(false);
 
-  const userData = {
-    name: 'Lucas Sousa',
-  };
+  const [activeCourses, setActiveCourses] = useState([]);
+  const [inactiveCourses, setInactiveCourses] = useState([]);
+  const [inReviewOrRejectedCourses, setInReviewOrRejectedCourses] = useState(
+    [],
+  );
 
-  const [coursesData, setCoursesData] = useState([]);
+  const getCourses = useCallback(async () => {
+    try {
+      setLoading(true);
+      // const response = await fetch(
+      //   `${process.env.API_HOST}:${process.env.API_PORT}/courses/logged-teacher`,
+      // );
+
+      const response = await api.get('/courses/logged-teacher');
+
+      if (response.status !== 200) {
+        setLoading(false);
+        setCoursesError(true);
+        // setTimeout(() => {
+        // setCoursesError(false);
+        // }, 2500);
+        return;
+      }
+
+      setLoading(false);
+      setCoursesError(false);
+
+      const coursesData = await response.data;
+      setCourses(coursesData);
+      console.log(coursesData);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setCoursesError(true);
+    }
+  }, []);
 
   useEffect(() => {
-    setCoursesData([
-      {
-        id: 1,
-        name: 'CURSO 01',
-        description: 'Descrição do curso',
-        value: 0,
-        subscribes_number: 152,
-        create_date: '00/00/0000',
-        status: 'active',
-      },
-      {
-        id: 1,
-        name: 'CURSO 02',
-        description: 'Descrição do curso',
-        value: 0,
-        subscribes_number: 152,
-        create_date: '00/00/0000',
-        status: 'active',
-      },
-      {
-        id: 1,
-        name: 'CURSO 03',
-        description: 'Descrição do curso',
-        value: 0,
-        subscribes_number: 152,
-        create_date: '00/00/0000',
-        status: 'inactive',
-      },
-      {
-        id: 1,
-        name: 'CURSO 04',
-        description: 'Descrição do curso',
-        value: 0,
-        subscribes_number: 0,
-        create_date: '00/00/0000',
-        status: 'rejected',
-      },
-      {
-        id: 1,
-        name: 'CURSO 05',
-        description: 'Descrição do curso',
-        value: 0,
-        subscribes_number: 0,
-        create_date: '00/00/0000',
-        status: 'in review',
-      },
-    ]);
-  }, []);
+    getCourses();
+    setCourses([]);
+  }, [getCourses]);
+
+  useEffect(() => {
+    const actives = courses.filter(course => {
+      return course.status === 'active';
+    });
+
+    const inactives = courses.filter(course => {
+      return course.status === 'inactive';
+    });
+
+    const inReviewOrRejected = courses.filter(course => {
+      return course.status === 'in review' || course.status === 'rejected';
+    });
+
+    console.log(`actives =>`);
+    console.log(`${actives}`);
+    console.log(`inactives =>`);
+    console.log(`${inactives}`);
+    console.log(`in review or rejected =>`);
+    console.log(`${inReviewOrRejected}`);
+
+    setActiveCourses(actives);
+    setInactiveCourses(inactives);
+    setInReviewOrRejectedCourses(inReviewOrRejected);
+  }, [courses]);
 
   return (
     <>
@@ -79,19 +94,19 @@ function TeacherDashboard() {
         margin="50px 0 35px 0"
       >
         <S.Text size="20px" weight="normal" color="primary">
-          Bem vindo!
+          {`Bem vindo, ${user[0].name}!`}
         </S.Text>
         <ButtonIcon
           icon={addWhiteIcon}
           onClick={() => {
-            console.log(user);
+            history.push('teacher/new-course');
           }}
         >
           Novo curso
         </ButtonIcon>
       </Container>
       <Section title="CURSOS EM ESPERA" contentDirection="column">
-        {coursesData.map(course => {
+        {activeCourses.map(course => {
           return course.status === 'in review' ||
             course.status === 'rejected' ? (
             <CourseUnderReviewBanner
@@ -107,19 +122,27 @@ function TeacherDashboard() {
             <></>
           );
         })}
+        <S.Text>
+          {!loading && !coursesError && inReviewOrRejectedCourses.length === 0
+            ? 'Não há curso com análise em espera.'
+            : ''}
+        </S.Text>
+        <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>
+        <S.ErrorReturn>
+          {coursesError ? 'Erro na requisição dos cursos!' : ''}
+        </S.ErrorReturn>
       </Section>
       <Section title="MEUS CURSOS" contentDirection="row" wrap="wrap">
-        {coursesData.map(course => {
+        {inactiveCourses.map(course => {
           return course.status === 'active' ? (
             <CourseBanner
               id={course.id}
               title={course.name}
               description={course.description}
-              teacher={userData.name}
+              teacher={user[0].name}
               value={course.value}
               subscribersNumber={course.subscribes_number}
               onClick={() => {
-                console.log('AQUI');
                 history.push('/dashboard/teacher/course-data');
               }}
             />
@@ -127,15 +150,24 @@ function TeacherDashboard() {
             <></>
           );
         })}
+        <S.Text>
+          {!loading && !coursesError && activeCourses.length === 0
+            ? 'Não há curso ativo.'
+            : ''}
+        </S.Text>
+        <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>
+        <S.ErrorReturn>
+          {coursesError ? 'Erro na requisição dos cursos!' : ''}
+        </S.ErrorReturn>
       </Section>
       <Section title="CURSOS INATIVOS" contentDirection="row" wrap="wrap">
-        {coursesData.map(course => {
+        {inReviewOrRejectedCourses.map(course => {
           return course.status === 'inactive' ? (
             <CourseBanner
               id={course.id}
               title={course.name}
               description={course.description}
-              teacher={userData.name}
+              teacher={user[0].name}
               value={course.value}
               subscribersNumber={course.subscribes_number}
               inactive
@@ -144,6 +176,15 @@ function TeacherDashboard() {
             <></>
           );
         })}
+        <S.Text>
+          {!loading && !coursesError && inactiveCourses.length === 0
+            ? 'Não há curso inativo.'
+            : ''}
+        </S.Text>
+        <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>
+        <S.ErrorReturn>
+          {coursesError ? 'Erro na requisição dos cursos!' : ''}
+        </S.ErrorReturn>
       </Section>
     </>
   );

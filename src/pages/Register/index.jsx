@@ -18,6 +18,7 @@ import { UploadContext } from '../../providers/UploadProvider';
 import AuthTemplate from '../../components/AuthTemplate';
 import Button from '../../components/Button';
 import DropArea from '../../components/DropArea';
+import avatar from '../../assets/avatar.svg';
 import * as S from './styles';
 
 const schema = yup.object().shape({
@@ -171,9 +172,13 @@ function Register() {
         <DropArea
           width="95px"
           height="95px"
+          dropWidth="95px"
+          dropHeight="95px"
+          margin="20px 0 0 0"
           borderRadius="47.5px"
           borderLine="solid"
           borderColor="none"
+          image={avatar}
         />
         <S.Text>Clique para inserir a foto do perfil</S.Text>
         <S.Form onSubmit={handleSubmit(signUp)}>
