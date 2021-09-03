@@ -5,7 +5,6 @@ import { Route } from './Route';
 import Home from '../pages/Home';
 import Register from '../pages/Register';
 import Password from '../pages/Password';
-
 import DashboardRouter from './Dashboard';
 
 export default function Router() {

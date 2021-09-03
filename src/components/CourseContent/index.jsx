@@ -63,9 +63,10 @@ function CourseContent() {
 
         <Section title="CONTEÚDO" contentDirection="column" alignItems="left" />
         <S.Content>
-          {chosenCourse?.modules?.map(mod => (
+          {chosenCourse?.modules?.map((mod, i) => (
             <ModulesAccordion
               courseModule={mod}
+              key={i}
               courseId={chosenCourse.course_id}
               canClick
             />

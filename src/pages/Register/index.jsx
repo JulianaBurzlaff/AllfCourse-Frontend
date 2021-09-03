@@ -13,7 +13,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import PhoneIcon from '@material-ui/icons/Phone';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
-// import { api } from '../../services/api';
 import { UploadContext } from '../../providers/UploadProvider';
 import { useUser } from '../../providers/UserProvider';
 import AuthTemplate from '../../components/AuthTemplate';

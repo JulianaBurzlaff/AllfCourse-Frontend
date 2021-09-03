@@ -7,10 +7,11 @@ export const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState([]);
+  const [photo, setPhoto] = useState('');
   const [typeActive, setTypeActive] = useState('');
   const [loading, setLoading] = useState(false);
   const [userError, setUserError] = useState('');
-  const [cookies, , removeCookies] = useCookies(['auth']);
+  const [cookies, setCookies, removeCookies] = useCookies(['auth']);
 
   const handleTypeActive = useCallback(type => {
     setTypeActive(type);
@@ -90,6 +91,7 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         user,
+        setUser,
         typeActive,
         logout,
         login,
@@ -98,6 +100,9 @@ export const UserProvider = ({ children }) => {
         userError,
         handleTypeActive,
         cookies,
+        setCookies,
+        photo,
+        setPhoto,
       }}
     >
       {children}
