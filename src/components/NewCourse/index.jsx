@@ -72,6 +72,81 @@ function NewCourse() {
   });
 
   const course = {};
+  course.courseModules = [
+    {
+      name: 'Amassiando a carne',
+      description: 'Primeiros passos para uma hipnose',
+      order: '1',
+    },
+    {
+      name: 'Alimentando as vaca',
+      description: 'Segundos passos para uma hipnose',
+      order: '2',
+    },
+    {
+      name: 'Preparação 7',
+      description: 'Terceiros passos para uma hipnose',
+      order: '3',
+    },
+  ];
+  course.courseClasses = [
+    {
+      name: 'Dormindo modulo 1 order1',
+      description: 'Tô com sono',
+      order: '1',
+      position: 0,
+      link: 'www.youtube.com',
+      inactive: false,
+    },
+    {
+      name: 'Dormindo  modulo 1 order2',
+      description: 'Tô com sono',
+      order: '2',
+      position: 0,
+      link: 'www.youtube.com',
+      inactive: false,
+    },
+    {
+      name: 'Acordando  modulo 2 order1',
+      description: 'Ainda Tô com sono',
+      order: '1',
+      position: 1,
+      link: 'www.youtube.com',
+      inactive: false,
+    },
+    {
+      name: 'Dormindo modulo 2 order2',
+      description: 'Ainda Tô com sono',
+      order: '2',
+      position: 1,
+      link: 'www.youtube.com',
+      inactive: false,
+    },
+    {
+      name: 'Dormindo modulo 3 order1',
+      description: 'Morrendo de sono',
+      order: '1',
+      position: 2,
+      link: 'www.youtube.com',
+      inactive: false,
+    },
+    {
+      name: 'Dormindo modulo 3 order2',
+      description: 'Morrendo de sono',
+      order: '2',
+      position: 2,
+      link: 'www.youtube.com',
+      inactive: false,
+    },
+    {
+      name: 'Dormindo modulo 3 order3',
+      description: 'Morrendo de sono',
+      order: '3',
+      position: 2,
+      link: 'www.youtube.com',
+      inactive: false,
+    },
+  ];
 
   const saveCourse = async ({
     courseTitle,
@@ -82,83 +157,7 @@ function NewCourse() {
     course.description = courseDescription;
     course.price = price;
     course.courseCategories = courseCategories;
-    course.courseModules = [
-      {
-        name: 'Amassiando a carne',
-        description: 'Primeiros passos para uma hipnose',
-        order: '1',
-      },
-      {
-        name: 'Alimentando as vaca',
-        description: 'Segundos passos para uma hipnose',
-        order: '2',
-      },
-      {
-        name: 'Preparação 7',
-        description: 'Terceiros passos para uma hipnose',
-        order: '3',
-      },
-    ];
-    course.courseClasses = [
-      {
-        name: 'Dormindo modulo 1 order1',
-        description: 'Tô com sono',
-        order: '1',
-        position: 0,
-        link: 'www.youtube.com',
-        inactive: false,
-      },
-      {
-        name: 'Dormindo  modulo 1 order2',
-        description: 'Tô com sono',
-        order: '2',
-        position: 0,
-        link: 'www.youtube.com',
-        inactive: false,
-      },
-      {
-        name: 'Acordando  modulo 2 order1',
-        description: 'Ainda Tô com sono',
-        order: '1',
-        position: 1,
-        link: 'www.youtube.com',
-        inactive: false,
-      },
-      {
-        name: 'Dormindo modulo 2 order2',
-        description: 'Ainda Tô com sono',
-        order: '2',
-        position: 1,
-        link: 'www.youtube.com',
-        inactive: false,
-      },
-      {
-        name: 'Dormindo modulo 3 order1',
-        description: 'Morrendo de sono',
-        order: '1',
-        position: 2,
-        link: 'www.youtube.com',
-        inactive: false,
-      },
-      {
-        name: 'Dormindo modulo 3 order2',
-        description: 'Morrendo de sono',
-        order: '2',
-        position: 2,
-        link: 'www.youtube.com',
-        inactive: false,
-      },
-      {
-        name: 'Dormindo modulo 3 order3',
-        description: 'Morrendo de sono',
-        order: '3',
-        position: 2,
-        link: 'www.youtube.com',
-        inactive: false,
-      },
-    ];
 
-    console.log(JSON.stringify(course));
     try {
       const { data } = await api.post('/addcourse', course);
       console.log(data);
@@ -214,7 +213,7 @@ function NewCourse() {
       if (verification.length === 0) {
         categories.forEach((item, index) => {
           if (item.id === parseInt(categoryId, 10)) {
-            categoriesToSet.push(categories[index].name);
+            categoriesToSet.push(categories[index]);
           }
         });
       } else if (verification.length > 0) {
@@ -426,21 +425,21 @@ function NewCourse() {
                       {categories.length === 0
                         ? ''
                         : categories.map(category => {
-                          return (
-                            <S.FlagToSelect
-                              key={category.id}
-                              id={category.id}
-                              selected={
-                                courseCategories.indexOf(category) !== -1
-                              }
-                              onClick={event => {
-                                handleToogleCourseCategories(event.target.id);
-                              }}
-                            >
-                              {category.name}
-                            </S.FlagToSelect>
-                          );
-                        })}
+                            return (
+                              <S.FlagToSelect
+                                key={category.id}
+                                id={category.id}
+                                selected={
+                                  courseCategories.indexOf(category) !== -1
+                                }
+                                onClick={event => {
+                                  handleToogleCourseCategories(event.target.id);
+                                }}
+                              >
+                                {category.name}
+                              </S.FlagToSelect>
+                            );
+                          })}
                       <S.Text>
                         {!loading && !categoriesError && categories.length === 0
                           ? 'Não há nenhuma categoria de curso.'
@@ -502,7 +501,7 @@ function NewCourse() {
         width="85%"
         margin="0 0 50px 0"
       >
-        <ButtonIcon icon={addWhiteIcon} onClick={() => { }}>
+        <ButtonIcon icon={addWhiteIcon} onClick={() => {}}>
           Novo módulo
         </ButtonIcon>
       </Container>
