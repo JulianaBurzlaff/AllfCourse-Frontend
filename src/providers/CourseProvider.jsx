@@ -9,7 +9,7 @@ export const CourseProvider = ({ children }) => {
   const [chosenCourse, setChosenCourse] = useState({});
   const [loading, setLoading] = useState(true);
 
-  const fetchApprovedCourses = useCallback(async () => {
+  const fetchCourses = useCallback(async () => {
     try {
       const { data } = await api.get('/courses/logged-user');
 
@@ -17,21 +17,14 @@ export const CourseProvider = ({ children }) => {
         course => course.status === 'aprovado' && course.enrolled === false,
       );
 
-      setApprovedCourses(approved);
-      return approved;
-    } catch (error) {
-      return null;
-    }
-  }, []);
-
-  const fetchLoggedStudentCourses = useCallback(async () => {
-    try {
-      const { data } = await api.get('/courses/logged-user');
-
       const loggedUser = data.filter(course => course.enrolled === true);
 
+      console.log(approved);
+      console.log(loggedUser);
+
+      setApprovedCourses(approved);
       setLoggedStudentCourses(loggedUser);
-      return loggedUser;
+      return approved;
     } catch (error) {
       return null;
     }
@@ -50,9 +43,8 @@ export const CourseProvider = ({ children }) => {
   return (
     <CourseContext.Provider
       value={{
-        fetchApprovedCourses,
+        fetchCourses,
         approvedCourses,
-        fetchLoggedStudentCourses,
         loggedStudentCourses,
         fetchChosenCourse,
         chosenCourse,

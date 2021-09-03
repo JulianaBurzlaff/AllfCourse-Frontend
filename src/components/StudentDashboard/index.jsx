@@ -13,8 +13,7 @@ function StudentDasboard() {
   const history = useHistory();
   const {
     approvedCourses = [],
-    fetchApprovedCourses,
-    fetchLoggedStudentCourses,
+    fetchCourses,
     loggedStudentCourses = [],
     loading,
     setLoading,
@@ -24,7 +23,7 @@ function StudentDasboard() {
     (async () => {
       setLoading(true);
 
-      await Promise.all([fetchLoggedStudentCourses(), fetchApprovedCourses()]);
+      await fetchCourses();
 
       setLoading(false);
     })();
