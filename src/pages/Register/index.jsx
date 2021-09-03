@@ -392,7 +392,7 @@ function Register() {
                   </option>
                   <option value="1">Aluno</option>
                   <option value="2">Professor</option>
-                  <option value="3">Aluno e professor</option>
+                  <option value="7">Aluno e professor</option>
                 </Select>
                 <S.ReturnError>{errors.type?.message}</S.ReturnError>
               </FormControl>

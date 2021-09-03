@@ -28,7 +28,6 @@ function Header({ color = 'primary', width, height, logo, avatar }) {
       <S.Avatar>
         <Avatar
           src={avatar}
-          alt="avatar"
           onClick={() => {
             logout();
           }}
