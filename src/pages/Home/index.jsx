@@ -23,11 +23,12 @@ function Home() {
 
   useEffect(() => {
     (async () => {
-      console.log(cookies);
-      if (cookies.auth) {
-        const userData = await jwt.decode(cookies.auth);
-        login(userData);
+      if (cookies.length > 0) {
         console.log(cookies);
+        if (cookies.auth) {
+          const userData = await jwt.decode(cookies.auth);
+          login(userData);
+        }
       }
     })();
   }, [cookies, login]);
