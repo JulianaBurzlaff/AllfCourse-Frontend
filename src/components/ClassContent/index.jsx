@@ -59,7 +59,7 @@ function ClassContent() {
         </S.Header>
         <S.Content>
           <S.Class>
-            <YoutubeEmbed embedId="rokGy0huYEA" />
+            <YoutubeEmbed embedId={classInfo?.video_link} />
             <S.ClassInfo>
               <S.ClassOrder>AULA {classInfo?.class_order}</S.ClassOrder>
               <S.ClassName> {classInfo?.name}</S.ClassName>
