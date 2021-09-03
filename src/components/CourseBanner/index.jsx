@@ -22,6 +22,7 @@ function CourseBanner({
         justifyContent="center"
         alignItems="center"
         width="100%"
+        height="200px"
       >
         <S.CourseDescription inactive={inactive}>
           <h3>{title}</h3>

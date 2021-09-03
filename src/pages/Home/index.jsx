@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { TextField, InputAdornment } from '@material-ui/core';
+import jwt from 'jsonwebtoken';
 import { useUser } from '../../providers/UserProvider';
 import AuthTemplate from '../../components/AuthTemplate';
 import Button from '../../components/Button';
@@ -17,18 +18,25 @@ const schema = yup.object().shape({
 });
 
 function Home() {
-  const { signIn, loading, userError } = useUser();
+  const { cookies, login, signIn, loading, userError } = useUser();
   const history = useHistory();
+
+  useEffect(() => {
+    (async () => {
+      console.log(cookies);
+      if (cookies.auth) {
+        const userData = await jwt.decode(cookies.auth);
+        login(userData);
+        console.log(cookies);
+      }
+    })();
+  }, [cookies, login]);
 
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({
-    defaultValues: {
-      email: 'lucasgsousa93@gmail.com',
-      password: '123456',
-    },
     resolver: yupResolver(schema),
   });
 

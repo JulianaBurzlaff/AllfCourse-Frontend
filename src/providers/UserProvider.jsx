@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken';
+import { useCookies } from 'react-cookie';
 import { api } from '../services/api';
 
 export const UserContext = createContext({});
@@ -9,6 +10,7 @@ export const UserProvider = ({ children }) => {
   const [typeActive, setTypeActive] = useState('');
   const [loading, setLoading] = useState(false);
   const [userError, setUserError] = useState('');
+  const [cookies, setCookies, removeCookies] = useCookies(['auth']);
 
   const handleTypeActive = useCallback(type => {
     setTypeActive(type);
@@ -49,6 +51,7 @@ export const UserProvider = ({ children }) => {
 
   const logout = useCallback(() => {
     setUser([]);
+    removeCookies('auth');
   }, []);
 
   const signIn = async ({ email, password }) => {
@@ -61,10 +64,8 @@ export const UserProvider = ({ children }) => {
           Authorization: `Basic ${btoa(`${email}:${password}`)}`,
         },
       });
-
       const responseData = await response.data;
-      const userData = await jwt.decode(responseData.token);
-      login(userData);
+      setCookies('auth', responseData.token);
       setLoading(false);
     } catch (error) {
       if (error.response.status !== 200) {
@@ -94,6 +95,7 @@ export const UserProvider = ({ children }) => {
         loading,
         userError,
         handleTypeActive,
+        cookies,
       }}
     >
       {children}

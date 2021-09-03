@@ -54,7 +54,7 @@ function StudentDasboard() {
           Bem vindo, {user[0].name}!
         </S.Text>
       </Container>
-      <Section title="CURSOS EM ANDAMENTO" contentDirection="column">
+      <Section title="CURSOS EM ANDAMENTO" contentDirection="row" wrap="wrap">
         {loggedStudentCourses.length > 0
           ? loggedStudentCourses.map(course => (
               <CourseBanner
