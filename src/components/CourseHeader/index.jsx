@@ -19,7 +19,7 @@ function CourseHeader({
     <S.Container>
       <S.Infos>
         <S.Title>{title}</S.Title>
-        <S.Teacher>Professor {teacher}</S.Teacher>
+        <S.Teacher>Professor(a) {teacher}</S.Teacher>
         <S.Description>{description}</S.Description>
         <S.ValuesContainer>
           <S.Values>

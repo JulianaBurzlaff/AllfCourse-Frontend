@@ -81,7 +81,7 @@ export const BackButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    opacity: 0.7;
+    transform: scale(1.02, 1.02);
   }
 `;
 
@@ -91,7 +91,7 @@ export const Material = styled.div`
   font-family: 'Poppins';
   color: #176d76;
   border-radius: 5px;
-  min-height: 350px;
+  min-height: 365px;
   text-align: center;
   padding: 10px;
 `;
@@ -109,7 +109,7 @@ export const Previous = styled.button`
   margin-right: 20px;
 
   &:hover {
-    opacity: 0.7;
+    transform: scale(1.02, 1.02);
   }
 `;
 
@@ -126,7 +126,7 @@ export const Next = styled.button`
   border: none;
 
   &:hover {
-    opacity: 0.7;
+    transform: scale(1.02, 1.02);
   }
 `;
 

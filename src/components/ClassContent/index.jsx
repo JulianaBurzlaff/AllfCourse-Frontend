@@ -4,18 +4,18 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useCourse } from '../../providers/CourseProvider';
 import Container from '../Container';
+import YoutubeEmbed from '../YoutubeEmbed';
 import Loader from '../Loader';
 
 import * as S from './styles';
 
-function ClassConten() {
+function ClassContent() {
   const [loading, setLoading] = useState(true);
   const { courseId, moduleId, classId } = useParams();
   const history = useHistory();
   const { fetchChosenCourse, chosenCourse = [] } = useCourse();
 
   useEffect(() => {
-    console.log(classId);
     fetchChosenCourse({ courseId }).finally(() => setLoading(false));
   }, []);
 
@@ -39,6 +39,7 @@ function ClassConten() {
         alignItems="left"
         width="90%"
         margin="50px 0 0 0"
+        padding="2px"
       >
         <S.Header>
           <S.Info>
@@ -58,7 +59,7 @@ function ClassConten() {
         </S.Header>
         <S.Content>
           <S.Class>
-            <S.Video>Video</S.Video>
+            <YoutubeEmbed embedId="rokGy0huYEA" />
             <S.ClassInfo>
               <S.ClassOrder>AULA {classInfo?.class_order}</S.ClassOrder>
               <S.ClassName> {classInfo?.name}</S.ClassName>
@@ -77,4 +78,4 @@ function ClassConten() {
   );
 }
 
-export default ClassConten;
+export default ClassContent;
