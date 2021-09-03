@@ -11,6 +11,7 @@ import AppProvider from './providers';
 import { UploadProvider } from './providers/UploadProvider';
 import { CourseProvider } from './providers/CourseProvider';
 import { StudentProvider } from './providers/StudentProvider';
+import { TeacherProvider } from './providers/TeacherProvider';
 import { UserProvider } from './providers/UserProvider';
 import GlobalStyle from './styles/GlobalStyle';
 
@@ -23,12 +24,14 @@ function App() {
             <AppProvider>
               <UserProvider>
                 <UploadProvider>
-                  <CourseProvider>
-                    <StudentProvider>
-                      <Router />
-                      <GlobalStyle />
-                    </StudentProvider>
-                  </CourseProvider>
+                  <TeacherProvider>
+                    <CourseProvider>
+                      <StudentProvider>
+                        <Router />
+                        <GlobalStyle />
+                      </StudentProvider>
+                    </CourseProvider>
+                  </TeacherProvider>
                 </UploadProvider>
               </UserProvider>
             </AppProvider>

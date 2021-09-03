@@ -28,6 +28,7 @@ function Section({
         alignItems="center"
         wrap={wrap}
         width="85%"
+        margin="0 0 50px 0"
       >
         {children}
       </Container>

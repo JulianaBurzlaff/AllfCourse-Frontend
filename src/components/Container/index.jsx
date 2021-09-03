@@ -17,6 +17,8 @@ function Container({
   overflowY,
   margin,
   padding,
+  palette,
+  color,
 }) {
   return (
     <S.Container
@@ -34,6 +36,8 @@ function Container({
       overflowY={overflowY}
       margin={margin}
       padding={padding}
+      palette={palette}
+      color={color}
     >
       {children}
     </S.Container>

@@ -11,7 +11,7 @@ import Dashboard from '../pages/Dashboard';
 import TeacherDashboard from '../components/TeacherDashboard';
 import StudentDashboard from '../components/StudentDashboard';
 import AdmDashboard from '../components/AdmDashboard';
-import NewCourse from '../components/NewCourse';
+import EditCourse from '../components/EditCourse';
 import CourseDetail from '../components/CourseDetail';
 import CourseContent from '../components/CourseContent';
 import ClassContent from '../components/ClassContent';
@@ -45,8 +45,8 @@ export default function DashboardRouter() {
           />
           <Route
             exact
-            path={`${path}/teacher/new-course`}
-            component={NewCourse}
+            path={`${path}/teacher/edit-course`}
+            component={EditCourse}
             isPrivate
           />
           <Route

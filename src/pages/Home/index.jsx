@@ -25,6 +25,10 @@ function Home() {
     formState: { errors },
     handleSubmit,
   } = useForm({
+    defaultValues: {
+      email: 'lucasgsousa93@gmail.com',
+      password: '123456',
+    },
     resolver: yupResolver(schema),
   });
 

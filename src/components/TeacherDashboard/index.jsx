@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useUser } from '../../providers/UserProvider';
+import { TeacherContext } from '../../providers/TeacherProvider';
 import CourseUnderReviewBanner from '../CourseUnderReviewBanner';
 import CourseBanner from '../CourseBanner';
 import Container from '../Container';
@@ -12,6 +13,7 @@ import * as S from './styles';
 
 function TeacherDashboard() {
   const { user } = useUser();
+  const { handleSetEditStatus } = useContext(TeacherContext);
   const history = useHistory();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -46,7 +48,6 @@ function TeacherDashboard() {
 
       const coursesData = await response.data;
       setCourses(coursesData);
-      console.log(coursesData);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -72,12 +73,12 @@ function TeacherDashboard() {
       return course.status === 'in review' || course.status === 'rejected';
     });
 
-    console.log(`actives =>`);
-    console.log(`${actives}`);
-    console.log(`inactives =>`);
-    console.log(`${inactives}`);
-    console.log(`in review or rejected =>`);
-    console.log(`${inReviewOrRejected}`);
+    // console.log(`actives =>`);
+    // console.log(`${actives}`);
+    // console.log(`inactives =>`);
+    // console.log(`${inactives}`);
+    // console.log(`in review or rejected =>`);
+    // console.log(`${inReviewOrRejected}`);
 
     setActiveCourses(actives);
     setInactiveCourses(inactives);
@@ -99,7 +100,8 @@ function TeacherDashboard() {
         <ButtonIcon
           icon={addWhiteIcon}
           onClick={() => {
-            history.push('teacher/new-course');
+            handleSetEditStatus(0);
+            history.push('teacher/edit-course');
           }}
         >
           Novo curso

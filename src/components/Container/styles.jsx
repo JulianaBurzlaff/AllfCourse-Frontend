@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   ${({
+    theme,
     direction,
     justifyContent,
     alignItems,
@@ -16,6 +17,8 @@ export const Container = styled.div`
     overflowY,
     margin,
     padding,
+    palette,
+    color,
   }) => css`
     display: flex;
     flex-direction: ${direction};
@@ -32,5 +35,17 @@ export const Container = styled.div`
     overflow-y: ${overflowY || 'auto'};
     margin: ${margin};
     padding: ${padding};
+
+    ${() =>
+      palette === 'primary' &&
+      css`
+        background: ${theme.palette.primary[color]};
+      `}
+
+    ${() =>
+      palette === 'secondary' &&
+      css`
+        background: ${theme.palette.primary[color]};
+      `}
   `}
 `;

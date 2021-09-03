@@ -32,7 +32,7 @@ export const Button = styled.button`
       color === 'secondary' &&
       css`
         color: ${theme.palette.primary.contrastText};
-        background-color: ${theme.palette.error.error};
+        background-color: ${theme.palette.error.dark};
         border: none;
       `}
 

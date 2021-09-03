@@ -1,4 +1,26 @@
 import styled, { css } from 'styled-components';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+
+export const AccordionConatiner = styled(Accordion)`
+  ${({ theme }) => css`
+    width: 100%;
+    background: ${theme.palette.primary.light};
+  `}
+`;
+
+export const AccordionSummaryContainer = styled(AccordionSummary)`
+  ${({ theme }) => css`
+    font-size: 16px;
+    font-weight: normal;
+    color: ${theme.palette.primary.main};
+  `}
+`;
+
+export const AccordionDetailsConatiner = styled(AccordionDetails)`
+  width: 100%;
+`;
 
 export const Title = styled.p`
   ${({ theme, fontSize, weight, color, margin, width }) => css`
