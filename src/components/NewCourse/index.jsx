@@ -9,6 +9,7 @@ import * as yup from 'yup';
 import TextField from '@material-ui/core/TextField';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
+import { api } from '../../services/api';
 import Container from '../Container';
 import Section from '../Section';
 import DropArea from '../DropArea';
@@ -18,7 +19,6 @@ import addBlackIcon from '../../assets/icons/add-black.svg';
 import addWhiteIcon from '../../assets/icons/add-white.svg';
 import imageBlackIcon from '../../assets/icons/image-black.svg';
 import closeIcon from '../../assets/icons/close.svg';
-import { api } from '../../services/api';
 import * as S from './styles';
 
 const useStyles = makeStyles(theme => ({
@@ -71,27 +71,101 @@ function NewCourse() {
     resolver: yupResolver(schema),
   });
 
-  const saveCourse = async ({ courseTitle, courseDescription }) => {
-    console.log(courseTitle);
-    console.log(courseDescription);
-    // try {
-    //   const response = await fetch('http://localhost:3001/login', {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       Authorization: `Basic ${btoa(`${email}:${password}`)}`,
-    //     },
-    //   });
+  const course = {};
 
-    //   if (response.status !== 200) {
-    //     history.push('/');
-    //   }
+  const saveCourse = async ({
+    courseTitle,
+    courseDescription,
+    price = '00,00',
+  }) => {
+    course.courseName = courseTitle;
+    course.description = courseDescription;
+    course.price = price;
+    course.courseCategories = courseCategories;
+    course.courseModules = [
+      {
+        name: 'Amassiando a carne',
+        description: 'Primeiros passos para uma hipnose',
+        order: '1',
+      },
+      {
+        name: 'Alimentando as vaca',
+        description: 'Segundos passos para uma hipnose',
+        order: '2',
+      },
+      {
+        name: 'Preparação 7',
+        description: 'Terceiros passos para uma hipnose',
+        order: '3',
+      },
+    ];
+    course.courseClasses = [
+      {
+        name: 'Dormindo modulo 1 order1',
+        description: 'Tô com sono',
+        order: '1',
+        position: 0,
+        link: 'www.youtube.com',
+        inactive: false,
+      },
+      {
+        name: 'Dormindo  modulo 1 order2',
+        description: 'Tô com sono',
+        order: '2',
+        position: 0,
+        link: 'www.youtube.com',
+        inactive: false,
+      },
+      {
+        name: 'Acordando  modulo 2 order1',
+        description: 'Ainda Tô com sono',
+        order: '1',
+        position: 1,
+        link: 'www.youtube.com',
+        inactive: false,
+      },
+      {
+        name: 'Dormindo modulo 2 order2',
+        description: 'Ainda Tô com sono',
+        order: '2',
+        position: 1,
+        link: 'www.youtube.com',
+        inactive: false,
+      },
+      {
+        name: 'Dormindo modulo 3 order1',
+        description: 'Morrendo de sono',
+        order: '1',
+        position: 2,
+        link: 'www.youtube.com',
+        inactive: false,
+      },
+      {
+        name: 'Dormindo modulo 3 order2',
+        description: 'Morrendo de sono',
+        order: '2',
+        position: 2,
+        link: 'www.youtube.com',
+        inactive: false,
+      },
+      {
+        name: 'Dormindo modulo 3 order3',
+        description: 'Morrendo de sono',
+        order: '3',
+        position: 2,
+        link: 'www.youtube.com',
+        inactive: false,
+      },
+    ];
 
-    //   const userData = await response.json();
-    //   login(userData);
-    // } catch (error) {
-    //   console.log('error:', error);
-    // }
+    console.log(JSON.stringify(course));
+    try {
+      const { data } = await api.post('/addcourse', course);
+      console.log(data);
+    } catch (error) {
+      console.log(error.response.data);
+      console.log('error:', error);
+    }
   };
 
   const handleSetModulesNumber = useCallback(number => {
@@ -140,7 +214,7 @@ function NewCourse() {
       if (verification.length === 0) {
         categories.forEach((item, index) => {
           if (item.id === parseInt(categoryId, 10)) {
-            categoriesToSet.push(categories[index]);
+            categoriesToSet.push(categories[index].name);
           }
         });
       } else if (verification.length > 0) {
@@ -352,21 +426,21 @@ function NewCourse() {
                       {categories.length === 0
                         ? ''
                         : categories.map(category => {
-                            return (
-                              <S.FlagToSelect
-                                key={category.id}
-                                id={category.id}
-                                selected={
-                                  courseCategories.indexOf(category) !== -1
-                                }
-                                onClick={event => {
-                                  handleToogleCourseCategories(event.target.id);
-                                }}
-                              >
-                                {category.name}
-                              </S.FlagToSelect>
-                            );
-                          })}
+                          return (
+                            <S.FlagToSelect
+                              key={category.id}
+                              id={category.id}
+                              selected={
+                                courseCategories.indexOf(category) !== -1
+                              }
+                              onClick={event => {
+                                handleToogleCourseCategories(event.target.id);
+                              }}
+                            >
+                              {category.name}
+                            </S.FlagToSelect>
+                          );
+                        })}
                       <S.Text>
                         {!loading && !categoriesError && categories.length === 0
                           ? 'Não há nenhuma categoria de curso.'
@@ -428,7 +502,7 @@ function NewCourse() {
         width="85%"
         margin="0 0 50px 0"
       >
-        <ButtonIcon icon={addWhiteIcon} onClick={() => {}}>
+        <ButtonIcon icon={addWhiteIcon} onClick={() => { }}>
           Novo módulo
         </ButtonIcon>
       </Container>

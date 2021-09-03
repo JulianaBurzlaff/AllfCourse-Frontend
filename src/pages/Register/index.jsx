@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import PhoneIcon from '@material-ui/icons/Phone';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
-import { api } from '../../services/api';
+// import { api } from '../../services/api';
 import { UploadContext } from '../../providers/UploadProvider';
 import { useUser } from '../../providers/UserProvider';
 import AuthTemplate from '../../components/AuthTemplate';
@@ -120,7 +120,8 @@ function Register() {
       setRegisterError('');
       setStatus('Aguarde...');
       setLoading(true);
-      const response = await api.post('/register', {
+      const response = await fetch('http://localhost:3001/register', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -143,7 +144,7 @@ function Register() {
       }
 
       setLoading(false);
-      setStatus('Usuário cadastrado com sucesso.');
+      setStatus('Usuário cadastrado com sucesso. Entrando...');
       signIn({ email, password });
     } catch (error) {
       console.log('error:', error);
