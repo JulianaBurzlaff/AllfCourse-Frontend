@@ -9,7 +9,7 @@ export const CourseProvider = ({ children }) => {
   const [chosenCourse, setChosenCourse] = useState({});
   const [loading, setLoading] = useState(true);
 
-  const fetchApprovedCourses = useCallback(async () => {
+  const fetchCourses = useCallback(async () => {
     try {
       const { data } = await api.get('/courses/logged-user');
 
@@ -17,26 +17,17 @@ export const CourseProvider = ({ children }) => {
         course => course.status === 'aprovado' && course.enrolled === false,
       );
 
+      const loggedUser = data.filter(course => course.enrolled === true);
+
+      console.log(approved);
+      console.log(loggedUser);
+
       setApprovedCourses(approved);
+      setLoggedStudentCourses(loggedUser);
       return approved;
     } catch (error) {
       return null;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const fetchLoggedStudentCourses = useCallback(async () => {
-    try {
-      const { data } = await api.get('/courses/logged-user');
-
-      const loggedUser = data.filter(course => course.enrolled === true);
-
-      setLoggedStudentCourses(loggedUser);
-      return loggedUser;
-    } catch (error) {
-      return null;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchChosenCourse = useCallback(async ({ id }) => {
@@ -47,15 +38,13 @@ export const CourseProvider = ({ children }) => {
     } catch (error) {
       return null;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <CourseContext.Provider
       value={{
-        fetchApprovedCourses,
+        fetchCourses,
         approvedCourses,
-        fetchLoggedStudentCourses,
         loggedStudentCourses,
         fetchChosenCourse,
         chosenCourse,

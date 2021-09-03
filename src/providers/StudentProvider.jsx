@@ -20,9 +20,9 @@ export const StudentProvider = ({ children }) => {
       });
       return data;
     } catch (error) {
+      console.error(error);
       return null;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

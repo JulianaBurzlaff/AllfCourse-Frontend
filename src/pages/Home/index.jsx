@@ -91,9 +91,7 @@ function Home() {
         </S.LinkButton>
       </S.Form>
       <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>
-      <S.ErrorReturn>
-        {userError ? 'Email ou senha incorretos' : ''}
-      </S.ErrorReturn>
+      <S.ErrorReturn>{userError}</S.ErrorReturn>
     </AuthTemplate>
   );
 }

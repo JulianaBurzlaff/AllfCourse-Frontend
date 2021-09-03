@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../Header';
 import Container from '../Container';
-import logo from '../../assets/logo.svg';
+import logoIcon from '../../assets/logo-icon.svg';
 import avatar from '../../assets/avatar.svg';
 
 function DashboardTemplate({ children }) {
@@ -12,7 +12,7 @@ function DashboardTemplate({ children }) {
       alignItems="flex-start"
       width="100vw"
     >
-      <Header width="80px" height="100vh" logo={logo} avatar={avatar} />
+      <Header width="80px" height="100vh" logo={logoIcon} avatar={avatar} />
       <Container
         direction="column"
         justifyContent="flex-start"
