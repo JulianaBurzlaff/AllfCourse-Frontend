@@ -27,7 +27,6 @@ function StudentDasboard() {
 
       setLoading(false);
     })();
-    console.log(user[0].socialName);
   }, []);
 
   function onCourseBannerClick(id) {

@@ -5,6 +5,7 @@ import { TeacherContext } from '../../providers/TeacherProvider';
 import CourseUnderReviewBanner from '../CourseUnderReviewBanner';
 import CourseBanner from '../CourseBanner';
 import Container from '../Container';
+import Loader from '../Loader';
 import Section from '../Section';
 import ButtonIcon from '../ButtonIcon';
 import addWhiteIcon from '../../assets/icons/add-white.svg';
@@ -78,6 +79,10 @@ function TeacherDashboard() {
     setInactiveCourses(inactives);
     setInReviewOrRejectedCourses(inReviewOrRejected);
   }, [courses]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>

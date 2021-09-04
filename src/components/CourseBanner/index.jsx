@@ -1,6 +1,7 @@
 import React from 'react';
 import Container from '../Container';
 import ProgressBar from '../ProgressBar';
+import Image from '../../assets/logo.svg';
 import * as S from './styles';
 
 function CourseBanner({
@@ -17,7 +18,7 @@ function CourseBanner({
 }) {
   return (
     <S.BannerContainer onClick={onClick} inactive={inactive}>
-      <S.ImageContainer />
+      <S.ImageContainer src={Image} />
       <Container
         direction="column"
         justifyContent="center"

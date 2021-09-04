@@ -16,23 +16,11 @@ function CourseContent() {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
-  const {
-    // fetchLoggedStudentCourses,
-    // loggedStudentCourses = [],
-    fetchChosenCourse,
-    chosenCourse = {},
-  } = useCourse();
+  const { fetchChosenCourse, chosenCourse = {} } = useCourse();
 
   useEffect(() => {
-    // fetchLoggedStudentCourses();
     fetchChosenCourse({ id }).finally(() => setLoading(false));
   }, []);
-
-  // const course = useMemo(() => {
-  //   return loggedStudentCourses?.find(
-  //     c => c.course_id === Number(chosenCourse.course_id),
-  //   );
-  // }, [loggedStudentCourses]);
 
   if (loading) {
     return <Loader />;
