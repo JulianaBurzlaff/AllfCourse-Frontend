@@ -32,8 +32,8 @@ function CourseHeader({
           <S.Categories>
             <S.CategoryTitle>Categorias:</S.CategoryTitle>
             <S.CategoriesTags>
-              {categories.map(category => (
-                <S.Category>{category.name}</S.Category>
+              {categories.map((category, i) => (
+                <S.Category key={i}>{category.name}</S.Category>
               ))}
             </S.CategoriesTags>
           </S.Categories>

@@ -2,9 +2,12 @@ import React from 'react';
 import Header from '../Header';
 import Container from '../Container';
 import logoIcon from '../../assets/logo-icon.svg';
-import avatar from '../../assets/avatar.svg';
+import { useUser } from '../../providers/UserProvider';
 
 function DashboardTemplate({ children }) {
+  const { photo } = useUser();
+
+  const avatar = photo;
   return (
     <Container
       direction="row"

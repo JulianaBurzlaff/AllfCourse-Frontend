@@ -13,6 +13,7 @@ function CourseBanner({
   student = false,
   progress,
   onClick,
+  id,
 }) {
   return (
     <S.BannerContainer onClick={onClick} inactive={inactive}>
@@ -22,6 +23,7 @@ function CourseBanner({
         justifyContent="center"
         alignItems="center"
         width="100%"
+        key={id}
         height="200px"
       >
         <S.CourseDescription inactive={inactive}>

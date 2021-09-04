@@ -56,12 +56,13 @@ function StudentDasboard() {
       </Container>
       <Section title="CURSOS EM ANDAMENTO" contentDirection="row" wrap="wrap">
         {loggedStudentCourses.length > 0
-          ? loggedStudentCourses.map(course => (
+          ? loggedStudentCourses.map((course, i) => (
               <CourseBanner
                 title={course.course_name}
                 description={course.course_description}
                 teacher={course.teacher_name}
                 value={course.value}
+                key={i}
                 subscribersNumber={course.total_enrolleds}
                 student
                 progress={course.finished ? 100 : 0}
@@ -71,12 +72,13 @@ function StudentDasboard() {
           : 'Nenhum curso em andamento no momento'}
       </Section>
       <Section title="TODOS OS CURSOS" contentDirection="row" wrap="wrap">
-        {approvedCourses.map(course => (
+        {approvedCourses.map((course, i) => (
           <CourseBanner
             title={course.course_name}
             description={course.course_description}
             teacher={course.teacher_name}
             value={course.value}
+            key={i}
             subscribersNumber={course.total_enrolleds}
             onClick={() => onCourseBannerClick(course.course_id)}
           />

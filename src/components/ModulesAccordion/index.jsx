@@ -21,8 +21,9 @@ function ModulesAccordion({ courseModule, courseId, canClick }) {
         </S.ModuleAccordionSummary>
         <S.ModuleAccordionDetails>
           <S.Description>{courseModule.description}</S.Description>
-          {courseModule.classes.map(courseClass => (
+          {courseModule.classes.map((courseClass, i) => (
             <S.Class
+              key={i}
               onClick={canClick ? () => openClass(courseClass.id) : undefined}
             >
               <S.ClassInfo> AULA {courseClass.class_order}</S.ClassInfo>

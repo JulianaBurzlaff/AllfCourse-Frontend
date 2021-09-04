@@ -63,11 +63,12 @@ function CourseModuleContent({ header, classes, position }) {
               <></>
             )}
           </Container>
-          {classes.map(classe =>
+          {classes.map((classe, i) =>
             classe.position === position ? (
               <S.Class editStatus={editStatus}>
                 <S.ClassInfo>AULA {classe.order}</S.ClassInfo>
                 <Container
+                  key={i}
                   direction="column"
                   justifyContent="flex-start"
                   alignItems="flex-start"

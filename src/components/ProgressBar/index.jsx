@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as S from './styles';
 
-function ProgressBar({ progress, heightPB, fontSize = '12px' }) {
+function ProgressBar({ progress, heightpb, fontSize = '12px' }) {
   return (
     <S.Container>
       <S.PGBar>
@@ -10,7 +10,7 @@ function ProgressBar({ progress, heightPB, fontSize = '12px' }) {
           variant="determinate"
           value={progress}
           color="primary"
-          heightPB={heightPB}
+          heightpb={heightpb}
         />
       </S.PGBar>
       <S.Value fontSize={fontSize}>{progress}%</S.Value>
