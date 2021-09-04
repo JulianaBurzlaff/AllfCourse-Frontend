@@ -48,7 +48,6 @@ function TeacherDashboard() {
       setCoursesError(false);
 
       const coursesData = await response.data;
-      console.log(coursesData);
       setCourses(coursesData);
     } catch (error) {
       console.log(error);
