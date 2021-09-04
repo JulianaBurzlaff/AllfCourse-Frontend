@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -29,14 +29,18 @@ const schema = yup.object().shape({
 
 function EditCourseHeader() {
   const history = useHistory();
+
   const {
     modulesNumber,
     // handleSetModulesNumber,
     getCoursesCategories,
-    courseCategories,
+    // courseCategories,
     saveCourse,
+    courseCategories,
+    handleSetCourseCategories,
     // handleCategoriesModalOpen,
     // editStatus,
+    categories,
     cancelEditCourse,
   } = useContext(TeacherContext);
 
@@ -54,6 +58,14 @@ function EditCourseHeader() {
   useEffect(() => {
     getCoursesCategories();
   }, [getCoursesCategories]);
+
+  const onCategoryClick = cat => {
+    handleSetCourseCategories(prev => [...prev, cat]);
+  };
+
+  const selectedCategoriesIds = useMemo(() => {
+    return courseCategories.map(ct => ct.id);
+  }, [courseCategories]);
 
   return (
     <Container
@@ -170,24 +182,18 @@ function EditCourseHeader() {
                 wrap="wrap"
                 margin="0 0 20px 0"
               >
-                <S.FlagsSelect
-                  multiple
-                  id="tags-outlined"
-                  options={courseCategories}
-                  getOptionLabel={option => option.name}
-                  // defaultValue={[top100Films[13]]}
-                  filterSelectedOptions
-                  renderInput={params => (
-                    <S.FlagsInput {...params} variant="outlined" />
-                  )}
-                />
-                {/* {courseCategories.map(category => {
-                  return (
-                    <S.Flag key={category.id}>
-                      <S.FlagLabel>{category.name}</S.FlagLabel>
-                    </S.Flag>
-                  );
-                })} */}
+                {categories.map(data => (
+                  <S.CatOption
+                    onClick={() => onCategoryClick(data)}
+                    key={data.id}
+                    label={data.name}
+                    color={
+                      selectedCategoriesIds.includes(data.id)
+                        ? 'primary'
+                        : 'default'
+                    }
+                  />
+                ))}
               </Container>
               {/* {editStatus === 0 || editStatus === 1 ? (
                 <ButtonIcon

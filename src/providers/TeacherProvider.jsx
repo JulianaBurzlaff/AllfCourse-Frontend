@@ -129,6 +129,7 @@ export const TeacherProvider = ({ children }) => {
   const saveCourse = async ({ courseName, description }) => {
     console.log(courseName);
     console.log(description);
+
     // try {
     //   const response = await fetch('http://localhost:3001/login', {
     //     method: 'GET',
