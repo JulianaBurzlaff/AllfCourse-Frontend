@@ -5,9 +5,8 @@ import Banner from '../../assets/logo.svg';
 import * as S from './styles';
 
 function CourseHeaderData() {
-  const { modulesNumber, courseHeader } = useContext(TeacherContext);
-
-  // courseCategories
+  const { modulesNumber, courseHeader, courseCategories } =
+    useContext(TeacherContext);
 
   return (
     <Container
@@ -91,7 +90,11 @@ function CourseHeaderData() {
                 width="100%"
                 wrap="wrap"
                 margin="0 0 20px 0"
-              />
+              >
+                {courseCategories.map(category => {
+                  return <S.Flag key={Math.random()}>{category}</S.Flag>;
+                })}
+              </Container>
             </Container>
           </Container>
         </Container>

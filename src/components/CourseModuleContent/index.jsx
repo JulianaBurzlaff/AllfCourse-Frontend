@@ -21,7 +21,7 @@ const schema = yup.object().shape({
     .string()
     .required('Título obrigatório')
     .test('title-validation', 'Título inválido', val => {
-      return !/[^A-Za-z0-9áãâéêíóõúç\s'?!.()]/.exec(val);
+      return !/[^A-Za-z0-9áãâéêíóõúç\s'?!.()/-]/.exec(val);
     }),
   description: yup.string().required('Descrição obrigatória'),
 });

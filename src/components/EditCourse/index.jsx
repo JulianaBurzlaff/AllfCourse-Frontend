@@ -66,7 +66,7 @@ function EditCourse() {
       const moduleData = {
         name,
         description,
-        order: courseModules.length + 1,
+        order: (courseModules.length + 1).toString(),
       };
 
       modules.push(moduleData);

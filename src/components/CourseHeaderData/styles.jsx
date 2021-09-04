@@ -24,3 +24,10 @@ export const Text = styled.p`
 export const Image = styled.img`
   height: 200px;
 `;
+
+export const Flag = styled.div`
+  ${({ theme }) => css`
+    background: ${theme.palette.secondary.dark};
+    margin: 2.5px;
+  `}
+`;

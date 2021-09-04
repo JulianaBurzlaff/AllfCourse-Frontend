@@ -14,7 +14,7 @@ import * as S from './styles';
 
 function TeacherDashboard() {
   const { user } = useUser();
-  const { handleSetEditStatus } = useContext(TeacherContext);
+  const { handleSetEditStatus, cancelEditCourse } = useContext(TeacherContext);
   const history = useHistory();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -29,18 +29,12 @@ function TeacherDashboard() {
   const getCourses = useCallback(async () => {
     try {
       setLoading(true);
-      // const response = await fetch(
-      //   `${process.env.API_HOST}:${process.env.API_PORT}/courses/logged-teacher`,
-      // );
 
       const response = await api.get('/courses/logged-teacher');
 
       if (response.status !== 200) {
         setLoading(false);
         setCoursesError(true);
-        // setTimeout(() => {
-        // setCoursesError(false);
-        // }, 2500);
         return;
       }
 
@@ -99,6 +93,7 @@ function TeacherDashboard() {
           icon={addWhiteIcon}
           onClick={() => {
             handleSetEditStatus(0);
+            cancelEditCourse();
             history.push('teacher/edit-course');
           }}
         >

@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from '../Container';
-import CourseClassContent from '../CourseClassContent';
+import CourseClassContentData from '../CourseClassContentData';
 
 function CourseClassBanner({ classes }) {
   return (
@@ -12,7 +12,7 @@ function CourseClassBanner({ classes }) {
     >
       {classes.map(classData => {
         return (
-          <CourseClassContent
+          <CourseClassContentData
             key={`${classData.position}${classData.order}`}
             classData={classData}
           />

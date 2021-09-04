@@ -7,8 +7,6 @@ export const TeacherContext = createContext({});
 export const TeacherProvider = ({ children }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [categoriesError, setCategoriesError] = useState(false);
   const [courseHeader, setCourseHeader] = useState({});
   const [courseModules, setCourseModules] = useState([]);
   const [courseCategories, setCourseCategories] = useState([]);
@@ -17,12 +15,6 @@ export const TeacherProvider = ({ children }) => {
   const [editStatus, setEditStatus] = useState(0);
   const [order, setOrder] = useState(0);
   const [position, setPosition] = useState(0);
-
-  // =============================================== controle de modais
-
-  // const [categoriesModalOpen, setCategoriesModalOpen] = useState(false);
-
-  // ==================================================================
 
   const handleSetEditStatus = useCallback(status => {
     setEditStatus(status);
@@ -59,92 +51,6 @@ export const TeacherProvider = ({ children }) => {
     setModulesNumber(counter.length);
   }, [courseModules]);
 
-  // =============================================== controle de modais
-
-  // const handleCategoriesModalOpen = useCallback(() => {
-  //   setCategoriesModalOpen(true);
-  // }, []);
-
-  // const handleCategoriesModalClose = useCallback(() => {
-  //   setCategoriesModalOpen(false);
-  // }, []);
-
-  // ==================================================================
-
-  const getCoursesCategories = useCallback(async () => {
-    if (categories.length === 0) {
-      try {
-        setLoading(true);
-        const response = await api.get('/category/0');
-
-        if (response.status !== 200) {
-          setLoading(false);
-          setCategoriesError(true);
-          return;
-        }
-
-        setLoading(false);
-        setCategoriesError(false);
-
-        const categoriesData = await response.data;
-        setCategories(categoriesData);
-        console.log(categoriesData);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }, [categories]);
-
-  // const handleToogleCourseCategories = useCallback(
-  //   categoryId => {
-  //     const verification = courseCategories.filter(category => {
-  //       return category.id === parseInt(categoryId, 10);
-  //     });
-
-  //     const categoriesToSet = courseCategories;
-
-  //     if (verification.length === 0) {
-  //       categories.forEach((item, index) => {
-  //         if (item.id === parseInt(categoryId, 10)) {
-  //           categoriesToSet.push(categories[index]);
-  //         }
-  //       });
-  //     } else if (verification.length > 0) {
-  //       courseCategories.forEach((item, index) => {
-  //         if (item.id === parseInt(categoryId, 10)) {
-  //           categoriesToSet.splice(index, 1);
-  //         }
-  //       });
-  //     }
-
-  //     setCourseCategories(categoriesToSet);
-  //   },
-  //   [categories, courseCategories],
-  // );
-
-  const saveCourse = async ({ courseName, description }) => {
-    console.log(courseName);
-    console.log(description);
-    // try {
-    //   const response = await fetch('http://localhost:3001/login', {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       Authorization: `Basic ${btoa(`${email}:${password}`)}`,
-    //     },
-    //   });
-
-    //   if (response.status !== 200) {
-    //     history.push('/');
-    //   }
-
-    //   const userData = await response.json();
-    //   login(userData);
-    // } catch (error) {
-    //   console.log('error:', error);
-    // }
-  };
-
   const cancelEditCourse = useCallback(() => {
     setCategories([]);
     setCourseHeader({});
@@ -153,6 +59,30 @@ export const TeacherProvider = ({ children }) => {
     setCourseCategories([]);
     setModulesNumber(0);
   }, []);
+
+  const saveCourse = async ({ courseName, description }) => {
+    handleSetCourseHeader({
+      courseName,
+      description,
+    });
+
+    const newCourse = {};
+    newCourse.courseName = courseName;
+    newCourse.description = description;
+    newCourse.price = '00,00';
+    newCourse.courseCategories = courseCategories;
+    newCourse.courseModules = courseModules;
+    newCourse.courseClasses = courseClasses;
+
+    try {
+      await api.post('/addcourse', newCourse);
+      enqueueSnackbar('Curso criado com sucesso.', {
+        variant: 'success',
+      });
+    } catch (error) {
+      console.log('error:', error.response.data);
+    }
+  };
 
   const deleteModule = useCallback(() => {
     if (editStatus === 0) {
@@ -267,17 +197,13 @@ export const TeacherProvider = ({ children }) => {
       value={{
         editStatus,
         handleSetEditStatus,
-        // categoriesModalOpen,
-        // handleCategoriesModalOpen,
-        // handleCategoriesModalClose,
         categories,
-        loading,
-        categoriesError,
+        // loading,
+        // categoriesError,
         modulesNumber,
         handleSetModulesNumber,
-        getCoursesCategories,
+        // getCoursesCategories,
         courseCategories,
-        // handleToogleCourseCategories,
         handleSetCourseCategories,
         courseHeader,
         handleSetCourseHeader,

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { TeacherContext } from '../../providers/TeacherProvider';
 import CourseHeaderData from '../CourseHeaderData';
-import CourseModuleContent from '../CourseModuleContent';
+import CourseModuleContentData from '../CourseModuleContentData';
 import Section from '../Section';
 
 function CourseData() {
@@ -13,7 +13,7 @@ function CourseData() {
       <Section title="CONTEÚDO" contentDirection="column">
         {courseModules.map((module, index) => {
           return (
-            <CourseModuleContent
+            <CourseModuleContentData
               key={module.order}
               module={module}
               classes={courseClasses}

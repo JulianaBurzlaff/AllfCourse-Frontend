@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useCallback } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,22 +20,22 @@ const schema = yup.object().shape({
     .string()
     .required('Título obrigatório')
     .test('title-validation', 'Título inválido', val => {
-      return !/[^A-Za-z0-9áãâéêíóõúç\s'?!.()]/.exec(val);
+      return !/[^A-Za-z0-9áãâéêíóõúç\s'?!.()/-]/.exec(val);
     }),
   description: yup.string().required('Descrição obrigatória'),
 });
 
 function EditCourseHeader() {
   const history = useHistory();
+
   const {
     modulesNumber,
-    getCoursesCategories,
-    courseCategories,
     saveCourse,
-    // handleCategoriesModalOpen,
-    // editStatus,
+    courseCategories,
+    handleSetCourseCategories,
+    categories,
     cancelEditCourse,
-    handleSetEditStatus,
+    // handleSetEditStatus,
   } = useContext(TeacherContext);
 
   const [modalWarning, setModalWarning] = useState(false);
@@ -56,18 +56,19 @@ function EditCourseHeader() {
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {
-    getCoursesCategories();
-  }, [getCoursesCategories]);
-
   const editConclude = useCallback(
     ({ courseName, description }) => {
       saveCourse({ courseName, description });
-      handleSetEditStatus(2);
-      history.push('/dashboard/teacher/course-data');
+      setTimeout(() => {
+        history.push('/dashboard/teacher/course-data');
+      }, 4000);
     },
-    [saveCourse, handleSetEditStatus, history],
+    [saveCourse, history],
   );
+
+  const onCategoryClick = cat => {
+    handleSetCourseCategories(prev => [...prev, cat]);
+  };
 
   return (
     <Container
@@ -184,40 +185,19 @@ function EditCourseHeader() {
                 wrap="wrap"
                 margin="0 0 20px 0"
               >
-                <S.FlagsSelect
-                  multiple
-                  id="tags-outlined"
-                  options={courseCategories}
-                  getOptionLabel={option => option.name}
-                  // defaultValue={[top100Films[13]]}
-                  filterSelectedOptions
-                  renderInput={params => (
-                    <S.FlagsInput {...params} variant="outlined" />
-                  )}
-                />
-                {/* {courseCategories.map(category => {
-                  return (
-                    <S.Flag key={category.id}>
-                      <S.FlagLabel>{category.name}</S.FlagLabel>
-                    </S.Flag>
-                  );
-                })} */}
+                {categories.map(data => (
+                  <S.CatOption
+                    onClick={() => onCategoryClick(data.name)}
+                    key={data.id}
+                    label={data.name}
+                    color={
+                      courseCategories.includes(data.name)
+                        ? 'primary'
+                        : 'default'
+                    }
+                  />
+                ))}
               </Container>
-              {/* {editStatus === 0 || editStatus === 1 ? (
-                <ButtonIcon
-                  color="neutral"
-                  icon={addBlackIcon}
-                  onClick={() => {
-                    handleCategoriesModalOpen();
-                    getCoursesCategories();
-                  }}
-                >
-                  Selecionar categorias
-                </ButtonIcon>
-              ) : (
-                <></>
-              )} */}
-              {/* <CategoriesModal /> */}
             </Container>
           </Container>
         </Container>

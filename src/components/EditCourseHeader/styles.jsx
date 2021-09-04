@@ -1,10 +1,11 @@
 import styled, { css } from 'styled-components';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+// import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
+import Chip from '@material-ui/core/Chip';
 import Modal from '@material-ui/core/Modal';
 
-export const FlagsSelect = styled(Autocomplete)`
-  width: 92.5%;
+export const CatOption = styled(Chip)`
+  margin-right: 5px;
 `;
 
 export const FlagsInput = styled(TextField)`
