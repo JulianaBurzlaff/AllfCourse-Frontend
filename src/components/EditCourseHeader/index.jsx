@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-  useMemo,
-  useCallback,
-} from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -73,10 +67,6 @@ function EditCourseHeader() {
   const onCategoryClick = cat => {
     handleSetCourseCategories(prev => [...prev, cat]);
   };
-
-  const selectedCategoriesIds = useMemo(() => {
-    return courseCategories.map(ct => ct.id);
-  }, [courseCategories]);
 
   return (
     <Container
@@ -195,11 +185,11 @@ function EditCourseHeader() {
               >
                 {categories.map(data => (
                   <S.CatOption
-                    onClick={() => onCategoryClick(data)}
+                    onClick={() => onCategoryClick(data.name)}
                     key={data.id}
                     label={data.name}
                     color={
-                      selectedCategoriesIds.includes(data.id)
+                      courseCategories.includes(data.name)
                         ? 'primary'
                         : 'default'
                     }
