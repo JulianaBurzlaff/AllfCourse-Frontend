@@ -15,17 +15,68 @@ function ClassContent() {
   const history = useHistory();
   const { fetchChosenCourse, chosenCourse = [] } = useCourse();
 
+  console.log(classId);
+
   useEffect(() => {
-    fetchChosenCourse({ courseId }).finally(() => setLoading(false));
-  }, []);
+    if (courseId) {
+      fetchChosenCourse({ courseId }).finally(() => setLoading(false));
+    }
+  }, [courseId]);
 
   const module = useMemo(() => {
     return chosenCourse.modules?.find(mod => mod.id === Number(moduleId));
-  }, [chosenCourse]);
+  }, [chosenCourse, moduleId]);
 
   const classInfo = useMemo(() => {
     return module.classes?.find(cl => cl.id === Number(classId));
-  }, [chosenCourse]);
+  }, [chosenCourse, classId]);
+
+  const classIndex = useMemo(() => {
+    const classesIds = module.classes?.map(cl => cl.id);
+    return classesIds.indexOf(Number(classId));
+  }, [classId, module.classes]);
+
+  const moduleIndex = useMemo(() => {
+    const modulesIds = chosenCourse.modules?.map(mod => mod.id);
+    return modulesIds.indexOf(Number(moduleId));
+  }, [moduleId, chosenCourse.modules]);
+
+  const onNextClassClick = () => {
+    const classesIds = module.classes?.map(cl => cl.id);
+
+    if (classIndex === classesIds.length - 1) {
+      const nextModule = chosenCourse.modules[moduleIndex + 1];
+      const firstClassId = nextModule.classes[0].id;
+
+      history.push(
+        `/dashboard/student/course/${courseId}/module/${nextModule.id}/class/${firstClassId}`,
+      );
+    } else {
+      const nextId = classesIds[classIndex + 1];
+
+      history.push(
+        `/dashboard/student/course/${courseId}/module/${moduleId}/class/${nextId}`,
+      );
+    }
+  };
+
+  const onPreviousClassClick = () => {
+    const classesIds = module.classes?.map(cl => cl.id);
+    if (classIndex === 0) {
+      const prevModule = chosenCourse.modules[moduleIndex - 1];
+      const lastClassId = prevModule.classes[prevModule.classes.length - 1].id;
+
+      history.push(
+        `/dashboard/student/course/${courseId}/module/${prevModule.id}/class/${lastClassId}`,
+      );
+    } else {
+      const previousId = classesIds[classIndex - 1];
+
+      history.push(
+        `/dashboard/student/course/${courseId}/module/${moduleId}/class/${previousId}`,
+      );
+    }
+  };
 
   if (loading) {
     return <Loader />;
@@ -51,7 +102,7 @@ function ClassContent() {
           </S.Info>
           <S.BackButton
             onClick={() => {
-              history.goBack();
+              history.push(`/dashboard/student/course/${courseId}/content`);
             }}
           >
             Voltar à página do curso
@@ -68,8 +119,23 @@ function ClassContent() {
           <S.RightSide>
             <S.Material>MATERIAL COMPLEMENTAR</S.Material>
             <S.Buttons>
-              <S.Previous>Aula Anterior</S.Previous>
-              <S.Next>Próxima aula</S.Next>
+              <S.Previous
+                disabled={classIndex === 0 && moduleIndex === 0}
+                onClick={onPreviousClassClick}
+              >
+                Aula Anterior
+              </S.Previous>
+              <S.Next
+                disabled={
+                  classIndex === module.classes?.length - 1 &&
+                  moduleIndex === chosenCourse.modules?.length - 1
+                }
+                onClick={onNextClassClick}
+              >
+                {classIndex === module.classes?.length - 1
+                  ? 'Próximo módulo'
+                  : 'Próxima aula'}
+              </S.Next>
             </S.Buttons>
           </S.RightSide>
         </S.Content>

@@ -99,7 +99,7 @@ export const Material = styled.div`
 export const Previous = styled.button`
   text-decoration: none;
   padding: 0 10px;
-  width: 120px;
+  width: 135px;
   height: 35px;
   background-color: #fff;
   border: 1px solid #727272;
@@ -111,12 +111,19 @@ export const Previous = styled.button`
   &:hover {
     transform: scale(1.02, 1.02);
   }
+
+  &:disabled {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: default;
+  }
 `;
 
 export const Next = styled.button`
   text-decoration: none;
   padding: 0 10px;
-  width: 120px;
+  width: 135px;
   height: 35px;
   background-color: #176d76;
   border-radius: 2px;
@@ -127,6 +134,13 @@ export const Next = styled.button`
 
   &:hover {
     transform: scale(1.02, 1.02);
+  }
+
+  &:disabled {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: default;
   }
 `;
 
