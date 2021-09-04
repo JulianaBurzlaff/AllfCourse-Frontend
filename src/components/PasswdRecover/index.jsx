@@ -78,7 +78,7 @@ function PasswdRecover({ onSuccess, token, loading, setLoading }) {
         />
         <TextField
           type="password"
-          id="input-with-icon-adornment"
+          id="input-with-icon-adornment-two"
           variant="outlined"
           fullWidth="true"
           placeholder="confirmação de senha"
