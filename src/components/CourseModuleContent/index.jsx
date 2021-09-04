@@ -5,15 +5,15 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { TeacherContext } from '../../providers/TeacherProvider';
-import { WarningContext } from '../../providers/WarningProvider';
 import ButtonIcon from '../ButtonIcon';
 import saveWhiteIcon from '../../assets/icons/save-white.svg';
 import cancelWhiteIcon from '../../assets/icons/cancel-white.svg';
 import editBlackIcon from '../../assets/icons/edit-black.svg';
 import trashWhiteIcon from '../../assets/icons/trash-white.svg';
+import warningIcon from '../../assets/icons/warning.svg';
+import confirmBlackIcon from '../../assets/icons/confirm-black.svg';
 import Container from '../Container';
 import CourseClassBanner from '../CourseClassBanner';
-import WarningModal from '../WarningModal';
 import * as S from './styles';
 
 const schema = yup.object().shape({
@@ -36,13 +36,20 @@ function CourseModuleContent({ module, classes, position }) {
     deleteModule,
   } = useContext(TeacherContext);
 
-  const { handleSetModalWarningOpen, handleSetModalWarningClose } =
-    useContext(WarningContext);
-
   const [modalState, setModalState] = useState(false);
   const [orderValue, setOrderValue] = useState(module.order);
   const [nameValue, setNameValue] = useState(module.name);
   const [descriptionValue, setDescriptionValue] = useState(module.description);
+
+  const [modalWarning, setModalWarning] = useState(false);
+
+  const handleSetModalWarningOpen = useCallback(() => {
+    setModalWarning(true);
+  }, []);
+
+  const handleSetModalWarningClose = useCallback(() => {
+    setModalWarning(false);
+  }, []);
 
   const handleSetModalStateOpen = useCallback(() => {
     setModalState(true);
@@ -149,14 +156,57 @@ function CourseModuleContent({ module, classes, position }) {
                 >
                   Excluir
                 </ButtonIcon>
-                <WarningModal
-                  confirmOnclick={() => {
-                    deleteModule();
+                <S.ModalContainer
+                  open={modalWarning}
+                  onClose={() => {
                     handleSetModalWarningClose();
-                    history.push('/dashboard/teacher/edit-course');
                   }}
-                  message="Tem certeza que deseja excluir esse módulo?"
-                />
+                  aria-labelledby="add-module-modal"
+                >
+                  <S.WarningModalContent>
+                    <Container
+                      direction="column"
+                      justifyContent="center"
+                      alignItems="center"
+                      width="400px"
+                    >
+                      <S.Icon src={warningIcon} />
+                      <S.Text margin="20px 0 0 0">
+                        Tem certeza que deseja excluir esse módulo?
+                      </S.Text>
+                    </Container>
+                    <Container
+                      direction="row"
+                      justifyContent="center"
+                      alignItems="center"
+                      width="100%"
+                      margin="20px 0 0 0"
+                    >
+                      <ButtonIcon
+                        icon={confirmBlackIcon}
+                        color="neutral"
+                        onClick={() => {
+                          deleteModule();
+                          handleSetModalWarningClose();
+                          history.push('/dashboard/teacher/edit-course');
+                        }}
+                        margin="2px 10px"
+                      >
+                        Sim
+                      </ButtonIcon>
+                      <ButtonIcon
+                        icon={cancelWhiteIcon}
+                        color="secondary"
+                        margin="2px 10px"
+                        onClick={() => {
+                          handleSetModalWarningClose();
+                        }}
+                      >
+                        Cancelar
+                      </ButtonIcon>
+                    </Container>
+                  </S.WarningModalContent>
+                </S.ModalContainer>
                 <S.ModalContainer
                   open={modalState}
                   onClose={() => {

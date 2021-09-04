@@ -1,19 +1,23 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+} from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import TextField from '@material-ui/core/TextField';
 import { TeacherContext } from '../../providers/TeacherProvider';
-import { WarningContext } from '../../providers/WarningProvider';
 import Container from '../Container';
 import DropArea from '../DropArea';
 import ButtonIcon from '../ButtonIcon';
-import WarningModal from '../WarningModal';
-// import CategoriesModal from '../CategoriesModal';
+import warningIcon from '../../assets/icons/warning.svg';
 import saveWhiteIcon from '../../assets/icons/save-white.svg';
 import cancelWhiteIcon from '../../assets/icons/cancel-white.svg';
-// import addBlackIcon from '../../assets/icons/add-black.svg';
+import confirmBlackIcon from '../../assets/icons/confirm-black.svg';
 import imageBlackIcon from '../../assets/icons/image-black.svg';
 import * as S from './styles';
 
@@ -44,8 +48,15 @@ function EditCourseHeader() {
     cancelEditCourse,
   } = useContext(TeacherContext);
 
-  const { handleSetModalWarningOpen, handleSetModalWarningClose } =
-    useContext(WarningContext);
+  const [modalWarning, setModalWarning] = useState(false);
+
+  const handleSetModalWarningOpen = useCallback(() => {
+    setModalWarning(true);
+  }, []);
+
+  const handleSetModalWarningClose = useCallback(() => {
+    setModalWarning(false);
+  }, []);
 
   const {
     register,
@@ -250,14 +261,57 @@ function EditCourseHeader() {
         >
           Cancelar
         </ButtonIcon>
-        <WarningModal
-          confirmOnclick={() => {
-            cancelEditCourse();
+        <S.ModalContainer
+          open={modalWarning}
+          onClose={() => {
             handleSetModalWarningClose();
-            history.push('/dashboard/teacher');
           }}
-          message="Tem certeza que deseja cancelar o cadastro do curso?"
-        />
+          aria-labelledby="add-module-modal"
+        >
+          <S.ModalContent>
+            <Container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              width="400px"
+            >
+              <S.Icon src={warningIcon} />
+              <S.Text margin="20px 0 0 0">
+                Tem certeza que deseja cancelar o cadastro do curso?
+              </S.Text>
+            </Container>
+            <Container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+              width="100%"
+              margin="20px 0 0 0"
+            >
+              <ButtonIcon
+                icon={confirmBlackIcon}
+                color="neutral"
+                onClick={() => {
+                  cancelEditCourse();
+                  handleSetModalWarningClose();
+                  history.push('/dashboard/teacher');
+                }}
+                margin="2px 10px"
+              >
+                Sim
+              </ButtonIcon>
+              <ButtonIcon
+                icon={cancelWhiteIcon}
+                color="secondary"
+                margin="2px 10px"
+                onClick={() => {
+                  handleSetModalWarningClose();
+                }}
+              >
+                Cancelar
+              </ButtonIcon>
+            </Container>
+          </S.ModalContent>
+        </S.ModalContainer>
       </Container>
     </Container>
   );

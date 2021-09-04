@@ -10,7 +10,7 @@ export const UserProvider = ({ children }) => {
   const [photo, setPhoto] = useState('');
   const [typeActive, setTypeActive] = useState('');
   const [loading, setLoading] = useState('');
-  const [userError, setUserError] = useState('');
+  const [userError, setUserError] = useState();
   const [cookies, setCookies, removeCookies] = useCookies(['auth']);
 
   const handleTypeActive = useCallback(type => {

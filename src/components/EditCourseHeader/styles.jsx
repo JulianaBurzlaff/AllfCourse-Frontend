@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 // import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
+import Modal from '@material-ui/core/Modal';
 
 export const CatOption = styled(Chip)`
   margin-right: 5px;
@@ -29,6 +30,7 @@ export const Text = styled.p`
     font-size: ${fontSize};
     font-weight: ${weight};
     margin: ${margin};
+    text-align: center;
   `}
 `;
 
@@ -55,4 +57,31 @@ export const FlagLabel = styled.p`
     font-size: 14px;
     margin: 2px 5px;
   `}
+`;
+
+export const ModalContainer = styled(Modal)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ModalContent = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: ${theme.palette.primary.contrastText};
+    border: none;
+    min-height: 30vh;
+    border-radius: 5px;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  `}
+`;
+
+export const Icon = styled.img`
+  width: 50px;
 `;

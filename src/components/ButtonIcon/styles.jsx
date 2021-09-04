@@ -25,7 +25,7 @@ export const Button = styled.button`
       css`
         color: ${theme.palette.primary.contrastText};
         background-color: ${theme.palette.primary.main};
-        border: none;
+        border: solid 1px ${theme.palette.primary.main};
       `}
 
     ${({ color }) =>
@@ -33,7 +33,7 @@ export const Button = styled.button`
       css`
         color: ${theme.palette.primary.contrastText};
         background-color: ${theme.palette.error.dark};
-        border: none;
+        border: solid 1px ${theme.palette.error.dark};
       `}
 
     ${({ color }) =>

@@ -13,7 +13,6 @@ import { CourseProvider } from './providers/CourseProvider';
 import { StudentProvider } from './providers/StudentProvider';
 import { TeacherProvider } from './providers/TeacherProvider';
 import { UserProvider } from './providers/UserProvider';
-import { WarningProvider } from './providers/WarningProvider';
 import GlobalStyle from './styles/GlobalStyle';
 
 function App() {
@@ -22,22 +21,20 @@ function App() {
       <StylesProvider injectFirst>
         <MaterialThemeProvider theme={theme}>
           <ThemeProvider theme={theme}>
-            <WarningProvider>
-              <AppProvider>
-                <UserProvider>
-                  <UploadProvider>
-                    <TeacherProvider>
-                      <CourseProvider>
-                        <StudentProvider>
-                          <Router />
-                          <GlobalStyle />
-                        </StudentProvider>
-                      </CourseProvider>
-                    </TeacherProvider>
-                  </UploadProvider>
-                </UserProvider>
-              </AppProvider>
-            </WarningProvider>
+            <AppProvider>
+              <UserProvider>
+                <UploadProvider>
+                  <TeacherProvider>
+                    <CourseProvider>
+                      <StudentProvider>
+                        <Router />
+                        <GlobalStyle />
+                      </StudentProvider>
+                    </CourseProvider>
+                  </TeacherProvider>
+                </UploadProvider>
+              </UserProvider>
+            </AppProvider>
           </ThemeProvider>
         </MaterialThemeProvider>
       </StylesProvider>
