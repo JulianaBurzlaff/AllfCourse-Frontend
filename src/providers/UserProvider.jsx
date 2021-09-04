@@ -17,8 +17,8 @@ export const UserProvider = ({ children }) => {
     setTypeActive(type);
   }, []);
 
-  const login = useCallback(({ id, email, name, type }) => {
-    const userData = [{ id, email, name, type }];
+  const login = useCallback(({ id, email, name, type, socialName }) => {
+    const userData = [{ id, email, name, type, socialName }];
 
     switch (type) {
       case 1:
