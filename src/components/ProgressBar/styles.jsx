@@ -12,8 +12,8 @@ export const PGBar = styled.div`
 `;
 
 export const ProgressBar = styled(LinearProgress)`
-  ${({ heightPB }) => css`
-    height: ${heightPB};
+  ${({ heightpb }) => css`
+    height: ${heightpb};
   `};
 `;
 

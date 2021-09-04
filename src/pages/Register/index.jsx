@@ -13,7 +13,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import PhoneIcon from '@material-ui/icons/Phone';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
-// import { api } from '../../services/api';
 import { UploadContext } from '../../providers/UploadProvider';
 import { useUser } from '../../providers/UserProvider';
 import AuthTemplate from '../../components/AuthTemplate';
@@ -393,7 +392,7 @@ function Register() {
                   </option>
                   <option value="1">Aluno</option>
                   <option value="2">Professor</option>
-                  <option value="3">Aluno e professor</option>
+                  <option value="7">Aluno e professor</option>
                 </Select>
                 <S.ReturnError>{errors.type?.message}</S.ReturnError>
               </FormControl>

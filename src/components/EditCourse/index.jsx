@@ -185,7 +185,7 @@ function EditCourse() {
         justifyContent="flex-start"
         alignItems="center"
         width="85%"
-        margin="-30px 0 50px 0"
+        margin="0 0 50px 0"
       >
         <ButtonIcon
           icon={addWhiteIcon}

@@ -1,21 +1,24 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
 import jwt from 'jsonwebtoken';
+import { useCookies } from 'react-cookie';
 import { api } from '../services/api';
 
 export const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState([]);
+  const [photo, setPhoto] = useState('');
   const [typeActive, setTypeActive] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState('');
   const [userError, setUserError] = useState('');
+  const [cookies, setCookies, removeCookies] = useCookies(['auth']);
 
   const handleTypeActive = useCallback(type => {
     setTypeActive(type);
   }, []);
 
-  const login = useCallback(({ id, email, name, type }) => {
-    const userData = [{ id, email, name, type }];
+  const login = useCallback(({ id, email, name, type, socialName }) => {
+    const userData = [{ id, email, name, type, socialName }];
 
     switch (type) {
       case 1:
@@ -49,12 +52,13 @@ export const UserProvider = ({ children }) => {
 
   const logout = useCallback(() => {
     setUser([]);
-  }, []);
+    removeCookies('auth');
+  }, [removeCookies]);
 
   const signIn = async ({ email, password }) => {
     try {
       setUserError('');
-      setLoading(true);
+      setLoading('Aguarde...');
       const response = await api.get('/login', {
         headers: {
           'Content-Type': 'application/json',
@@ -62,13 +66,13 @@ export const UserProvider = ({ children }) => {
         },
       });
 
-      const responseData = await response.data;
-      const userData = await jwt.decode(responseData.token);
+      const userData = await jwt.decode(response.data.token);
       login(userData);
-      setLoading(false);
+      // setCookies('auth',);
+      setLoading('');
     } catch (error) {
       if (error.response.status !== 200) {
-        setLoading(false);
+        setLoading('');
 
         const pathError = Object.keys(
           error.response.data.message.criticalErrors,
@@ -87,6 +91,7 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         user,
+        setUser,
         typeActive,
         logout,
         login,
@@ -94,6 +99,10 @@ export const UserProvider = ({ children }) => {
         loading,
         userError,
         handleTypeActive,
+        cookies,
+        setCookies,
+        photo,
+        setPhoto,
       }}
     >
       {children}

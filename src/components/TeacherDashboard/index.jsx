@@ -5,6 +5,7 @@ import { TeacherContext } from '../../providers/TeacherProvider';
 import CourseUnderReviewBanner from '../CourseUnderReviewBanner';
 import CourseBanner from '../CourseBanner';
 import Container from '../Container';
+import Loader from '../Loader';
 import Section from '../Section';
 import ButtonIcon from '../ButtonIcon';
 import addWhiteIcon from '../../assets/icons/add-white.svg';
@@ -62,28 +63,25 @@ function TeacherDashboard() {
 
   useEffect(() => {
     const actives = courses.filter(course => {
-      return course.status === 'active';
+      return course.status === 'aprovado';
     });
 
     const inactives = courses.filter(course => {
-      return course.status === 'inactive';
+      return course.status === 'inativo';
     });
 
     const inReviewOrRejected = courses.filter(course => {
-      return course.status === 'in review' || course.status === 'rejected';
+      return course.status === 'em análise' || course.status === 'rejeitado';
     });
-
-    // console.log(`actives =>`);
-    // console.log(`${actives}`);
-    // console.log(`inactives =>`);
-    // console.log(`${inactives}`);
-    // console.log(`in review or rejected =>`);
-    // console.log(`${inReviewOrRejected}`);
 
     setActiveCourses(actives);
     setInactiveCourses(inactives);
     setInReviewOrRejectedCourses(inReviewOrRejected);
   }, [courses]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -108,17 +106,18 @@ function TeacherDashboard() {
         </ButtonIcon>
       </Container>
       <Section title="CURSOS EM ESPERA" contentDirection="column">
-        {activeCourses.map(course => {
-          return course.status === 'in review' ||
-            course.status === 'rejected' ? (
+        {inReviewOrRejectedCourses.map((course, i) => {
+          return course.status === 'em análise' ||
+            course.status === 'rejeitado' ? (
             <CourseUnderReviewBanner
               id={course.id}
               title={course.name}
+              key={i}
               description={course.description}
               value={course.value}
               requestDate={course.create_date}
-              inReview={course.status === 'in review'}
-              rejected={course.status === 'rejected'}
+              inReview={course.status === 'em análise'}
+              rejected={course.status === 'rejeitado'}
             />
           ) : (
             <></>
@@ -135,15 +134,16 @@ function TeacherDashboard() {
         </S.ErrorReturn>
       </Section>
       <Section title="MEUS CURSOS" contentDirection="row" wrap="wrap">
-        {inactiveCourses.map(course => {
-          return course.status === 'active' ? (
+        {activeCourses.map((course, i) => {
+          return course.status === 'aprovado' ? (
             <CourseBanner
               id={course.id}
               title={course.name}
               description={course.description}
               teacher={user[0].name}
               value={course.value}
-              subscribersNumber={course.subscribes_number}
+              key={i}
+              subscribersNumber={course.enrolleds}
               onClick={() => {
                 history.push('/dashboard/teacher/course-data');
               }}
@@ -163,14 +163,15 @@ function TeacherDashboard() {
         </S.ErrorReturn>
       </Section>
       <Section title="CURSOS INATIVOS" contentDirection="row" wrap="wrap">
-        {inReviewOrRejectedCourses.map(course => {
-          return course.status === 'inactive' ? (
+        {inactiveCourses.map((course, i) => {
+          return course.status === 'inativo' ? (
             <CourseBanner
               id={course.id}
               title={course.name}
               description={course.description}
               teacher={user[0].name}
               value={course.value}
+              key={i}
               subscribersNumber={course.subscribes_number}
               inactive
             />

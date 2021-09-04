@@ -81,7 +81,7 @@ export const BackButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    opacity: 0.7;
+    transform: scale(1.02, 1.02);
   }
 `;
 
@@ -91,7 +91,7 @@ export const Material = styled.div`
   font-family: 'Poppins';
   color: #176d76;
   border-radius: 5px;
-  min-height: 350px;
+  min-height: 365px;
   text-align: center;
   padding: 10px;
 `;
@@ -99,7 +99,7 @@ export const Material = styled.div`
 export const Previous = styled.button`
   text-decoration: none;
   padding: 0 10px;
-  width: 120px;
+  width: 135px;
   height: 35px;
   background-color: #fff;
   border: 1px solid #727272;
@@ -109,14 +109,21 @@ export const Previous = styled.button`
   margin-right: 20px;
 
   &:hover {
-    opacity: 0.7;
+    transform: scale(1.02, 1.02);
+  }
+
+  &:disabled {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: default;
   }
 `;
 
 export const Next = styled.button`
   text-decoration: none;
   padding: 0 10px;
-  width: 120px;
+  width: 135px;
   height: 35px;
   background-color: #176d76;
   border-radius: 2px;
@@ -126,7 +133,14 @@ export const Next = styled.button`
   border: none;
 
   &:hover {
-    opacity: 0.7;
+    transform: scale(1.02, 1.02);
+  }
+
+  &:disabled {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: default;
   }
 `;
 

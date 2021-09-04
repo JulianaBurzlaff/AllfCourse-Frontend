@@ -19,12 +19,12 @@ function CourseHeader({
     <S.Container>
       <S.Infos>
         <S.Title>{title}</S.Title>
-        <S.Teacher>Professor {teacher}</S.Teacher>
+        <S.Teacher>Professor(a) {teacher}</S.Teacher>
         <S.Description>{description}</S.Description>
         <S.ValuesContainer>
           <S.Values>
             <h3>
-              <h6>Valor:</h6>
+              <span>Valor:</span>
               {parseInt(value, 10) ? `R$ ${value}` : 'GRATUITO'}
             </h3>
             <p>{`${subscribersNumber} inscritos`}</p>
@@ -32,8 +32,8 @@ function CourseHeader({
           <S.Categories>
             <S.CategoryTitle>Categorias:</S.CategoryTitle>
             <S.CategoriesTags>
-              {categories.map(category => (
-                <S.Category>{category.name}</S.Category>
+              {categories.map((category, i) => (
+                <S.Category key={i}>{category.name}</S.Category>
               ))}
             </S.CategoriesTags>
           </S.Categories>

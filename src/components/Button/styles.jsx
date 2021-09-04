@@ -17,7 +17,7 @@ export const Button = styled.button`
 
     &:hover {
       cursor: pointer;
-      background-color: ${theme.palette[color].dark};
+      transform: scale(1.02, 1.02);
     }
 
     /* @media screen (min-width: 768px) {

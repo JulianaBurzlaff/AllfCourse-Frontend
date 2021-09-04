@@ -32,7 +32,7 @@ export const BannerContainer = styled.button`
   `}
 `;
 
-export const ImageContainer = styled.div`
+export const ImageContainer = styled.img`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
@@ -41,10 +41,11 @@ export const ImageContainer = styled.div`
     width: 100%;
     height: 200px;
     overflow: hidden;
-    background: ${theme.palette.secondary.main};
-    border: 1px solid ${theme.palette.secondary.dark};
+    background: ${theme.palette.primary.light};
+    border: 1px solid ${theme.palette.primary.light};
     box-sizing: border-box;
     border-radius: 10px 10px 0px 0px;
+    padding: 10px;
   `}
 `;
 
