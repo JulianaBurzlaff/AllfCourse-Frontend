@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { api } from '../services/api';
 
@@ -17,13 +17,6 @@ export const TeacherProvider = ({ children }) => {
   const [editStatus, setEditStatus] = useState(0);
   const [order, setOrder] = useState(0);
   const [position, setPosition] = useState(0);
-
-  useEffect(() => {
-    console.log(courseHeader);
-    console.log(courseModules);
-    console.log(courseClasses);
-    console.log(courseCategories);
-  }, [courseHeader, courseModules, courseClasses, courseCategories]);
 
   // =============================================== controle de modais
 
@@ -127,27 +120,21 @@ export const TeacherProvider = ({ children }) => {
   // );
 
   const saveCourse = async ({ courseName, description }) => {
-    console.log(courseName);
-    console.log(description);
+    const newCourse = {};
+    newCourse.courseName = courseName;
+    newCourse.description = description;
+    newCourse.price = '00,00';
+    newCourse.courseCategories = courseCategories;
+    newCourse.courseModules = courseModules;
+    newCourse.courseClasses = courseClasses;
 
-    // try {
-    //   const response = await fetch('http://localhost:3001/login', {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       Authorization: `Basic ${btoa(`${email}:${password}`)}`,
-    //     },
-    //   });
-
-    //   if (response.status !== 200) {
-    //     history.push('/');
-    //   }
-
-    //   const userData = await response.json();
-    //   login(userData);
-    // } catch (error) {
-    //   console.log('error:', error);
-    // }
+    console.log(JSON.stringify(newCourse));
+    try {
+      const { data } = await api.post('/addcourse', newCourse);
+      console.log(data);
+    } catch (error) {
+      console.log('error:', error);
+    }
   };
 
   const cancelEditCourse = useCallback(() => {
