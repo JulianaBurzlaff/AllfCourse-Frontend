@@ -26,6 +26,7 @@
     "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/no-array-index-key": "off",
+    "jsx-a11y/label-has-associated-control": "off",
     "prettier/prettier": [
       "error",
       {

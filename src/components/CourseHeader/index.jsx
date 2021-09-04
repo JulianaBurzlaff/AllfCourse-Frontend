@@ -24,7 +24,7 @@ function CourseHeader({
         <S.ValuesContainer>
           <S.Values>
             <h3>
-              <h6>Valor:</h6>
+              <span>Valor:</span>
               {parseInt(value, 10) ? `R$ ${value}` : 'GRATUITO'}
             </h3>
             <p>{`${subscribersNumber} inscritos`}</p>

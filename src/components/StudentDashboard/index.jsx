@@ -27,7 +27,7 @@ function StudentDasboard() {
 
       setLoading(false);
     })();
-  }, []);
+  }, [fetchCourses, setLoading]);
 
   function onCourseBannerClick(id) {
     history.push(`/dashboard/student/course/${id}`);

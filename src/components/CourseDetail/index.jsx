@@ -71,8 +71,8 @@ function CourseDetail() {
         </S.SubmitButton>
         <Section title="CONTEÚDO" contentDirection="column" alignItems="left" />
         <S.Content>
-          {chosenCourse.modules.map(mod => (
-            <ModulesAccordion courseModule={mod} />
+          {chosenCourse.modules.map((mod, i) => (
+            <ModulesAccordion courseModule={mod} key={i} />
           ))}
         </S.Content>
         <S.SubmitButton

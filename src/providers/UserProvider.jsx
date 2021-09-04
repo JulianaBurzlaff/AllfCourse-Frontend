@@ -9,7 +9,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [photo, setPhoto] = useState('');
   const [typeActive, setTypeActive] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState('');
   const [userError, setUserError] = useState('');
   const [cookies, setCookies, removeCookies] = useCookies(['auth']);
 
@@ -53,12 +53,12 @@ export const UserProvider = ({ children }) => {
   const logout = useCallback(() => {
     setUser([]);
     removeCookies('auth');
-  }, []);
+  }, [removeCookies]);
 
   const signIn = async ({ email, password }) => {
     try {
       setUserError('');
-      setLoading(true);
+      setLoading('Aguarde...');
       const response = await api.get('/login', {
         headers: {
           'Content-Type': 'application/json',
@@ -69,10 +69,10 @@ export const UserProvider = ({ children }) => {
       const userData = await jwt.decode(response.data.token);
       login(userData);
       // setCookies('auth',);
-      setLoading(false);
+      setLoading('');
     } catch (error) {
       if (error.response.status !== 200) {
-        setLoading(false);
+        setLoading('');
 
         const pathError = Object.keys(
           error.response.data.message.criticalErrors,

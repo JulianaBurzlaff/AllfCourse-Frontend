@@ -161,6 +161,7 @@ function NewCourse() {
     try {
       const { data } = await api.post('/addcourse', course);
       console.log(data);
+      console.log(course);
     } catch (error) {
       console.log(error.response.data);
       console.log('error:', error);

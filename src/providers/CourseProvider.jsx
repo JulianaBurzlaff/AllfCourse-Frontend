@@ -19,9 +19,6 @@ export const CourseProvider = ({ children }) => {
 
       const loggedUser = data.filter(course => course.enrolled === true);
 
-      console.log(approved);
-      console.log(loggedUser);
-
       setApprovedCourses(approved);
       setLoggedStudentCourses(loggedUser);
       return approved;

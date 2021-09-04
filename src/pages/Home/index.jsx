@@ -48,7 +48,7 @@ function Home() {
         <TextField
           id="input-with-icon-adornment"
           variant="outlined"
-          fullWidth="true"
+          fullWidth
           placeholder="e-mail"
           margin="normal"
           {...register('email')}
@@ -56,7 +56,7 @@ function Home() {
           error={errors.email}
           InputProps={{
             startAdornment: (
-              <InputAdornment>
+              <InputAdornment position="start">
                 <MailOutlineIcon color="disabled" />
               </InputAdornment>
             ),
@@ -64,9 +64,9 @@ function Home() {
         />
         <TextField
           type="password"
-          id="input-with-icon-adornment"
+          id="input-with-icon-adornment-two"
           variant="outlined"
-          fullWidth="true"
+          fullWidth
           placeholder="senha"
           margin="normal"
           {...register('password')}
@@ -79,7 +79,7 @@ function Home() {
           error={errors.password}
           InputProps={{
             startAdornment: (
-              <InputAdornment>
+              <InputAdornment position="start">
                 <LockOutlinedIcon color="disabled" />
               </InputAdornment>
             ),
@@ -88,18 +88,14 @@ function Home() {
         <S.LinkButton onClick={() => history.push('/password')}>
           Esqueceu sua senha?
         </S.LinkButton>
-        <Button
-          onClick={handleSubmit(signIn)}
-          loading={loading}
-          fullWidth="true"
-        >
+        <Button onClick={handleSubmit(signIn)} loading={loading} fullWidth>
           Entrar
         </Button>
         <S.LinkButton onClick={() => history.push('/register')}>
           Crie sua conta
         </S.LinkButton>
       </S.Form>
-      <S.Return>{loading ? 'Aguarde...' : ''}</S.Return>
+      <S.Return>{loading}</S.Return>
       <S.ErrorReturn>{userError}</S.ErrorReturn>
     </AuthTemplate>
   );
