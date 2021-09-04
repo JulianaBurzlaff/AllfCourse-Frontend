@@ -76,7 +76,7 @@ function CourseClassBanner({ classes, position }) {
         name,
         description,
         link,
-        order: classes.length + 1,
+        order: (classes.length + 1).toString(),
         position,
       };
 

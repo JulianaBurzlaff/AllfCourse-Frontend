@@ -60,6 +60,17 @@ function EditCourseHeader() {
     resolver: yupResolver(schema),
   });
 
+  const editConclude = useCallback(
+    ({ courseName, description }) => {
+      saveCourse({ courseName, description });
+      // handleSetEditStatus(2);
+      setTimeout(() => {
+        history.push('/dashboard/teacher');
+      }, 4000);
+    },
+    [saveCourse, history],
+  );
+
   useEffect(() => {
     getCoursesCategories();
   }, [getCoursesCategories]);
@@ -239,7 +250,7 @@ function EditCourseHeader() {
         alignItems="center"
         width="100%"
       >
-        <ButtonIcon icon={saveWhiteIcon} onClick={handleSubmit(saveCourse)}>
+        <ButtonIcon icon={saveWhiteIcon} onClick={handleSubmit(editConclude)}>
           Salvar curso
         </ButtonIcon>
         <ButtonIcon

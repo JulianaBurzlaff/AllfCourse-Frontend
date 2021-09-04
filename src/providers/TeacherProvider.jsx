@@ -118,6 +118,14 @@ export const TeacherProvider = ({ children }) => {
   //   },
   //   [categories, courseCategories],
   // );
+  const cancelEditCourse = useCallback(() => {
+    setCategories([]);
+    setCourseHeader({});
+    setCourseModules([]);
+    setCourseClasses([]);
+    setCourseCategories([]);
+    setModulesNumber(0);
+  }, []);
 
   const saveCourse = async ({ courseName, description }) => {
     const newCourse = {};
@@ -128,23 +136,16 @@ export const TeacherProvider = ({ children }) => {
     newCourse.courseModules = courseModules;
     newCourse.courseClasses = courseClasses;
 
-    console.log(JSON.stringify(newCourse));
     try {
-      const { data } = await api.post('/addcourse', newCourse);
-      console.log(data);
+      await api.post('/addcourse', newCourse);
+      enqueueSnackbar('Curso criado com sucesso.', {
+        variant: 'success',
+      });
+      cancelEditCourse();
     } catch (error) {
-      console.log('error:', error);
+      console.log('error:', error.response.data);
     }
   };
-
-  const cancelEditCourse = useCallback(() => {
-    setCategories([]);
-    setCourseHeader({});
-    setCourseModules([]);
-    setCourseClasses([]);
-    setCourseCategories([]);
-    setModulesNumber(0);
-  }, []);
 
   const deleteModule = useCallback(() => {
     if (editStatus === 0) {
