@@ -94,7 +94,7 @@ function TeacherDashboard() {
           onClick={() => {
             handleSetEditStatus(0);
             cancelEditCourse();
-            history.push('/dashboard/teacher/course-edit');
+            history.push('/dashboard/teacher/edit-course');
           }}
         >
           Novo curso
