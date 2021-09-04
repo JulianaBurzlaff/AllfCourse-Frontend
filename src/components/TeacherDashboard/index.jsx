@@ -94,7 +94,7 @@ function TeacherDashboard() {
           onClick={() => {
             handleSetEditStatus(0);
             cancelEditCourse();
-            history.push('teacher/edit-course');
+            history.push('/dashboard/teacher/course-edit');
           }}
         >
           Novo curso
@@ -132,16 +132,13 @@ function TeacherDashboard() {
         {activeCourses.map((course, i) => {
           return course.status === 'aprovado' ? (
             <CourseBanner
-              id={course.id}
+              id={course.course_id}
               title={course.name}
               description={course.description}
               teacher={user[0].name}
               value={course.value}
               key={i}
               subscribersNumber={course.enrolleds}
-              onClick={() => {
-                history.push('/dashboard/teacher/course-data');
-              }}
             />
           ) : (
             <></>

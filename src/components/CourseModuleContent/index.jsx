@@ -84,7 +84,7 @@ function CourseModuleContent({ module, classes, position }) {
       const modules = courseModules;
 
       const index = modules.findIndex(item => {
-        return item.order === parseInt(order, 10);
+        return item.order === order;
       });
 
       if (index !== -1) {

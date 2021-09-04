@@ -98,8 +98,7 @@ function CourseClassContent({ classData }) {
 
       const index = allClasses.findIndex(item => {
         return (
-          item.order === parseInt(order, 10) &&
-          item.position === parseInt(position, 10)
+          item.order === order, 10 && item.position === parseInt(position, 10)
         );
       });
 
