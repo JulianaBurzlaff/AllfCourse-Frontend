@@ -18,6 +18,7 @@ export const Text = styled.p`
     font-size: ${fontSize};
     font-weight: ${weight};
     margin: ${margin};
+    text-align: center;
   `}
 `;
 
@@ -105,4 +106,24 @@ export const Description = styled.div`
     color: ${theme.palette.text.primary};
     margin: 10px;
   `}
+`;
+
+export const WarningModalContent = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: ${theme.palette.primary.contrastText};
+    border: none;
+    min-height: 30vh;
+    border-radius: 5px;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  `}
+`;
+
+export const Icon = styled.img`
+  width: 50px;
 `;
