@@ -24,9 +24,16 @@ const schema = yup.object().shape({
 });
 
 function EditCourse() {
-  const { courseModules, courseClasses, editStatus, handleSetCourseModules } =
-    useContext(TeacherContext);
+  const {
+    courseModules,
+    courseClasses,
+    editStatus,
+    handleSetCourseModules,
+    handleSetModulesNumber,
+  } = useContext(TeacherContext);
   const [modalState, setModalState] = useState(false);
+  const [nameValue, setNameValue] = useState('');
+  const [descriptionValue, setDescriptionValue] = useState('');
 
   const handleSetModalStateOpen = useCallback(() => {
     setModalState(true);
@@ -35,9 +42,6 @@ function EditCourse() {
   const handleSetModalStateClose = useCallback(() => {
     setModalState(false);
   }, []);
-
-  const [nameValue, setNameValue] = useState('');
-  const [descriptionValue, setDescriptionValue] = useState('');
 
   const handleSetNameValue = useCallback(data => {
     setNameValue(data);
@@ -68,7 +72,7 @@ function EditCourse() {
       modules.push(moduleData);
       handleSetCourseModules(modules);
       handleSetModalStateClose();
-      // }
+      handleSetModulesNumber();
     } else if (editStatus === 1) {
       console.log('');
     }

@@ -29,13 +29,13 @@ function EditCourseHeader() {
   const history = useHistory();
   const {
     modulesNumber,
-    // handleSetModulesNumber,
     getCoursesCategories,
     courseCategories,
     saveCourse,
     // handleCategoriesModalOpen,
     // editStatus,
     cancelEditCourse,
+    handleSetEditStatus,
   } = useContext(TeacherContext);
 
   const [modalWarning, setModalWarning] = useState(false);
@@ -59,6 +59,15 @@ function EditCourseHeader() {
   useEffect(() => {
     getCoursesCategories();
   }, [getCoursesCategories]);
+
+  const editConclude = useCallback(
+    ({ courseName, description }) => {
+      saveCourse({ courseName, description });
+      handleSetEditStatus(2);
+      history.push('/dashboard/teacher/course-data');
+    },
+    [saveCourse, handleSetEditStatus, history],
+  );
 
   return (
     <Container
@@ -237,7 +246,7 @@ function EditCourseHeader() {
         alignItems="center"
         width="100%"
       >
-        <ButtonIcon icon={saveWhiteIcon} onClick={handleSubmit(saveCourse)}>
+        <ButtonIcon icon={saveWhiteIcon} onClick={handleSubmit(editConclude)}>
           Salvar curso
         </ButtonIcon>
         <ButtonIcon

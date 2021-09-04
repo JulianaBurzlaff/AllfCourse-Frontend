@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { api } from '../services/api';
 
@@ -18,13 +18,6 @@ export const TeacherProvider = ({ children }) => {
   const [order, setOrder] = useState(0);
   const [position, setPosition] = useState(0);
 
-  useEffect(() => {
-    console.log(courseHeader);
-    console.log(courseModules);
-    console.log(courseClasses);
-    console.log(courseCategories);
-  }, [courseHeader, courseModules, courseClasses, courseCategories]);
-
   // =============================================== controle de modais
 
   // const [categoriesModalOpen, setCategoriesModalOpen] = useState(false);
@@ -43,10 +36,6 @@ export const TeacherProvider = ({ children }) => {
     setCourseCategories(data);
   }, []);
 
-  const handleSetModulesNumber = useCallback(number => {
-    setModulesNumber(number);
-  }, []);
-
   const handleSetCourseModules = useCallback(modules => {
     setCourseModules(modules);
   }, []);
@@ -62,6 +51,13 @@ export const TeacherProvider = ({ children }) => {
   const handleSetPosition = useCallback(value => {
     setPosition(value);
   }, []);
+
+  const handleSetModulesNumber = useCallback(() => {
+    const counter = courseModules.map(() => {
+      return true;
+    });
+    setModulesNumber(counter.length);
+  }, [courseModules]);
 
   // =============================================== controle de modais
 
@@ -201,6 +197,7 @@ export const TeacherProvider = ({ children }) => {
 
         handleSetCourseModules(modules);
         handleSetCourseClasses(classes);
+        handleSetModulesNumber();
 
         enqueueSnackbar('Módulo excluído com sucesso!', {
           variant: 'success',
@@ -215,6 +212,7 @@ export const TeacherProvider = ({ children }) => {
     courseClasses,
     handleSetCourseModules,
     handleSetCourseClasses,
+    handleSetModulesNumber,
     enqueueSnackbar,
     order,
   ]);
