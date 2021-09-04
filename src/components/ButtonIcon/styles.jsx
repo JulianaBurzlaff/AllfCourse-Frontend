@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const Button = styled.button`
-  ${({ theme, fontSize }) => css`
+  ${({ theme, fontSize, margin }) => css`
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -9,7 +9,7 @@ export const Button = styled.button`
     border: none;
     border-radius: 5px;
     font-size: ${fontSize};
-    margin: 2px;
+    margin: ${margin || '2px'};
 
     &:active {
       filter: brightness(0.9);

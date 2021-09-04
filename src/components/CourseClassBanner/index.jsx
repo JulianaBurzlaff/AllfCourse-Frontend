@@ -1,17 +1,16 @@
 import React, { useContext, useState, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { TeacherContext } from '../../providers/TeacherProvider';
-import Container from '../Container';
-import ButtonIcon from '../ButtonIcon';
+import addWhiteIcon from '../../assets/icons/add-white.svg';
 import saveWhiteIcon from '../../assets/icons/save-white.svg';
 import cancelWhiteIcon from '../../assets/icons/cancel-white.svg';
-import addWhiteIcon from '../../assets/icons/add-white.svg';
+import Container from '../Container';
+import ButtonIcon from '../ButtonIcon';
+import CourseClassContent from '../CourseClassContent';
 import * as S from './styles';
-import EditCourseHeader from '../EditCourseHeader';
-import CourseModuleContent from '../CourseModuleContent';
-import Section from '../Section';
 
 const schema = yup.object().shape({
   name: yup
@@ -21,11 +20,19 @@ const schema = yup.object().shape({
       return !/[^A-Za-z0-9áãâéêíóõúç\s'?!.()]/.exec(val);
     }),
   description: yup.string().required('Descrição obrigatória'),
+  link: yup.string().required('URL obrigatória'),
 });
 
-function EditCourse() {
-  const { courseModules, courseClasses, editStatus, handleSetCourseModules } =
-    useContext(TeacherContext);
+function CourseClassBanner({ classes, position }) {
+  const history = useHistory();
+  const {
+    editStatus,
+    courseClasses,
+    courseModules,
+    handleSetCourseClasses,
+    handleSetCourseModules,
+  } = useContext(TeacherContext);
+
   const [modalState, setModalState] = useState(false);
 
   const handleSetModalStateOpen = useCallback(() => {
@@ -38,6 +45,7 @@ function EditCourse() {
 
   const [nameValue, setNameValue] = useState('');
   const [descriptionValue, setDescriptionValue] = useState('');
+  const [linkValue, setLinkValue] = useState('');
 
   const handleSetNameValue = useCallback(data => {
     setNameValue(data);
@@ -45,6 +53,10 @@ function EditCourse() {
 
   const handleSetDescriptionValue = useCallback(data => {
     setDescriptionValue(data);
+  }, []);
+
+  const handleSetLinkValue = useCallback(data => {
+    setLinkValue(data);
   }, []);
 
   const {
@@ -55,46 +67,75 @@ function EditCourse() {
     resolver: yupResolver(schema),
   });
 
-  const saveModule = ({ name, description }) => {
+  const saveClass = ({ name, description, link }) => {
     if (editStatus === 0) {
       const modules = courseModules;
+      const allClasses = courseClasses;
 
-      const moduleData = {
+      const classData = {
         name,
         description,
-        order: courseModules.length + 1,
+        link,
+        order: classes.length + 1,
+        position,
       };
 
-      modules.push(moduleData);
+      allClasses.push(classData);
+      handleSetCourseClasses(allClasses);
       handleSetCourseModules(modules);
       handleSetModalStateClose();
-      // }
+      history.push('/dashboard/teacher/edit-course');
     } else if (editStatus === 1) {
       console.log('');
     }
   };
 
   return (
-    <>
-      <EditCourseHeader />
-      <Section title="CONTEÚDO" contentDirection="column">
-        {courseModules.map((module, index) => {
-          return (
-            <CourseModuleContent
-              key={module.order}
-              module={module}
-              classes={courseClasses}
-              position={index}
-            />
-          );
-        })}
-      </Section>
+    <Container
+      direction="column"
+      justifyContent="flex-start"
+      alignItems="flex-start"
+      width="100%"
+    >
+      {classes.map(classData => {
+        return (
+          <CourseClassContent
+            key={`${classData.position}${classData.order}`}
+            classData={classData}
+          />
+        );
+      })}
+      <Container
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="flex-start"
+        width="100%"
+        margin="10px 0 0 0"
+      >
+        {editStatus === 0 || editStatus === 1 ? (
+          <ButtonIcon
+            color="primary"
+            icon={addWhiteIcon}
+            fontSize="12px"
+            onClick={() => {
+              handleSetNameValue('');
+              handleSetDescriptionValue('');
+              handleSetLinkValue('');
+              handleSetModalStateOpen();
+            }}
+          >
+            Nova aula
+          </ButtonIcon>
+        ) : (
+          <></>
+        )}
+      </Container>
       <S.ModalContainer
         open={modalState}
         onClose={() => {
           handleSetModalStateClose();
         }}
-        aria-labelledby="add-module-modal"
+        aria-labelledby="add-class-modal"
       >
         <S.ModalContent>
           <Container
@@ -125,9 +166,9 @@ function EditCourse() {
             >
               <S.Input
                 type="text"
-                id="input-course-name"
+                id="input-class-name"
                 variant="outlined"
-                placeholder="Título do módulo"
+                placeholder="Título da aula"
                 margin="dense"
                 fullWidth
                 {...register('name')}
@@ -138,9 +179,24 @@ function EditCourse() {
                   handleSetNameValue(event.target.value);
                 }}
               />
+              <S.Input
+                type="text"
+                id="input-class-link"
+                variant="outlined"
+                placeholder="URL da aula"
+                margin="dense"
+                fullWidth
+                {...register('link')}
+                helperText={errors.link?.message}
+                error={errors.link}
+                value={linkValue}
+                onChange={event => {
+                  handleSetLinkValue(event.target.value);
+                }}
+              />
               <S.TextArea
                 type="text"
-                id="input-course-description"
+                id="input-class-description"
                 variant="outlined"
                 placeholder="Descrição"
                 margin="dense"
@@ -165,13 +221,16 @@ function EditCourse() {
             overflowY="hidden"
             margin="20px 0 0 0"
           >
-            <ButtonIcon icon={saveWhiteIcon} onClick={handleSubmit(saveModule)}>
-              Salvar módulo
+            <ButtonIcon icon={saveWhiteIcon} onClick={handleSubmit(saveClass)}>
+              Salvar aula
             </ButtonIcon>
             <ButtonIcon
               icon={cancelWhiteIcon}
               color="secondary"
               onClick={() => {
+                handleSetNameValue('');
+                handleSetDescriptionValue('');
+                handleSetLinkValue('');
                 handleSetModalStateClose();
               }}
             >
@@ -180,26 +239,8 @@ function EditCourse() {
           </Container>
         </S.ModalContent>
       </S.ModalContainer>
-      <Container
-        direction="row"
-        justifyContent="flex-start"
-        alignItems="center"
-        width="85%"
-        margin="-30px 0 50px 0"
-      >
-        <ButtonIcon
-          icon={addWhiteIcon}
-          onClick={() => {
-            handleSetNameValue('');
-            handleSetDescriptionValue('');
-            handleSetModalStateOpen();
-          }}
-        >
-          Novo módulo
-        </ButtonIcon>
-      </Container>
-    </>
+    </Container>
   );
 }
 
-export default EditCourse;
+export default CourseClassBanner;
