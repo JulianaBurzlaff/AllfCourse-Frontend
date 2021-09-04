@@ -1,7 +1,7 @@
 import React from 'react';
 // import Grid from '@material-ui/core/Grid';
 import * as S from './styles';
-import logo from '../../assets/logo.svg';
+import logo from '../../assets/logo2.svg';
 
 function AuthLayout({ children, sizeLeft = 6, subtitle }) {
   return (

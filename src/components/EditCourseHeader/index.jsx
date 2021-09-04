@@ -1,15 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import TextField from '@material-ui/core/TextField';
 import { TeacherContext } from '../../providers/TeacherProvider';
+import { WarningContext } from '../../providers/WarningProvider';
 import Container from '../Container';
 import DropArea from '../DropArea';
 import ButtonIcon from '../ButtonIcon';
-import CategoriesModal from '../CategoriesModal';
+import WarningModal from '../WarningModal';
+// import CategoriesModal from '../CategoriesModal';
 import saveWhiteIcon from '../../assets/icons/save-white.svg';
-import addBlackIcon from '../../assets/icons/add-black.svg';
+import cancelWhiteIcon from '../../assets/icons/cancel-white.svg';
+// import addBlackIcon from '../../assets/icons/add-black.svg';
 import imageBlackIcon from '../../assets/icons/image-black.svg';
 import * as S from './styles';
 
@@ -24,15 +28,20 @@ const schema = yup.object().shape({
 });
 
 function EditCourseHeader() {
+  const history = useHistory();
   const {
     modulesNumber,
     // handleSetModulesNumber,
     getCoursesCategories,
     courseCategories,
     saveCourse,
-    handleCategoriesModalOpen,
-    editStatus,
+    // handleCategoriesModalOpen,
+    // editStatus,
+    cancelEditCourse,
   } = useContext(TeacherContext);
+
+  const { handleSetModalWarningOpen, handleSetModalWarningClose } =
+    useContext(WarningContext);
 
   const {
     register,
@@ -41,6 +50,10 @@ function EditCourseHeader() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    getCoursesCategories();
+  }, [getCoursesCategories]);
 
   return (
     <Container
@@ -69,7 +82,7 @@ function EditCourseHeader() {
             color="primary"
             margin="0 0 35px 0"
           >
-            Novo curso
+            Edição de curso
           </S.Text>
           <Container
             direction="column"
@@ -157,15 +170,26 @@ function EditCourseHeader() {
                 wrap="wrap"
                 margin="0 0 20px 0"
               >
-                {courseCategories.map(category => {
+                <S.FlagsSelect
+                  multiple
+                  id="tags-outlined"
+                  options={courseCategories}
+                  getOptionLabel={option => option.name}
+                  // defaultValue={[top100Films[13]]}
+                  filterSelectedOptions
+                  renderInput={params => (
+                    <S.FlagsInput {...params} variant="outlined" />
+                  )}
+                />
+                {/* {courseCategories.map(category => {
                   return (
                     <S.Flag key={category.id}>
                       <S.FlagLabel>{category.name}</S.FlagLabel>
                     </S.Flag>
                   );
-                })}
+                })} */}
               </Container>
-              {editStatus === 0 || editStatus === 1 ? (
+              {/* {editStatus === 0 || editStatus === 1 ? (
                 <ButtonIcon
                   color="neutral"
                   icon={addBlackIcon}
@@ -178,8 +202,8 @@ function EditCourseHeader() {
                 </ButtonIcon>
               ) : (
                 <></>
-              )}
-              <CategoriesModal />
+              )} */}
+              {/* <CategoriesModal /> */}
             </Container>
           </Container>
         </Container>
@@ -211,6 +235,23 @@ function EditCourseHeader() {
         <ButtonIcon icon={saveWhiteIcon} onClick={handleSubmit(saveCourse)}>
           Salvar curso
         </ButtonIcon>
+        <ButtonIcon
+          icon={cancelWhiteIcon}
+          color="secondary"
+          onClick={() => {
+            handleSetModalWarningOpen();
+          }}
+        >
+          Cancelar
+        </ButtonIcon>
+        <WarningModal
+          confirmOnclick={() => {
+            cancelEditCourse();
+            handleSetModalWarningClose();
+            history.push('/dashboard/teacher');
+          }}
+          message="Tem certeza que deseja cancelar o cadastro do curso?"
+        />
       </Container>
     </Container>
   );

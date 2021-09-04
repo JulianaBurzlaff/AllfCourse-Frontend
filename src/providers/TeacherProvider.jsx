@@ -1,150 +1,79 @@
-import React, { createContext, useCallback, useState, useEffect } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack';
 import { api } from '../services/api';
 
 export const TeacherContext = createContext({});
 
 export const TeacherProvider = ({ children }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [categoriesError, setCategoriesError] = useState(false);
+  const [courseHeader, setCourseHeader] = useState({});
   const [courseModules, setCourseModules] = useState([]);
   const [courseCategories, setCourseCategories] = useState([]);
   const [courseClasses, setCourseClasses] = useState([]);
   const [modulesNumber, setModulesNumber] = useState(0);
-
-  const [categoriesModalOpen, setCategoriesModalOpen] = useState(false);
-  const [modulesModalOpen, setModulesModalOpen] = useState(false);
-
   const [editStatus, setEditStatus] = useState(0);
+  const [order, setOrder] = useState(0);
+  const [position, setPosition] = useState(0);
 
   useEffect(() => {
-    setCourseModules([
-      {
-        id: '1',
-        name: 'Preparação',
-        description: 'Primeiros passos para uma hipnose',
-        order: '1',
-      },
-      {
-        id: '2',
-        name: 'Preparação 2',
-        description: 'Segundos passos para uma hipnose',
-        order: '2',
-      },
-      {
-        id: '3',
-        name: 'Preparação 3',
-        description: 'Terceiros passos para uma hipnose',
-        order: '3',
-      },
-    ]);
+    console.log(courseHeader);
+    console.log(courseModules);
+    console.log(courseClasses);
+    console.log(courseCategories);
+  }, [courseHeader, courseModules, courseClasses, courseCategories]);
 
-    setCourseClasses([
-      {
-        id: '1',
-        name: 'Dormindo modulo 1 order1',
-        description: 'Tô com sono',
-        order: '1',
-        position: 0,
-        link: 'www.youtube.com',
-        inactive: false,
-      },
-      {
-        id: '2',
-        name: 'Dormindo  modulo 1 order2',
-        description: 'Tô com sono',
-        order: '2',
-        position: 0,
-        link: 'www.youtube.com',
-        inactive: false,
-      },
-      {
-        id: '3',
-        name: 'Acordando  modulo 2 order1',
-        description: 'Ainda Tô com sono',
-        order: '1',
-        position: 1,
-        link: 'www.youtube.com',
-        inactive: false,
-      },
-      {
-        id: '4',
-        name: 'Dormindo modulo 2 order2',
-        description: 'Ainda Tô com sono',
-        order: '2',
-        position: 1,
-        link: 'www.youtube.com',
-        inactive: false,
-      },
-      {
-        id: '5',
-        name: 'Dormindo modulo 3 order1',
-        description: 'Morrendo de sono',
-        order: '1',
-        position: 2,
-        link: 'www.youtube.com',
-        inactive: false,
-      },
-      {
-        id: '6',
-        name: 'Dormindo modulo 3 order2',
-        description: 'Morrendo de sono',
-        order: '2',
-        position: 2,
-        link: 'www.youtube.com',
-        inactive: false,
-      },
-      {
-        id: '7',
-        name: 'Dormindo modulo 3 order3',
-        description: 'Morrendo de sono',
-        order: '3',
-        position: 2,
-        link: 'www.youtube.com',
-        inactive: false,
-      },
-    ]);
-  }, []);
+  // =============================================== controle de modais
 
-  const handleCategoriesModalOpen = useCallback(() => {
-    setCategoriesModalOpen(true);
-  }, []);
+  // const [categoriesModalOpen, setCategoriesModalOpen] = useState(false);
 
-  const handleCategoriesModalClose = useCallback(() => {
-    setCategoriesModalOpen(false);
-  }, []);
-
-  const handleModulesModalOpen = useCallback(() => {
-    setModulesModalOpen(true);
-  }, []);
-
-  const handleModulesModalClose = useCallback(() => {
-    setModulesModalOpen(false);
-  }, []);
+  // ==================================================================
 
   const handleSetEditStatus = useCallback(status => {
     setEditStatus(status);
+  }, []);
+
+  const handleSetCourseHeader = useCallback(data => {
+    setCourseHeader(data);
+  }, []);
+
+  const handleSetCourseCategories = useCallback(data => {
+    setCourseCategories(data);
   }, []);
 
   const handleSetModulesNumber = useCallback(number => {
     setModulesNumber(number);
   }, []);
 
-  const handleAddCourseModule = useCallback(module => {
-    setCourseModules(module);
+  const handleSetCourseModules = useCallback(modules => {
+    setCourseModules(modules);
   }, []);
 
-  const handleRemoveCourseModule = useCallback(moduleId => {
-    setCourseModules(moduleId);
-  }, []);
-
-  const handleAddCourseClasse = useCallback(classe => {
+  const handleSetCourseClasses = useCallback(classe => {
     setCourseClasses(classe);
   }, []);
 
-  const handleRemoveCourseClasse = useCallback(classeId => {
-    setCourseClasses(classeId);
+  const handleSetOrder = useCallback(value => {
+    setOrder(value);
   }, []);
+
+  const handleSetPosition = useCallback(value => {
+    setPosition(value);
+  }, []);
+
+  // =============================================== controle de modais
+
+  // const handleCategoriesModalOpen = useCallback(() => {
+  //   setCategoriesModalOpen(true);
+  // }, []);
+
+  // const handleCategoriesModalClose = useCallback(() => {
+  //   setCategoriesModalOpen(false);
+  // }, []);
+
+  // ==================================================================
 
   const getCoursesCategories = useCallback(async () => {
     if (categories.length === 0) {
@@ -163,38 +92,39 @@ export const TeacherProvider = ({ children }) => {
 
         const categoriesData = await response.data;
         setCategories(categoriesData);
+        console.log(categoriesData);
       } catch (error) {
         console.log(error);
       }
     }
   }, [categories]);
 
-  const handleToogleCourseCategories = useCallback(
-    categoryId => {
-      const verification = courseCategories.filter(category => {
-        return category.id === parseInt(categoryId, 10);
-      });
+  // const handleToogleCourseCategories = useCallback(
+  //   categoryId => {
+  //     const verification = courseCategories.filter(category => {
+  //       return category.id === parseInt(categoryId, 10);
+  //     });
 
-      const categoriesToSet = courseCategories;
+  //     const categoriesToSet = courseCategories;
 
-      if (verification.length === 0) {
-        categories.forEach((item, index) => {
-          if (item.id === parseInt(categoryId, 10)) {
-            categoriesToSet.push(categories[index]);
-          }
-        });
-      } else if (verification.length > 0) {
-        courseCategories.forEach((item, index) => {
-          if (item.id === parseInt(categoryId, 10)) {
-            categoriesToSet.splice(index, 1);
-          }
-        });
-      }
+  //     if (verification.length === 0) {
+  //       categories.forEach((item, index) => {
+  //         if (item.id === parseInt(categoryId, 10)) {
+  //           categoriesToSet.push(categories[index]);
+  //         }
+  //       });
+  //     } else if (verification.length > 0) {
+  //       courseCategories.forEach((item, index) => {
+  //         if (item.id === parseInt(categoryId, 10)) {
+  //           categoriesToSet.splice(index, 1);
+  //         }
+  //       });
+  //     }
 
-      setCourseCategories(categoriesToSet);
-    },
-    [categories, courseCategories],
-  );
+  //     setCourseCategories(categoriesToSet);
+  //   },
+  //   [categories, courseCategories],
+  // );
 
   const saveCourse = async ({ courseName, description }) => {
     console.log(courseName);
@@ -219,22 +149,129 @@ export const TeacherProvider = ({ children }) => {
     // }
   };
 
-  const saveModule = async ({ name, description }) => {
-    console.log(name);
-    console.log(description);
-  };
+  const cancelEditCourse = useCallback(() => {
+    setCategories([]);
+    setCourseHeader({});
+    setCourseModules([]);
+    setCourseClasses([]);
+    setCourseCategories([]);
+    setModulesNumber(0);
+  }, []);
+
+  const deleteModule = useCallback(() => {
+    if (editStatus === 0) {
+      const modules = courseModules;
+      const classes = courseClasses;
+      const index = modules.findIndex(module => {
+        return module.order === parseInt(order, 10);
+      });
+
+      if (index !== -1) {
+        const indexClassesToExclusion = classes.map((item, itemIndex) => {
+          if (item.position === parseInt(order, 10) - 1) {
+            return itemIndex;
+          }
+          return null;
+        });
+
+        for (let i = indexClassesToExclusion.length - 1; i >= 0; i -= 1) {
+          if (indexClassesToExclusion[i] !== null) {
+            classes.splice([i], 1);
+          }
+        }
+
+        const indexClassesToChagePosition = classes.map((item, itemIndex) => {
+          if (item.position >= parseInt(order, 10)) {
+            return itemIndex;
+          }
+          return null;
+        });
+
+        for (let i = 0; i < classes.length; i += 1) {
+          if (indexClassesToChagePosition[i] !== null) {
+            classes[i].position -= 1;
+          }
+        }
+
+        modules.splice(index, 1);
+
+        for (let i = 0; i < modules.length; i += 1) {
+          modules[i].order = i + 1;
+        }
+
+        handleSetCourseModules(modules);
+        handleSetCourseClasses(classes);
+
+        enqueueSnackbar('Módulo excluído com sucesso!', {
+          variant: 'success',
+        });
+      }
+    } else if (editStatus === 1) {
+      console.log('');
+    }
+  }, [
+    editStatus,
+    courseModules,
+    courseClasses,
+    handleSetCourseModules,
+    handleSetCourseClasses,
+    enqueueSnackbar,
+    order,
+  ]);
+
+  const deleteClass = useCallback(() => {
+    if (editStatus === 0) {
+      const classes = courseClasses;
+
+      const index = classes.findIndex(classItem => {
+        return (
+          classItem.order === parseInt(order, 10) &&
+          classItem.position === parseInt(position, 10)
+        );
+      });
+
+      if (index !== -1) {
+        classes.splice([index], 1);
+
+        const indexClassesToChageOrder = classes.map((item, itemIndex) => {
+          if (item.order > parseInt(order, 10)) {
+            return itemIndex;
+          }
+          return null;
+        });
+
+        for (let i = 0; i < classes.length; i += 1) {
+          if (indexClassesToChageOrder[i] !== null) {
+            classes[i].order -= 1;
+          }
+        }
+
+        handleSetCourseClasses(classes);
+
+        enqueueSnackbar('Aula excluída com sucesso!', {
+          variant: 'success',
+        });
+      }
+    } else if (editStatus === 1) {
+      console.log('');
+    }
+  }, [
+    editStatus,
+    courseClasses,
+    handleSetCourseClasses,
+    enqueueSnackbar,
+    order,
+    position,
+  ]);
 
   return (
     <TeacherContext.Provider
       value={{
         editStatus,
         handleSetEditStatus,
-        categoriesModalOpen,
-        handleCategoriesModalOpen,
-        handleCategoriesModalClose,
-        modulesModalOpen,
-        handleModulesModalOpen,
-        handleModulesModalClose,
+        // categoriesModalOpen,
+        // handleCategoriesModalOpen,
+        // handleCategoriesModalClose,
         categories,
         loading,
         categoriesError,
@@ -242,15 +279,20 @@ export const TeacherProvider = ({ children }) => {
         handleSetModulesNumber,
         getCoursesCategories,
         courseCategories,
-        handleToogleCourseCategories,
+        // handleToogleCourseCategories,
+        handleSetCourseCategories,
+        courseHeader,
+        handleSetCourseHeader,
         courseModules,
-        handleAddCourseModule,
-        handleRemoveCourseModule,
+        handleSetCourseModules,
         courseClasses,
-        handleAddCourseClasse,
-        handleRemoveCourseClasse,
+        handleSetCourseClasses,
+        handleSetOrder,
+        handleSetPosition,
         saveCourse,
-        saveModule,
+        cancelEditCourse,
+        deleteModule,
+        deleteClass,
       }}
     >
       {children}

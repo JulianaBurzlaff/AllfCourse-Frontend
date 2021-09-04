@@ -1,4 +1,15 @@
 import styled, { css } from 'styled-components';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
+
+export const FlagsSelect = styled(Autocomplete)`
+  width: 92.5%;
+`;
+
+export const FlagsInput = styled(TextField)`
+  font-size: 16px;
+  width: 100%;
+`;
 
 export const Title = styled.p`
   ${({ theme, fontSize, weight, color, margin, width }) => css`
