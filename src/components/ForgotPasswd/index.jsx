@@ -7,10 +7,11 @@ import InputMask from 'react-input-mask';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PhoneIcon from '@material-ui/icons/Phone';
 import { TextField, InputAdornment } from '@material-ui/core';
+import { api } from '../../services/api';
 
 import * as S from './styles';
 
-const method = { email: undefined, sms: undefined };
+const method = { email: undefined, phone: undefined };
 
 const schema = yup.object().shape({
   email: yup
@@ -18,19 +19,19 @@ const schema = yup.object().shape({
     .email('Email inválido')
     .test('verify-email', 'Escolha um único método de verificação', val => {
       method.email = val;
-      if ((method.sms && method.email) || (!method.sms && !method.email)) {
+      if ((method.phone && method.email) || (!method.phone && !method.email)) {
         return false;
       }
       return true;
     }),
-  sms: yup
+  phone: yup
     .string()
     .test('phone-validation', 'Telefone inválido', val => {
       return !/[^0-9()\s']/.exec(val) && !/[0-9]{11}/.exec(val);
     })
     .test('verify-phone', 'Escolha um único método de verificação', val => {
-      method.sms = val;
-      if ((method.sms && method.email) || (!method.sms && !method.email)) {
+      method.phone = val;
+      if ((method.phone && method.email) || (!method.phone && !method.email)) {
         return false;
       }
       return true;
@@ -52,13 +53,7 @@ function ForgotPasswd({ onSuccess, loading, setLoading }) {
   const codeSend = async ({ email, phone }) => {
     if (email) {
       setLoading(true);
-      const response = await fetch('http://localhost:3001/requestpass-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
+      const response = await api.post('requestpass-email', { email });
 
       if (response.status !== 201) {
         setrecoveryError(true);
@@ -67,13 +62,10 @@ function ForgotPasswd({ onSuccess, loading, setLoading }) {
 
     if (phone) {
       setLoading(true);
-      const response = await fetch('http://localhost:3001/requestpass-sms', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ phone }),
+      const response = await api.post('requestpass-sms', {
+        phone: phone.replace(/[^0-9]+/g, ''),
       });
+
       if (response.status !== 201) {
         setrecoveryError(true);
       }
@@ -124,9 +116,9 @@ function ForgotPasswd({ onSuccess, loading, setLoading }) {
               placeholder="telefone"
               fullWidth="true"
               margin="normal"
-              {...register('sms')}
-              helperText={errors.sms?.message}
-              error={errors.sms}
+              {...register('phone')}
+              helperText={errors.phone?.message}
+              error={errors.phone}
               InputProps={{
                 startAdornment: (
                   <InputAdornment>

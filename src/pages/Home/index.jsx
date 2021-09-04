@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -14,12 +14,17 @@ import * as S from './styles';
 
 const schema = yup.object().shape({
   email: yup.string().email('Email inválido').required('E-mail obrigatório'),
-  password: yup.string().required('Senha obrigatória').min(6),
+  password: yup
+    .string()
+    .required('Senha obrigatória')
+    .min(6, 'Senha deve conter ao menos 6 digitos'),
 });
 
 function Home() {
   const { cookies, login, signIn, loading, userError } = useUser();
   const history = useHistory();
+  const [passwordError, setPasswordError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -41,6 +46,27 @@ function Home() {
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    if (errors) {
+      if (errors.email || errors.email?.message) {
+        setEmailError(true);
+      } else {
+        setEmailError(false);
+      }
+      if (errors.password || errors.password?.message) {
+        setPasswordError(true);
+      } else {
+        setPasswordError(false);
+      }
+    }
+  }, [
+    setEmailError,
+    setPasswordError,
+    errors,
+    errors.password?.message,
+    errors.email?.message,
+  ]);
+
   return (
     <AuthTemplate subtitle="Sua plataforma de cursos online">
       <S.LoginName>Login</S.LoginName>
@@ -53,7 +79,7 @@ function Home() {
           margin="normal"
           {...register('email')}
           helperText={errors.email?.message}
-          error={errors.email}
+          error={emailError}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -76,7 +102,7 @@ function Home() {
             }
           }}
           helperText={errors.password?.message}
-          error={errors.password}
+          error={passwordError}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
